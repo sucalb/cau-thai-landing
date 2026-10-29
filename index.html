@@ -74,7 +74,7 @@
 
   .hero-visual{position:relative;aspect-ratio:1/1.05;max-width:520px;justify-self:center;width:100%}
   .blob{position:absolute;inset:6% 4% 0 8%;background:linear-gradient(160deg,var(--leaf),var(--forest));border-radius:46% 54% 42% 58%/52% 44% 56% 48%;box-shadow:var(--shadow)}
-  .hero-photo{position:absolute;inset:3% 6% 3% 10%;width:84%;height:94%;object-fit:cover;border-radius:46% 54% 42% 58%/52% 44% 56% 48%;border:8px solid #fff;box-shadow:var(--shadow)}
+  .hero-photo{position:absolute;inset:3% 6% 3% 10%;width:84%;height:94%;object-fit:cover;object-position:center 62%;border-radius:46% 54% 42% 58%/52% 44% 56% 48%;border:8px solid #fff;box-shadow:var(--shadow)}
   .blob{transform:rotate(-6deg) translate(-14px,10px)}
   .float{position:absolute;background:#fff;border-radius:16px;padding:12px 16px;box-shadow:0 18px 40px -18px rgba(22,48,31,.45);display:flex;align-items:center;gap:12px;font-size:13.5px;animation:bob 5s ease-in-out infinite}
   .float b{display:block;font-size:18px;color:var(--forest);line-height:1.15}
@@ -109,8 +109,7 @@
   .ph::after{content:attr(data-label);position:relative;margin:16px;background:rgba(0,0,0,.35);backdrop-filter:blur(6px);padding:8px 12px;border-radius:10px;font-size:13px;font-weight:600}
   .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
   .ph.has-img::after{display:none}
-  .gallery-main{display:grid;grid-template-columns:2fr 1fr;grid-template-rows:1fr 1fr;gap:14px;height:480px}
-  .gallery-main .ph:first-child{grid-row:span 2}
+  .gallery-main{display:grid;grid-template-columns:1.2fr 1fr;gap:14px;height:480px}
   .specs{margin-top:28px;display:grid;gap:14px}
   .spec{display:flex;gap:16px;align-items:flex-start;background:#fff;border-radius:16px;padding:18px 20px;border:1px solid var(--line)}
   .spec .num{font-family:"Playfair Display",serif;font-weight:800;font-size:26px;color:var(--fruit-2);min-width:88px;line-height:1.1}
@@ -336,7 +335,7 @@
 
     <div class="hero-visual reveal">
       <div class="blob"></div>
-      <img class="hero-photo" src="images/hero-buong-cau.jpg" alt="Buồng cau chín trĩu quả trên cây">
+      <img class="hero-photo" src="images/vuon-cau-trai-dai.jpg" alt="Vườn cau Thái trái dài đang trĩu buồng">
       <div class="float f1"><div class="ic">🌴</div><div><b>1–2 mét</b>Cây lùn, dễ hái</div></div>
       <div class="float f2"><div class="ic">🍊</div><div><b>40–80 quả</b>mỗi buồng</div></div>
       <div class="float f3"><div class="ic">⏱️</div><div><b>9–12 tháng</b>là ra trái</div></div>
@@ -377,9 +376,8 @@
 <section class="product">
   <div class="wrap product-grid">
         <div class="gallery-main reveal">
-      <div class="ph has-img"><img src="images/buong-cau-chin.jpg" alt="Buồng cau chín màu cam" loading="lazy"></div>
-      <div class="ph has-img"><img src="images/qua-cau-can-canh.jpg" alt="Quả cau cận cảnh" loading="lazy"></div>
-      <div class="ph has-img"><img src="images/cay-giong-trong-chau.jpg" alt="Cây cau giống trong chậu" loading="lazy"></div>
+      <div class="ph has-img"><img src="images/cay-giong-tai-vuon.jpg" alt="Cây giống cau Thái trái dài bên cây mẹ đang ra buồng" loading="lazy"></div>
+      <div class="ph has-img"><img src="images/cay-giong-bau.jpg" alt="Cây giống cau Thái trái dài trong bầu" loading="lazy"></div>
     </div>
     <div class="reveal">
       <span class="eyebrow">Đặc điểm giống</span>
@@ -458,7 +456,7 @@
     </div>
     <div class="player reveal">
       <!-- Thay bằng video thật: <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe> -->
-      <div class="ph has-img"><img src="images/vuon-cau.jpg" alt="Vườn cau trưởng thành" loading="lazy"></div>
+      <div class="ph has-img"><img src="images/vuon-cau-trai-dai.jpg" alt="Vườn cau Thái trái dài" loading="lazy" style="object-position:center 62%"></div>
       <span class="play"><svg width="30" height="30" viewBox="0 0 24 24" fill="#e9792f"><path d="M8 5v14l11-7z"/></svg></span>
     </div>
   </div>
@@ -468,23 +466,11 @@
 <section>
   <div class="wrap">
     <div class="center reveal">
-      <span class="eyebrow">Hình ảnh thực tế</span>
-      <h2 class="title">Cau trưởng thành ngoài vườn</h2>
-      <p class="lead">Cây cau sau khi trồng: thân thẳng, tán gọn, buồng sai quả.</p>
+      <span class="eyebrow">Khách hàng nói gì</span>
+      <h2 class="title">Được nhà vườn khắp nơi tin chọn</h2>
     </div>
-    <div class="masonry">
-      <div class="ph has-img reveal" style="height:280px"><img src="images/cau-lun.jpg" alt="Cây cau lùn" loading="lazy"></div>
-      <div class="ph has-img reveal" style="height:200px"><img src="images/vuon-cau-2.jpg" alt="Vườn cau" loading="lazy"></div>
-      <div class="ph has-img reveal" style="height:320px"><img src="images/cay-cau-ra-buong.jpg" alt="Cây cau đang ra buồng" loading="lazy"></div>
-      <div class="ph has-img reveal" style="height:230px"><img src="images/doi-cau.jpg" alt="Cau trồng trên đồi" loading="lazy"></div>
-      <div class="ph has-img reveal" style="height:220px"><img src="images/cau-non.jpg" alt="Cây cau non" loading="lazy"></div>
-      <div class="ph has-img reveal" style="height:300px"><img src="images/hang-cau.jpg" alt="Hàng cau trưởng thành" loading="lazy"></div>
-      <div class="ph has-img reveal" style="height:250px"><img src="images/tan-la-cau.jpg" alt="Tán lá cau" loading="lazy"></div>
-      <div class="ph has-img reveal" style="height:210px"><img src="images/rung-cau.jpg" alt="Rừng cau" loading="lazy"></div>
-    </div>
-
     <!-- Đánh giá mẫu: thay bằng phản hồi thật của khách hàng -->
-    <div class="reviews">
+    <div class="reviews" style="margin-top:36px">
       <div class="review reveal"><div class="stars">★★★★★</div><p>“Đặt 6 cây, nhận hàng cây xanh tốt, bầu đất chắc. Trồng hơn tháng giờ đã ra lá mới, cây nào cũng sống.”</p><div class="who"><div class="avatar">T</div><div><b>Anh Tuấn</b><span>Krông Pắc, Đắk Lắk</span></div></div></div>
       <div class="review reveal"><div class="stars">★★★★★</div><p>“Được kiểm tra cây rồi mới trả tiền nên rất yên tâm. Nhà vườn tư vấn cách bón phân rất nhiệt tình.”</p><div class="who"><div class="avatar">H</div><div><b>Chị Hạnh</b><span>Châu Thành, Bến Tre</span></div></div></div>
       <div class="review reveal"><div class="stars">★★★★★</div><p>“Lấy gói 10 tặng 1, cây đều và đẹp. Sẽ quay lại đặt thêm để trồng hết vườn sau nhà.”</p><div class="who"><div class="avatar">M</div><div><b>Chú Minh</b><span>Đồng Phú, Bình Phước</span></div></div></div>
@@ -594,7 +580,7 @@
         <ul><li><a href="#">Chính sách vận chuyển</a></li><li><a href="#">Chính sách đổi trả</a></li><li><a href="#">Điều khoản sử dụng</a></li></ul>
       </div>
     </div>
-    <div class="copy">© 2026 Vườn Cau Việt. Ảnh: Wikimedia Commons (CC BY / CC BY-SA), danh sách tác giả trong CREDITS.md.</div>
+    <div class="copy">© 2026 Vườn Cau Việt.</div>
   </div>
 </footer>
 

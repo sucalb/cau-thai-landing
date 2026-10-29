@@ -13,6 +13,6 @@ Mở http://localhost:5173.
 ## Cần thay trước khi chạy quảng cáo
 
 - Tên vườn, số điện thoại, Zalo, địa chỉ, email (đang là "Vườn Cau Việt", 0900.000.000).
-- Ảnh trong `images/` là ảnh cây cau minh hoạ từ Wikimedia Commons, không phải ảnh vườn của mình. Nên thay bằng ảnh và video thật tại vườn. Nguồn ảnh xem `CREDITS.md`.
+- Ảnh trong `images/` là ảnh vườn do khách gửi. Video tại vườn vẫn chưa có (khung video đang dùng ảnh làm nền).
 - Đánh giá khách hàng và số liệu (12.000+ khách, 63 tỉnh) là nội dung mẫu.
 - Form đặt hàng chưa gửi đi đâu: nối vào Google Sheet / Telegram / backend ở chỗ `TODO` trong `index.html`.
