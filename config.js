@@ -1,6 +1,6 @@
 window.SITE_CONFIG = {
   "topbar": {
-    "text": "Giao hàng toàn quốc · Kiểm tra cây trước khi trả tiền ·",
+    "text": "Giao toàn quốc · Xem cây rồi trả tiền",
     "highlight": "Giảm 50% tháng này"
   },
   "hero": {
