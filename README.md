@@ -10,12 +10,18 @@ Landing page bán cây giống cau Thái trái dài, tối ưu cho điện tho�
 
 Khách tự sửa giá, các gói combo, giá mua số lượng lớn, sản phẩm mua kèm, chữ khuyến mãi, tiêu đề, đánh giá, hỏi đáp, ảnh và video, rồi bấm **Lưu thay đổi**. Trang quản trị ghi `config.js` (và ảnh/video mới) thẳng vào repo này; GitHub Pages tự cập nhật trang bán hàng sau khoảng 1–10 phút.
 
-Đăng nhập bằng token GitHub:
+Đăng nhập bằng tài khoản + mật khẩu. Phía sau, trang quản trị dùng một token GitHub đã được mã hoá bằng mật khẩu và lưu trong `admin-auth.json`; khách không cần biết gì về GitHub.
 
-1. Mở https://github.com/settings/personal-access-tokens/new (tài khoản có quyền ghi vào repo).
-2. Repository access: **Only select repositories**, chọn repo này.
-3. Repository permissions → **Contents: Read and write**.
-4. Generate token, dán vào trang quản trị. Ai có token này đều sửa được trang, không gửi cho người khác.
+Cài (hoặc đổi) tài khoản, chỉ người làm trang làm một lần:
+
+1. Tạo token tại https://github.com/settings/personal-access-tokens/new: Repository access **Only select repositories** → chọn repo này; Repository permissions → **Contents: Read and write**. Nên đặt hạn dùng dài (vd 1 năm) và ghi nhớ ngày hết hạn.
+2. Chạy và dán token khi được hỏi:
+   ```bash
+   node tools/tao-tai-khoan.mjs admin "mật-khẩu-mới"
+   ```
+3. Commit và push `admin-auth.json`.
+
+Mật khẩu nên dài (ít nhất 12 ký tự, script bắt buộc) vì file mã hoá nằm công khai trong repo. Đổi mật khẩu hoặc khi token hết hạn: chạy lại bước 1–3.
 
 Ảnh tải lên được tự thu nhỏ về tối đa 1600px. Video nên nén dưới 20MB trước khi tải lên (tối đa 50MB).
 

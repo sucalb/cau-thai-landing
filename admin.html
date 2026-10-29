@@ -89,20 +89,14 @@
 <div class="login" id="loginView">
   <div class="card">
     <h1>Quản trị trang bán hàng</h1>
-    <p class="sub">Đăng nhập bằng mã truy cập GitHub để sửa giá, chữ, ảnh và video.</p>
+    <p class="sub">Đăng nhập để sửa giá, chữ, ảnh và video.</p>
     <form id="loginForm" class="fields">
-      <div class="f"><label class="lbl" for="l-token">Mã truy cập GitHub (token)</label><input type="text" id="l-token" autocomplete="off" placeholder="github_pat_..." spellcheck="false"></div>
-      <div class="f"><label class="lbl" for="l-repo">Repo</label><input type="text" id="l-repo" placeholder="tên-tài-khoản/tên-repo" spellcheck="false"></div>
-      <label class="check"><input type="checkbox" id="l-remember" checked>Ghi nhớ trên máy này</label>
+      <div class="f"><label class="lbl" for="l-user">Tài khoản</label><input type="text" id="l-user" autocomplete="username" autocapitalize="none" spellcheck="false"></div>
+      <div class="f"><label class="lbl" for="l-pass">Mật khẩu</label><input type="password" id="l-pass" autocomplete="current-password"></div>
+      <label class="check"><input type="checkbox" id="l-remember" checked>Ghi nhớ đăng nhập trên máy này</label>
       <button class="btn btn-primary" type="submit" id="loginBtn">Đăng nhập</button>
     </form>
     <div class="err-box" id="loginErr" hidden></div>
-    <ol>
-      <li>Mở <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">trang tạo token của GitHub</a>.</li>
-      <li>Repository access: chọn <b>Only select repositories</b> và chọn repo của trang.</li>
-      <li>Permissions → Repository permissions → <b>Contents: Read and write</b>.</li>
-      <li>Bấm Generate token, copy và dán vào ô trên. Không gửi token cho người khác.</li>
-    </ol>
   </div>
 </div>
 
@@ -198,9 +192,9 @@ const b64ToUtf8 = b => new TextDecoder().decode(Uint8Array.from(atob(b.replace(/
 const blobToB64 = blob => new Promise((ok, fail) => { const r = new FileReader(); r.onload = () => ok(r.result.split(',')[1]); r.onerror = fail; r.readAsDataURL(blob); });
 
 function explain(e) {
-  if (e.status === 401) return 'Token không đúng hoặc đã hết hạn.';
-  if (e.status === 403) return 'Token chưa có quyền "Contents: Read and write" cho repo này.';
-  if (e.status === 404) return 'Không tìm thấy repo hoặc file. Kiểm tra tên repo và quyền của token.';
+  if (e.status === 401) return 'Quyền truy cập đã hết hạn. Liên hệ người làm trang để cấp lại.';
+  if (e.status === 403) return 'Tài khoản chưa có quyền lưu. Liên hệ người làm trang.';
+  if (e.status === 404) return 'Không tìm thấy dữ liệu trang. Liên hệ người làm trang.';
   if (e.status === 409) return 'Nội dung vừa được sửa ở nơi khác. Bấm "Tải lại" rồi sửa lại.';
   if (e.status === 422) return 'GitHub từ chối file (có thể file quá lớn).';
   return 'Lỗi: ' + e.message;
@@ -349,10 +343,21 @@ async function resizeImage(file, max, q) {
 }
 
 // ---- Đăng nhập ----
-function guessRepo() {
-  const m = location.hostname.match(/^([^.]+)\.github\.io$/);
-  const seg = location.pathname.split('/').filter(Boolean)[0];
-  return m && seg && !seg.endsWith('.html') ? `${m[1]}/${seg}` : '';
+// admin-auth.json chứa token GitHub đã mã hoá bằng mật khẩu (AES-GCM, khoá dẫn xuất PBKDF2).
+// Tạo/đổi bằng: node tools/tao-tai-khoan.mjs <tài khoản> <mật khẩu>
+const fromB64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+async function unlock(user, pass) {
+  const res = await fetch('admin-auth.json?t=' + Date.now(), { cache: 'no-store' });
+  if (!res.ok) throw new Error('Trang quản trị chưa được cài tài khoản. Liên hệ người làm trang.');
+  const a = await res.json();
+  const bad = new Error('Sai tài khoản hoặc mật khẩu.');
+  if (user.trim().toLowerCase() !== a.user.toLowerCase()) throw bad;
+  const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(pass), 'PBKDF2', false, ['deriveKey']);
+  const key = await crypto.subtle.deriveKey({ name: 'PBKDF2', salt: fromB64(a.salt), iterations: a.iter, hash: 'SHA-256' }, base, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
+  try {
+    const plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: fromB64(a.iv), additionalData: new TextEncoder().encode(a.user) }, key, fromB64(a.data));
+    return { token: new TextDecoder().decode(plain), repo: a.repo };
+  } catch (e) { throw bad; }
 }
 async function start(a) {
   auth = a;
@@ -362,15 +367,15 @@ async function start(a) {
 }
 $('loginForm').addEventListener('submit', async e => {
   e.preventDefault();
-  const a = { token: $('l-token').value.trim(), repo: $('l-repo').value.trim().replace(/^https?:\/\/github\.com\//, '').replace(/\/$/, '') };
   $('loginErr').hidden = true;
-  if (!a.token || !a.repo.includes('/')) { $('loginErr').textContent = 'Nhập token và repo dạng tên-tài-khoản/tên-repo.'; $('loginErr').hidden = false; return; }
-  $('loginBtn').disabled = true; $('loginBtn').textContent = 'Đang kiểm tra…';
+  if (!$('l-user').value.trim() || !$('l-pass').value) { $('loginErr').textContent = 'Nhập tài khoản và mật khẩu.'; $('loginErr').hidden = false; return; }
+  $('loginBtn').disabled = true; $('loginBtn').textContent = 'Đang đăng nhập…';
   try {
+    const a = await unlock($('l-user').value, $('l-pass').value);
     await start(a);
     try { $('l-remember').checked ? localStorage.setItem(LS_KEY, JSON.stringify(a)) : localStorage.removeItem(LS_KEY); } catch (e) {}
   } catch (err) {
-    $('loginErr').textContent = explain(err); $('loginErr').hidden = false;
+    $('loginErr').textContent = err.status ? explain(err) : err.message; $('loginErr').hidden = false;
   }
   $('loginBtn').disabled = false; $('loginBtn').textContent = 'Đăng nhập';
 });
@@ -387,12 +392,11 @@ $('saveBtn').addEventListener('click', save);
 window.addEventListener('beforeunload', e => { if (dirty) { e.preventDefault(); e.returnValue = ''; } });
 
 (async () => {
-  $('l-repo').value = guessRepo();
   let saved = null;
   try { saved = JSON.parse(localStorage.getItem(LS_KEY)); } catch (e) {}
   if (saved?.token) {
-    $('l-token').value = saved.token; $('l-repo').value = saved.repo;
-    try { await start(saved); } catch (e) { $('loginErr').textContent = explain(e); $('loginErr').hidden = false; }
+    try { await start(saved); }
+    catch (e) { try { localStorage.removeItem(LS_KEY); } catch (_) {} $('loginErr').textContent = 'Phiên đăng nhập đã hết, vui lòng đăng nhập lại.'; $('loginErr').hidden = false; }
   }
 })();
 </script>
