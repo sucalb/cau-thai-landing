@@ -1,6 +1,6 @@
 # Landing page – Cau Thái Trái Dài
 
-Landing page bán cây giống cau Thái trái dài, thiết kế cho điện thoại (trên máy tính hiển thị một cột ở giữa): giới thiệu, bảng giá combo, đếm ngược ưu đãi, form đặt hàng, hỏi đáp. Một file HTML tĩnh, không cần build.
+Landing page bán cây giống cau Thái trái dài, tối ưu cho điện thoại, mở trên máy tính thì ra bố cục nhiều cột riêng: giới thiệu, bảng giá combo, đếm ngược ưu đãi, form đặt hàng, hỏi đáp. Một file HTML tĩnh, không cần build.
 
 ## Chạy thử
 
