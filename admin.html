@@ -90,6 +90,7 @@
   <div class="card">
     <h1>Quản trị trang bán hàng</h1>
     <p class="sub">Đăng nhập để sửa giá, chữ, ảnh và video.</p>
+    <p class="sub" style="background:var(--mint);border-radius:10px;padding:10px 12px;color:var(--forest)">Bản demo: tài khoản <b>admin</b>, mật khẩu <b>demo123</b>. Thay đổi chỉ lưu trên máy này để xem trước, chưa đưa lên trang thật.</p>
     <form id="loginForm" class="fields">
       <div class="f"><label class="lbl" for="l-user">Tài khoản</label><input type="text" id="l-user" autocomplete="username" autocapitalize="none" spellcheck="false"></div>
       <div class="f"><label class="lbl" for="l-pass">Mật khẩu</label><input type="password" id="l-pass" autocomplete="current-password"></div>
@@ -104,8 +105,8 @@
 <div id="editorView" hidden>
   <div class="bar"><div class="bar-in">
     <h1>Quản trị · Cau Thái Trái Dài</h1>
-    <a href="./" target="_blank" rel="noopener">Xem trang ↗</a>
-    <button class="btn btn-ghost btn-sm" id="reloadBtn" type="button">Tải lại</button>
+    <a href="./?preview=1" target="_blank" rel="noopener">Xem trước ↗</a>
+    <button class="btn btn-ghost btn-sm" id="reloadBtn" type="button">Khôi phục mặc định</button>
     <button class="btn btn-ghost btn-sm" id="logoutBtn" type="button">Đăng xuất</button>
     <button class="btn btn-primary btn-sm" id="saveBtn" type="button" disabled>Lưu thay đổi</button>
     <div class="status" id="status">Chưa có thay đổi</div>
@@ -118,6 +119,7 @@
 
 <div class="toast" id="toast" hidden></div>
 
+<script src="config.js"></script>
 <script>
 // Cấu trúc các mục sửa được. Mỗi field: [đường dẫn trong config, nhãn, kiểu]
 // Kiểu: text (mặc định), textarea, money, number, bool, image, video
@@ -134,7 +136,7 @@ const SECTIONS = [
   { id: 'km', title: 'Khuyến mãi & đếm ngược',
     fields: [['topbar.text', 'Dòng chữ trên cùng'], ['topbar.highlight', 'Phần chữ vàng nổi bật'], ['hero.tag', 'Nhãn đỏ trên ảnh đầu trang'], ['countdown.label', 'Chữ trên đồng hồ đếm ngược'], ['countdown.days', 'Số ngày đếm ngược (tính từ lần đầu khách mở trang)', 'number']] },
   { id: 'dau', title: 'Đầu trang',
-    fields: [['hero.image', 'Ảnh đầu trang', 'image'], ['hero.titleStart', 'Tiêu đề – phần đầu'], ['hero.titleHighlight', 'Tiêu đề – phần chữ cam'], ['hero.titleEnd', 'Tiêu đề – phần cuối'], ['hero.sub', 'Mô tả ngắn', 'textarea'], ['hero.button', 'Chữ trên nút đặt mua']],
+    fields: [['hero.image', 'Ảnh đầu trang', 'image'], ['hero.titleStart', 'Tiêu đề chữ lớn – dòng 1 (nên 2 chữ, vd: Cau Thái)'], ['hero.titleHighlight', 'Tiêu đề chữ lớn – dòng 2 (nên 2 chữ, vd: Trái Dài)'], ['hero.titleEnd', 'Dòng phụ dưới tiêu đề'], ['hero.sub', 'Mô tả ngắn', 'textarea'], ['hero.button', 'Chữ trên nút đặt mua']],
     lists: [{ key: 'hero.facts', title: 'Ô thông số trên ảnh (nên để 3 ô)', label: it => it.big || 'Ô mới', newItem: { big: '', small: '' }, fields: [['big', 'Chữ lớn'], ['small', 'Chữ nhỏ']] }] },
   { id: 'video', title: 'Video',
     fields: [['video.src', 'File video (.mp4, nên dưới 20MB)', 'video'], ['video.poster', 'Ảnh bìa video', 'image'], ['video.title', 'Tiêu đề'], ['video.lead', 'Mô tả', 'textarea']],
@@ -153,12 +155,11 @@ const SECTIONS = [
     lists: [{ key: 'faq', title: 'Câu hỏi', label: it => it.q || 'Câu hỏi mới', newItem: { q: '', a: '' }, fields: [['q', 'Câu hỏi', 'text', true], ['a', 'Trả lời', 'textarea', true]] }] }
 ];
 
-const API = 'https://api.github.com';
-const CONFIG_PATH = 'config.js';
-const LS_KEY = 'admin_auth';
-const MAX_VIDEO_MB = 50;
-let auth = null, cfg = null, sha = null, dirty = false;
-const pending = new Map(); // đường dẫn file mới -> { b64, url }
+// BẢN DEMO: chưa lưu lên trang thật. Bản nháp nằm trong localStorage của máy này;
+// trang bán hàng mở với ?preview=1 sẽ hiện bản nháp đó.
+const DEMO_USER = 'admin', DEMO_PASS = 'demo123';
+const LS_AUTH = 'admin_demo_login', LS_DRAFT = 'cfg_preview';
+let cfg = null, dirty = false;
 
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -177,69 +178,33 @@ function setDirty(v = true) {
   $('status').classList.toggle('warn', v);
 }
 
-// ---- GitHub API ----
-async function gh(path, opts = {}) {
-  const res = await fetch(API + path, { ...opts, headers: { Authorization: 'Bearer ' + auth.token, Accept: 'application/vnd.github+json', ...(opts.headers || {}) } });
-  if (!res.ok) {
-    const body = await res.json().catch(() => ({}));
-    const err = new Error(body.message || res.statusText); err.status = res.status; throw err;
-  }
-  return res.json();
-}
-const repoPath = p => `/repos/${auth.repo}/contents/${p.split('/').map(encodeURIComponent).join('/')}`;
-const utf8ToB64 = s => { const b = new TextEncoder().encode(s); let bin = ''; for (let i = 0; i < b.length; i += 0x8000) bin += String.fromCharCode(...b.subarray(i, i + 0x8000)); return btoa(bin); };
-const b64ToUtf8 = b => new TextDecoder().decode(Uint8Array.from(atob(b.replace(/\s/g, '')), c => c.charCodeAt(0)));
-const blobToB64 = blob => new Promise((ok, fail) => { const r = new FileReader(); r.onload = () => ok(r.result.split(',')[1]); r.onerror = fail; r.readAsDataURL(blob); });
-
-function explain(e) {
-  if (e.status === 401) return 'Quyền truy cập đã hết hạn. Liên hệ người làm trang để cấp lại.';
-  if (e.status === 403) return 'Tài khoản chưa có quyền lưu. Liên hệ người làm trang.';
-  if (e.status === 404) return 'Không tìm thấy dữ liệu trang. Liên hệ người làm trang.';
-  if (e.status === 409) return 'Nội dung vừa được sửa ở nơi khác. Bấm "Tải lại" rồi sửa lại.';
-  if (e.status === 422) return 'GitHub từ chối file (có thể file quá lớn).';
-  return 'Lỗi: ' + e.message;
-}
-
-async function loadConfig() {
-  const f = await gh(repoPath(CONFIG_PATH) + '?ref=main&t=' + Date.now());
-  sha = f.sha;
-  const text = b64ToUtf8(f.content);
-  cfg = JSON.parse(text.slice(text.indexOf('{'), text.lastIndexOf('}') + 1));
-  pending.clear();
+function loadConfig() {
+  let draft = null;
+  try { draft = JSON.parse(localStorage.getItem(LS_DRAFT)); } catch (e) {}
+  cfg = draft || structuredClone(window.SITE_CONFIG);
+  if (draft) $('status').dataset.saved = 'Đang sửa bản nháp đã lưu trên máy này';
   render();
   setDirty(false);
 }
 
-async function save() {
+function save() {
   const problem = validate();
   if (problem) { toast(problem, true); return; }
-  $('saveBtn').disabled = true;
   try {
-    let i = 0;
-    for (const [path, f] of pending) {
-      $('status').textContent = `Đang tải lên file ${++i}/${pending.size}…`;
-      await gh(repoPath(path), { method: 'PUT', body: JSON.stringify({ message: 'Tải lên ' + path, content: f.b64, branch: 'main' }) });
-    }
-    $('status').textContent = 'Đang lưu nội dung…';
-    const text = 'window.SITE_CONFIG = ' + JSON.stringify(cfg, null, 2) + ';\n';
-    const r = await gh(repoPath(CONFIG_PATH), { method: 'PUT', body: JSON.stringify({ message: 'Cập nhật nội dung trang từ trang quản trị', content: utf8ToB64(text), sha, branch: 'main' }) });
-    sha = r.content.sha;
-    pending.clear();
-    const time = new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
-    $('status').dataset.saved = `Đã lưu lúc ${time}. Trang bán hàng cập nhật sau khoảng 1–10 phút.`;
-    setDirty(false);
-    toast('Đã lưu. Trang bán hàng sẽ cập nhật sau khoảng 1–10 phút.');
+    localStorage.setItem(LS_DRAFT, JSON.stringify(cfg));
   } catch (e) {
-    toast(explain(e), true);
-    setDirty(true);
+    toast('Bộ nhớ trình duyệt đã đầy (ảnh quá nhiều/quá lớn). Bớt ảnh rồi lưu lại.', true); return;
   }
+  const time = new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+  $('status').dataset.saved = `Đã lưu bản nháp lúc ${time} (bản demo, chưa lên trang thật). Bấm "Xem trước" để xem.`;
+  setDirty(false);
+  toast('Đã lưu bản nháp. Bấm "Xem trước" để xem trang với nội dung mới.');
 }
 
 function validate() {
   if (!(cfg.price.perTree > 0) || !(cfg.price.original > 0)) return 'Giá mỗi cây và giá gốc phải lớn hơn 0.';
   if (!cfg.combos.length) return 'Cần ít nhất 1 gói combo.';
-  const bad = cfg.combos.find(c => !c.name.trim() || !(c.price > 0));
-  if (bad) return 'Mỗi gói cần có tên và giá lớn hơn 0.';
+  if (cfg.combos.find(c => !c.name.trim() || !(c.price > 0))) return 'Mỗi gói cần có tên và giá lớn hơn 0.';
   if (cfg.bulk.enabled && !(cfg.bulk.min > 0 && cfg.bulk.price > 0)) return 'Mua số lượng lớn: cần số lượng tối thiểu và giá lớn hơn 0.';
   if (cfg.addon.enabled && !(cfg.addon.price > 0)) return 'Giá sản phẩm mua kèm phải lớn hơn 0.';
   return '';
@@ -253,10 +218,10 @@ function fieldHTML(path, label, type = 'text', wide = false) {
   if (type === 'textarea') return `<div class="${cls}"><label class="lbl" for="${id}">${esc(label)}</label><textarea id="${id}" data-p="${path}">${esc(v)}</textarea></div>`;
   if (type === 'money' || type === 'number') return `<div class="${cls}"><label class="lbl" for="${id}">${esc(label)}</label><input type="number" inputmode="numeric" min="0" step="${type === 'money' ? 1000 : 1}" id="${id}" data-p="${path}" data-type="number" value="${esc(v)}">${type === 'money' ? `<div class="money-hint" data-money="${path}">${fmt(v)}</div>` : ''}</div>`;
   if (type === 'image' || type === 'video') {
-    const src = pending.get(v)?.url || v;
-    const preview = type === 'image' ? `<img src="${esc(src)}" alt="">` : `<video src="${esc(src)}" muted playsinline preload="metadata"></video>`;
+    const isNew = String(v).startsWith('data:');
+    const preview = type === 'image' ? `<img src="${esc(v)}" alt="">` : `<video src="${esc(v)}" muted playsinline preload="metadata"></video>`;
     return `<div class="${cls}"><span class="lbl" style="display:block;font-weight:600;font-size:14px;color:var(--forest);margin-bottom:5px">${esc(label)}</span>
-      <div class="media">${preview}<div class="info">${pending.has(v) ? '<span class="new">Ảnh/video mới, sẽ tải lên khi bấm Lưu</span><br>' : ''}${esc(v)}<br><br>
+      <div class="media">${preview}<div class="info">${isNew ? '<span class="new">Ảnh mới chọn</span>' : esc(v)}<br><br>
       <label class="btn btn-ghost btn-sm">Chọn ${type === 'image' ? 'ảnh' : 'video'} khác<input type="file" hidden accept="${type === 'image' ? 'image/*' : 'video/mp4'}" data-p="${path}" data-type="${type}"></label></div></div></div>`;
   }
   return `<div class="${cls}"><label class="lbl" for="${id}">${esc(label)}</label><input type="text" id="${id}" data-p="${path}" value="${esc(v)}"></div>`;
@@ -288,7 +253,7 @@ const findList = key => SECTIONS.flatMap(s => s.lists || []).find(l => l.key ===
 $('sections').addEventListener('input', e => {
   const el = e.target, p = el.dataset.p;
   if (!p || el.type === 'file') return;
-  let v = el.dataset.type === 'bool' ? el.checked : el.dataset.type === 'number' ? (el.value === '' ? 0 : +el.value) : el.value;
+  const v = el.dataset.type === 'bool' ? el.checked : el.dataset.type === 'number' ? (el.value === '' ? 0 : +el.value) : el.value;
   setP(cfg, p, v);
   const hint = document.querySelector(`[data-money="${p}"]`);
   if (hint) hint.textContent = fmt(v);
@@ -297,23 +262,15 @@ $('sections').addEventListener('input', e => {
 $('sections').addEventListener('change', async e => {
   const el = e.target;
   if (el.type !== 'file' || !el.files[0]) return;
-  const file = el.files[0], p = el.dataset.p;
+  if (el.dataset.type === 'video') { toast('Bản demo chưa hỗ trợ tải video lên. Khi làm bản chính sẽ có.', true); el.value = ''; return; }
   try {
-    let blob = file, path;
-    const stamp = Date.now().toString(36);
-    if (el.dataset.type === 'image') {
-      blob = await resizeImage(file, 1600, 0.82);
-      path = `images/anh-${stamp}.jpg`;
-    } else {
-      if (file.size > MAX_VIDEO_MB * 1048576) { toast(`Video nặng ${(file.size / 1048576).toFixed(0)}MB, tối đa ${MAX_VIDEO_MB}MB. Hãy nén video trước khi tải lên.`, true); el.value = ''; return; }
-      if (file.size > 20 * 1048576) toast('Video trên 20MB sẽ tải chậm trên điện thoại.');
-      path = `video/video-${stamp}.mp4`;
-    }
-    pending.set(path, { b64: await blobToB64(blob), url: URL.createObjectURL(blob) });
-    setP(cfg, p, path);
+    // Thu nhỏ ảnh để bản nháp vừa bộ nhớ trình duyệt
+    const blob = await resizeImage(el.files[0], 1000, 0.75);
+    const dataUrl = await new Promise((ok, fail) => { const r = new FileReader(); r.onload = () => ok(r.result); r.onerror = fail; r.readAsDataURL(blob); });
+    setP(cfg, el.dataset.p, dataUrl);
     render(); setDirty();
   } catch (err) {
-    toast('Không đọc được file này. Thử ảnh JPG/PNG hoặc video MP4.', true);
+    toast('Không đọc được ảnh này. Thử ảnh JPG hoặc PNG.', true);
   }
 });
 $('sections').addEventListener('click', e => {
@@ -342,63 +299,36 @@ async function resizeImage(file, max, q) {
   return new Promise(ok => c.toBlob(ok, 'image/jpeg', q));
 }
 
-// ---- Đăng nhập ----
-// admin-auth.json chứa token GitHub đã mã hoá bằng mật khẩu (AES-GCM, khoá dẫn xuất PBKDF2).
-// Tạo/đổi bằng: node tools/tao-tai-khoan.mjs <tài khoản> <mật khẩu>
-const fromB64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
-async function unlock(user, pass) {
-  const res = await fetch('admin-auth.json?t=' + Date.now(), { cache: 'no-store' });
-  if (!res.ok) throw new Error('Trang quản trị chưa được cài tài khoản. Liên hệ người làm trang.');
-  const a = await res.json();
-  const bad = new Error('Sai tài khoản hoặc mật khẩu.');
-  if (user.trim().toLowerCase() !== a.user.toLowerCase()) throw bad;
-  const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(pass), 'PBKDF2', false, ['deriveKey']);
-  const key = await crypto.subtle.deriveKey({ name: 'PBKDF2', salt: fromB64(a.salt), iterations: a.iter, hash: 'SHA-256' }, base, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
-  try {
-    const plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: fromB64(a.iv), additionalData: new TextEncoder().encode(a.user) }, key, fromB64(a.data));
-    return { token: new TextDecoder().decode(plain), repo: a.repo };
-  } catch (e) { throw bad; }
-}
-async function start(a) {
-  auth = a;
-  await gh(`/repos/${auth.repo}`);
-  await loadConfig();
+// ---- Đăng nhập (demo) ----
+function start() {
+  loadConfig();
   $('loginView').hidden = true; $('editorView').hidden = false;
 }
-$('loginForm').addEventListener('submit', async e => {
+$('loginForm').addEventListener('submit', e => {
   e.preventDefault();
-  $('loginErr').hidden = true;
-  if (!$('l-user').value.trim() || !$('l-pass').value) { $('loginErr').textContent = 'Nhập tài khoản và mật khẩu.'; $('loginErr').hidden = false; return; }
-  $('loginBtn').disabled = true; $('loginBtn').textContent = 'Đang đăng nhập…';
-  try {
-    const a = await unlock($('l-user').value, $('l-pass').value);
-    await start(a);
-    try { $('l-remember').checked ? localStorage.setItem(LS_KEY, JSON.stringify(a)) : localStorage.removeItem(LS_KEY); } catch (e) {}
-  } catch (err) {
-    $('loginErr').textContent = err.status ? explain(err) : err.message; $('loginErr').hidden = false;
-  }
-  $('loginBtn').disabled = false; $('loginBtn').textContent = 'Đăng nhập';
+  const ok = $('l-user').value.trim().toLowerCase() === DEMO_USER && $('l-pass').value === DEMO_PASS;
+  $('loginErr').textContent = 'Sai tài khoản hoặc mật khẩu.';
+  $('loginErr').hidden = ok;
+  if (!ok) return;
+  try { $('l-remember').checked ? localStorage.setItem(LS_AUTH, '1') : localStorage.removeItem(LS_AUTH); } catch (e) {}
+  start();
 });
 $('logoutBtn').addEventListener('click', () => {
   if (dirty && !window.confirm('Có thay đổi chưa lưu. Vẫn đăng xuất?')) return;
-  try { localStorage.removeItem(LS_KEY); } catch (e) {}
+  try { localStorage.removeItem(LS_AUTH); } catch (e) {}
   location.reload();
 });
-$('reloadBtn').addEventListener('click', async () => {
-  if (dirty && !window.confirm('Bỏ các thay đổi chưa lưu và tải lại?')) return;
-  try { await loadConfig(); toast('Đã tải lại nội dung mới nhất.'); } catch (e) { toast(explain(e), true); }
+$('reloadBtn').addEventListener('click', () => {
+  if (!window.confirm('Xoá bản nháp và quay về nội dung gốc của trang?')) return;
+  try { localStorage.removeItem(LS_DRAFT); } catch (e) {}
+  delete $('status').dataset.saved;
+  loadConfig();
+  toast('Đã quay về nội dung gốc.');
 });
 $('saveBtn').addEventListener('click', save);
 window.addEventListener('beforeunload', e => { if (dirty) { e.preventDefault(); e.returnValue = ''; } });
 
-(async () => {
-  let saved = null;
-  try { saved = JSON.parse(localStorage.getItem(LS_KEY)); } catch (e) {}
-  if (saved?.token) {
-    try { await start(saved); }
-    catch (e) { try { localStorage.removeItem(LS_KEY); } catch (_) {} $('loginErr').textContent = 'Phiên đăng nhập đã hết, vui lòng đăng nhập lại.'; $('loginErr').hidden = false; }
-  }
-})();
+try { if (localStorage.getItem(LS_AUTH)) start(); } catch (e) {}
 </script>
 </body>
 </html>

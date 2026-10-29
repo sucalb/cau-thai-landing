@@ -3,29 +3,16 @@
 Landing page bán cây giống cau Thái trái dài, tối ưu cho điện thoại, mở trên máy tính thì ra bố cục nhiều cột riêng. Trang tĩnh, không cần build, chạy trên GitHub Pages.
 
 - Trang bán hàng: `index.html`
-- Trang quản trị: `admin.html` (vd: https://sucalb.github.io/cau-thai-landing/admin.html)
+- Trang quản trị (demo): `admin.html` (vd: https://sucalb.github.io/cau-thai-landing/admin.html)
 - Nội dung sửa được (giá, gói, chữ, ảnh, video): `config.js`
 
-## Trang quản trị
+## Trang quản trị (bản demo)
 
-Khách tự sửa giá, các gói combo, giá mua số lượng lớn, sản phẩm mua kèm, chữ khuyến mãi, tiêu đề, đánh giá, hỏi đáp, ảnh và video, rồi bấm **Lưu thay đổi**. Trang quản trị ghi `config.js` (và ảnh/video mới) thẳng vào repo này; GitHub Pages tự cập nhật trang bán hàng sau khoảng 1–10 phút.
+`admin.html` hiện là **bản demo, chưa lưu lên trang thật**. Đăng nhập: tài khoản `admin`, mật khẩu `demo123` (kiểm tra ngay trên trình duyệt, chỉ để demo).
 
-Đăng nhập bằng tài khoản + mật khẩu. Phía sau, trang quản trị dùng một token GitHub đã được mã hoá bằng mật khẩu và lưu trong `admin-auth.json`; khách không cần biết gì về GitHub.
+Khách sửa giá, các gói, giá mua số lượng lớn, sản phẩm mua kèm, chữ khuyến mãi, tiêu đề, đánh giá, hỏi đáp, ảnh rồi bấm **Lưu thay đổi**: bản nháp được lưu trong trình duyệt của máy đó. Bấm **Xem trước** để mở trang bán hàng (`?preview=1`) với nội dung vừa sửa. Khách thật vào trang không thấy bản nháp. **Khôi phục mặc định** xoá bản nháp.
 
-Cài (hoặc đổi) tài khoản, chỉ người làm trang làm một lần:
-
-1. Tạo token tại https://github.com/settings/personal-access-tokens/new: Repository access **Only select repositories** → chọn repo này; Repository permissions → **Contents: Read and write**. Nên đặt hạn dùng dài (vd 1 năm) và ghi nhớ ngày hết hạn.
-2. Chạy và dán token khi được hỏi:
-   ```bash
-   node tools/tao-tai-khoan.mjs admin "mật-khẩu-mới"
-   ```
-3. Commit và push `admin-auth.json`.
-
-Mật khẩu nên dài (ít nhất 12 ký tự, script bắt buộc) vì file mã hoá nằm công khai trong repo. Đổi mật khẩu hoặc khi token hết hạn: chạy lại bước 1–3.
-
-Ảnh tải lên được tự thu nhỏ về tối đa 1600px. Video nên nén dưới 20MB trước khi tải lên (tối đa 50MB).
-
-Trang quản trị không quản lý đơn hàng và không sửa hotline/Zalo/địa chỉ (đang cố định trong `index.html`).
+Bản demo chưa hỗ trợ tải video. Khi làm bản chính cần thêm chỗ lưu thật (máy chủ hoặc dịch vụ như Firebase) và đăng nhập thật.
 
 ## Chạy thử trên máy
 
@@ -38,5 +25,5 @@ Mở http://localhost:5173.
 ## Cần thay trước khi chạy quảng cáo
 
 - Tên vườn, số điện thoại, Zalo, địa chỉ, email trong `index.html` (đang là "Vườn Cau Việt", 0900.000.000). Video có hotline 0368.555.616: nếu đúng là số của vườn thì thay luôn.
-- Đánh giá khách hàng và số liệu (12.000+ khách…) là nội dung mẫu, sửa trong trang quản trị.
+- Đánh giá khách hàng và số liệu (12.000+ khách…) là nội dung mẫu, sửa trong `config.js`.
 - Form đặt hàng chưa gửi đi đâu: nối vào Google Sheet / Telegram / backend ở chỗ `TODO` trong `index.html`.

@@ -567,6 +567,16 @@
 
 <script src="config.js"></script>
 <script>
+  // ?preview=1: hiện bản nháp đã lưu từ trang quản trị (bản demo, chỉ trên máy đó)
+  if (new URLSearchParams(location.search).has('preview')) {
+    try {
+      const draft = JSON.parse(localStorage.getItem('cfg_preview'));
+      if (draft) {
+        window.SITE_CONFIG = draft;
+        document.body.insertAdjacentHTML('afterbegin', '<div style="position:relative;z-index:70;background:#ee8a2c;color:#fff;font:700 13px/1.4 var(--body);text-align:center;padding:8px 16px">Đang xem bản nháp từ trang quản trị (chỉ hiện trên máy này)</div>');
+      }
+    } catch (e) {}
+  }
   const C = window.SITE_CONFIG;
   const fmt = n => (+n || 0).toLocaleString('vi-VN') + 'đ';
   const fmtK = n => n % 1000 === 0 ? (n / 1000).toLocaleString('vi-VN') + 'K' : fmt(n);
