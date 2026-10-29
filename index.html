@@ -165,6 +165,10 @@
   .opt .r{margin-left:auto;font-weight:800;color:var(--forest);white-space:nowrap}
   .opt:has(input:checked){border-color:var(--leaf);background:var(--mint)}
   .opt .tag{font-size:10.5px;font-weight:800;background:var(--sun);color:var(--forest);padding:2px 7px;border-radius:999px}
+  #customQty{margin-top:-6px;margin-bottom:16px}
+  .qty-note{font-size:13px;color:var(--muted);margin-top:6px}
+  .bulk{margin-top:14px;text-align:center;font-size:15px;color:var(--muted)}
+  .bulk a{color:var(--fruit-2);font-weight:800;text-decoration:underline;text-underline-offset:3px}
   .addons{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
   .addons .opt{justify-content:center;text-align:center;padding:10px 4px;font-size:13.5px;line-height:1.25}
   .addons .opt input{position:absolute;opacity:0;pointer-events:none}
@@ -411,6 +415,7 @@
       <a href="#dat-hang" class="btn btn-dark" data-combo="10">Chọn gói 10 + 1 cây</a>
     </div>
   </div>
+  <p class="bulk">Cần nhiều hơn 10 cây? <a href="#dat-hang" data-combo="custom">Tự điền số lượng</a></p>
   <div class="addon">
     <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#3f7d4e" stroke-width="2" style="flex:none"><path d="M9 3h6M10 3v6L4 19a2 2 0 0 0 1.7 3h12.6a2 2 0 0 0 1.7-3L14 9V3"/><path d="M7 15h10"/></svg>
     <p><b>Phân kích rễ 25.000đ/gói</b><br>Giúp cây bén rễ nhanh, tăng tỷ lệ sống. Không bắt buộc.</p>
@@ -484,6 +489,13 @@
         <label class="opt"><input type="radio" id="c4" name="combo" value="4" data-price="130000">4 cây<span class="r">130.000đ</span></label>
         <label class="opt"><input type="radio" id="c6" name="combo" value="6" data-price="150000" checked>6 cây <span class="tag">FREESHIP</span><span class="r">150.000đ</span></label>
         <label class="opt"><input type="radio" id="c10" name="combo" value="10" data-price="250000">10 + 1 cây <span class="tag">FREESHIP</span><span class="r">250.000đ</span></label>
+        <label class="opt"><input type="radio" id="cX" name="combo" value="custom">Số lượng khác <span class="r">Trên 10 cây</span></label>
+      </div>
+      <div class="field" id="customQty" hidden>
+        <label for="f-qty">Số lượng cây bạn cần</label>
+        <input id="f-qty" name="qty" type="number" inputmode="numeric" min="11" step="1" placeholder="Ví dụ: 50">
+        <div class="msg">Vui lòng nhập số lượng từ 11 cây trở lên</div>
+        <p class="qty-note">Tạm tính 25.000đ/cây, miễn phí ship. Mua số lượng lớn, nhân viên sẽ gọi báo giá sỉ.</p>
       </div>
 
       <span class="group-label">Phân kích rễ (không bắt buộc)</span>
@@ -579,12 +591,26 @@
   // Tổng tiền
   const form = document.getElementById('orderForm');
   const fmt = n => n.toLocaleString('vi-VN') + 'đ';
+  // Giá mỗi cây khi khách tự điền số lượng (trên 10 cây, miễn ship)
+  const BULK_PRICE = 25000, BULK_MIN = 11;
+  const qtyBox = document.getElementById('customQty'), qtyInput = form.qty;
+  const isCustom = () => form.querySelector('[name=combo]:checked').value === 'custom';
   function updateTotal() {
-    const c = +form.querySelector('[name=combo]:checked').dataset.price;
+    qtyBox.hidden = !isCustom();
     const a = +form.querySelector('[name=addon]:checked').dataset.price;
+    let c;
+    if (isCustom()) {
+      const q = parseInt(qtyInput.value, 10);
+      if (!(q >= BULK_MIN)) { document.getElementById('total').textContent = '—'; return; }
+      c = q * BULK_PRICE;
+    } else {
+      c = +form.querySelector('[name=combo]:checked').dataset.price;
+    }
     document.getElementById('total').textContent = fmt(c + a);
   }
   form.addEventListener('change', updateTotal);
+  qtyInput.addEventListener('input', () => { qtyInput.classList.remove('err'); updateTotal(); });
+  form.addEventListener('change', e => { if (e.target.id === 'cX') qtyInput.focus(); });
 
   // Nút "Chọn gói" ở bảng giá chọn sẵn gói trong form
   document.querySelectorAll('[data-combo]').forEach(b => b.addEventListener('click', () => {
@@ -601,6 +627,11 @@
       i.classList.toggle('err', bad);
       if (bad && !first) first = i;
     });
+    if (isCustom()) {
+      const bad = !(parseInt(qtyInput.value, 10) >= BULK_MIN);
+      qtyInput.classList.toggle('err', bad);
+      if (bad && !first) first = qtyInput;
+    }
     if (first) { first.focus(); return; }
     const data = Object.fromEntries(new FormData(form));
     // TODO: gửi đơn về backend / Google Sheet / Telegram, ví dụ:
