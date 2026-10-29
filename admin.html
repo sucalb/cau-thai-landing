@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Quản trị – Cau Thái Trái Dài</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --forest:#16301f; --leaf:#3f7d4e; --mint:#e4efe1; --cream:#f7f2e7; --paper:#fffdf8;
+    --ink:#1b2a20; --muted:#5d6b60; --line:#e3dccb; --fruit:#e9792f; --fruit-2:#d35f1a; --red:#d64234; --sun:#f2b632;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  [hidden]{display:none!important}
+  body{font-family:"Be Vietnam Pro",system-ui,-apple-system,sans-serif;background:var(--cream);color:var(--ink);line-height:1.5;font-size:15px}
+  a{color:var(--leaf)}
+  button{font:inherit;cursor:pointer}
+  :focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:0;border-radius:12px;padding:12px 18px;font-weight:700}
+  .btn-primary{background:linear-gradient(135deg,var(--fruit),var(--fruit-2));color:#fff}
+  .btn-primary:disabled{opacity:.5;cursor:not-allowed}
+  .btn-ghost{background:#fff;border:1.5px solid var(--line);color:var(--forest)}
+  .btn-sm{padding:7px 12px;font-size:13.5px;border-radius:10px}
+
+  /* Đăng nhập */
+  .login{max-width:460px;margin:40px auto;padding:0 16px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px}
+  .login h1{font-size:22px;color:var(--forest);margin-bottom:4px}
+  .login p.sub{color:var(--muted);margin-bottom:18px}
+  .login ol{margin:14px 0 0 20px;color:var(--muted);font-size:13.5px;display:grid;gap:4px}
+  .err-box{background:#fdecea;color:var(--red);border-radius:10px;padding:10px 12px;margin-top:12px;font-size:14px}
+
+  /* Thanh trên */
+  .bar{position:sticky;top:0;z-index:10;background:var(--forest);color:#fff}
+  .bar-in{max-width:1100px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .bar h1{font-size:16px;margin-right:auto}
+  .bar a{color:#cfe3cf;font-size:14px}
+  .status{font-size:13px;color:#cfe3cf;width:100%;order:3}
+  .status.warn{color:var(--sun)}
+
+  .layout{max-width:1100px;margin:0 auto;padding:16px;display:grid;gap:16px}
+  .toc{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+  .toc a{flex:none;background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 12px;font-size:13.5px;font-weight:600;color:var(--forest);text-decoration:none}
+  @media (min-width:900px){
+    .layout{grid-template-columns:220px 1fr;align-items:start}
+    .toc{flex-direction:column;position:sticky;top:76px}
+    .toc a{border-radius:10px}
+    .status{width:auto;order:0}
+  }
+
+  section.sec{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px;scroll-margin-top:80px}
+  .sections{display:grid;gap:16px;min-width:0}
+  .sec h2{font-size:18px;color:var(--forest)}
+  .sec .hint{color:var(--muted);font-size:13.5px;margin-top:2px}
+  .fields{display:grid;gap:14px;margin-top:16px}
+  .f label.lbl{display:block;font-weight:600;font-size:14px;color:var(--forest);margin-bottom:5px}
+  .f input[type=text],.f input[type=number],.f textarea{width:100%;font:inherit;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;background:var(--paper);color:var(--ink)}
+  .f textarea{min-height:76px;resize:vertical}
+  .f input:focus,.f textarea:focus{outline:0;border-color:var(--leaf);box-shadow:0 0 0 3px rgba(63,125,78,.15)}
+  .money-hint{font-size:12.5px;color:var(--muted);margin-top:3px}
+  .check{display:flex;align-items:center;gap:10px;font-weight:600;color:var(--forest);cursor:pointer}
+  .check input{width:20px;height:20px;accent-color:var(--leaf)}
+  .media{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+  .media img,.media video{width:120px;height:120px;object-fit:cover;border-radius:12px;background:var(--mint);border:1px solid var(--line)}
+  .media .info{font-size:12.5px;color:var(--muted);word-break:break-all;flex:1;min-width:140px}
+  .media .new{color:var(--fruit-2);font-weight:700}
+
+  .list{margin-top:18px}
+  .list > h3{font-size:15px;color:var(--forest);margin-bottom:8px}
+  .item{border:1.5px solid var(--line);border-radius:14px;padding:14px;margin-bottom:10px;background:var(--paper)}
+  .item-head{display:flex;align-items:center;gap:6px;margin-bottom:10px}
+  .item-head b{margin-right:auto;font-size:14px;color:var(--forest)}
+  .icon-btn{width:34px;height:34px;border-radius:9px;border:1px solid var(--line);background:#fff;color:var(--forest);font-weight:800}
+  .icon-btn.del{color:var(--red)}
+  .icon-btn:disabled{opacity:.35}
+  .item .fields{margin-top:0;gap:10px}
+  @media (min-width:640px){ .item .fields{grid-template-columns:1fr 1fr} .item .f.wide{grid-column:1/-1} }
+
+  .toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--forest);color:#fff;padding:12px 18px;border-radius:12px;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,.25);z-index:20;max-width:calc(100% - 32px)}
+  .toast.bad{background:var(--red)}
+</style>
+</head>
+<body>
+
+<!-- ĐĂNG NHẬP -->
+<div class="login" id="loginView">
+  <div class="card">
+    <h1>Quản trị trang bán hàng</h1>
+    <p class="sub">Đăng nhập bằng mã truy cập GitHub để sửa giá, chữ, ảnh và video.</p>
+    <form id="loginForm" class="fields">
+      <div class="f"><label class="lbl" for="l-token">Mã truy cập GitHub (token)</label><input type="text" id="l-token" autocomplete="off" placeholder="github_pat_..." spellcheck="false"></div>
+      <div class="f"><label class="lbl" for="l-repo">Repo</label><input type="text" id="l-repo" placeholder="tên-tài-khoản/tên-repo" spellcheck="false"></div>
+      <label class="check"><input type="checkbox" id="l-remember" checked>Ghi nhớ trên máy này</label>
+      <button class="btn btn-primary" type="submit" id="loginBtn">Đăng nhập</button>
+    </form>
+    <div class="err-box" id="loginErr" hidden></div>
+    <ol>
+      <li>Mở <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">trang tạo token của GitHub</a>.</li>
+      <li>Repository access: chọn <b>Only select repositories</b> và chọn repo của trang.</li>
+      <li>Permissions → Repository permissions → <b>Contents: Read and write</b>.</li>
+      <li>Bấm Generate token, copy và dán vào ô trên. Không gửi token cho người khác.</li>
+    </ol>
+  </div>
+</div>
+
+<!-- TRÌNH SỬA -->
+<div id="editorView" hidden>
+  <div class="bar"><div class="bar-in">
+    <h1>Quản trị · Cau Thái Trái Dài</h1>
+    <a href="./" target="_blank" rel="noopener">Xem trang ↗</a>
+    <button class="btn btn-ghost btn-sm" id="reloadBtn" type="button">Tải lại</button>
+    <button class="btn btn-ghost btn-sm" id="logoutBtn" type="button">Đăng xuất</button>
+    <button class="btn btn-primary btn-sm" id="saveBtn" type="button" disabled>Lưu thay đổi</button>
+    <div class="status" id="status">Chưa có thay đổi</div>
+  </div></div>
+  <div class="layout">
+    <nav class="toc" id="toc"></nav>
+    <div class="sections" id="sections"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast" hidden></div>
+
+<script>
+// Cấu trúc các mục sửa được. Mỗi field: [đường dẫn trong config, nhãn, kiểu]
+// Kiểu: text (mặc định), textarea, money, number, bool, image, video
+const SECTIONS = [
+  { id: 'gia', title: 'Giá bán', hint: 'Phần "Tiết kiệm %" ở đầu trang tự tính từ hai giá này.',
+    fields: [['price.perTree', 'Giá mỗi cây (hiện to ở đầu trang)', 'money'], ['price.original', 'Giá gốc (bị gạch ngang)', 'money']] },
+  { id: 'goi', title: 'Các gói combo', hint: 'Hiện trong bảng giá và trong form đặt hàng.',
+    lists: [{ key: 'combos', title: 'Danh sách gói', label: it => it.name || 'Gói mới', newItem: { name: '', price: 0, note: '', tag: '', hot: false },
+      fields: [['name', 'Tên gói (vd: 6 cây)'], ['price', 'Giá gói', 'money'], ['note', 'Ghi chú (vd: Miễn phí ship)'], ['tag', 'Nhãn nhỏ trong form (vd: FREESHIP, để trống nếu không cần)'], ['hot', 'Đánh dấu "Bán chạy nhất" (gói này được chọn sẵn)', 'bool']] }] },
+  { id: 'si', title: 'Mua số lượng lớn', hint: 'Lựa chọn "Số lượng khác" để khách tự điền số cây.',
+    fields: [['bulk.enabled', 'Cho khách tự điền số lượng', 'bool'], ['bulk.min', 'Số lượng tối thiểu (cây)', 'number'], ['bulk.price', 'Giá mỗi cây khi tự điền', 'money'], ['bulk.note', 'Ghi chú dưới ô số lượng', 'textarea']] },
+  { id: 'kem', title: 'Sản phẩm mua kèm', hint: 'Khách chọn mua 0, 1 hoặc 2 gói trong form.',
+    fields: [['addon.enabled', 'Hiện sản phẩm mua kèm', 'bool'], ['addon.name', 'Tên (vd: Phân kích rễ)'], ['addon.price', 'Giá mỗi gói', 'money'], ['addon.desc', 'Mô tả', 'textarea']] },
+  { id: 'km', title: 'Khuyến mãi & đếm ngược',
+    fields: [['topbar.text', 'Dòng chữ trên cùng'], ['topbar.highlight', 'Phần chữ vàng nổi bật'], ['hero.tag', 'Nhãn đỏ trên ảnh đầu trang'], ['countdown.label', 'Chữ trên đồng hồ đếm ngược'], ['countdown.days', 'Số ngày đếm ngược (tính từ lần đầu khách mở trang)', 'number']] },
+  { id: 'dau', title: 'Đầu trang',
+    fields: [['hero.image', 'Ảnh đầu trang', 'image'], ['hero.titleStart', 'Tiêu đề – phần đầu'], ['hero.titleHighlight', 'Tiêu đề – phần chữ cam'], ['hero.titleEnd', 'Tiêu đề – phần cuối'], ['hero.sub', 'Mô tả ngắn', 'textarea'], ['hero.button', 'Chữ trên nút đặt mua']],
+    lists: [{ key: 'hero.facts', title: 'Ô thông số trên ảnh (nên để 3 ô)', label: it => it.big || 'Ô mới', newItem: { big: '', small: '' }, fields: [['big', 'Chữ lớn'], ['small', 'Chữ nhỏ']] }] },
+  { id: 'video', title: 'Video',
+    fields: [['video.src', 'File video (.mp4, nên dưới 20MB)', 'video'], ['video.poster', 'Ảnh bìa video', 'image'], ['video.title', 'Tiêu đề'], ['video.lead', 'Mô tả', 'textarea']],
+    lists: [{ key: 'video.checks', title: 'Các dòng có dấu tích', label: it => it.text || 'Dòng mới', newItem: { text: '' }, fields: [['text', 'Nội dung', 'text', true]] }] },
+  { id: 'so', title: 'Ô số liệu',
+    lists: [{ key: 'stats', title: 'Các ô số liệu (nên để 4 ô)', label: it => it.big || 'Ô mới', newItem: { big: '', small: '' }, fields: [['big', 'Số lớn (vd: 99%)'], ['small', 'Chữ nhỏ']] }] },
+  { id: 'dd', title: 'Đặc điểm giống',
+    fields: [['product.title', 'Tiêu đề'], ['product.lead', 'Mô tả', 'textarea'], ['product.photo1', 'Ảnh 1', 'image'], ['product.photo2', 'Ảnh 2', 'image']],
+    lists: [{ key: 'product.specs', title: 'Thông số', label: it => it.title || 'Thông số mới', newItem: { num: '', title: '', desc: '' }, fields: [['num', 'Số nổi bật (vd: 9–12)'], ['title', 'Tiêu đề'], ['desc', 'Mô tả', 'text', true]] }] },
+  { id: 'loi', title: 'Lợi ích',
+    fields: [['benefits.title', 'Tiêu đề']],
+    lists: [{ key: 'benefits.items', title: 'Các lợi ích (nên để 4)', label: it => it.title || 'Lợi ích mới', newItem: { title: '', desc: '' }, fields: [['title', 'Tiêu đề'], ['desc', 'Mô tả']] }] },
+  { id: 'dg', title: 'Đánh giá khách hàng', hint: 'Xoá hết đánh giá thì phần này tự ẩn.',
+    lists: [{ key: 'reviews', title: 'Đánh giá', label: it => it.name || 'Đánh giá mới', newItem: { text: '', name: '', place: '' }, fields: [['text', 'Nội dung', 'textarea', true], ['name', 'Tên khách'], ['place', 'Nơi ở']] }] },
+  { id: 'faq', title: 'Hỏi đáp',
+    lists: [{ key: 'faq', title: 'Câu hỏi', label: it => it.q || 'Câu hỏi mới', newItem: { q: '', a: '' }, fields: [['q', 'Câu hỏi', 'text', true], ['a', 'Trả lời', 'textarea', true]] }] }
+];
+
+const API = 'https://api.github.com';
+const CONFIG_PATH = 'config.js';
+const LS_KEY = 'admin_auth';
+const MAX_VIDEO_MB = 50;
+let auth = null, cfg = null, sha = null, dirty = false;
+const pending = new Map(); // đường dẫn file mới -> { b64, url }
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const fmt = n => (+n || 0).toLocaleString('vi-VN') + 'đ';
+const getP = (o, p) => p.split('.').reduce((a, k) => a?.[k], o);
+const setP = (o, p, v) => { const ks = p.split('.'); const last = ks.pop(); ks.reduce((a, k) => a[k] ??= {}, o)[last] = v; };
+
+function toast(msg, bad) {
+  const t = $('toast'); t.textContent = msg; t.className = 'toast' + (bad ? ' bad' : ''); t.hidden = false;
+  clearTimeout(toast.t); toast.t = setTimeout(() => t.hidden = true, 4000);
+}
+function setDirty(v = true) {
+  dirty = v;
+  $('saveBtn').disabled = !v;
+  $('status').textContent = v ? 'Có thay đổi chưa lưu' : $('status').dataset.saved || 'Chưa có thay đổi';
+  $('status').classList.toggle('warn', v);
+}
+
+// ---- GitHub API ----
+async function gh(path, opts = {}) {
+  const res = await fetch(API + path, { ...opts, headers: { Authorization: 'Bearer ' + auth.token, Accept: 'application/vnd.github+json', ...(opts.headers || {}) } });
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    const err = new Error(body.message || res.statusText); err.status = res.status; throw err;
+  }
+  return res.json();
+}
+const repoPath = p => `/repos/${auth.repo}/contents/${p.split('/').map(encodeURIComponent).join('/')}`;
+const utf8ToB64 = s => { const b = new TextEncoder().encode(s); let bin = ''; for (let i = 0; i < b.length; i += 0x8000) bin += String.fromCharCode(...b.subarray(i, i + 0x8000)); return btoa(bin); };
+const b64ToUtf8 = b => new TextDecoder().decode(Uint8Array.from(atob(b.replace(/\s/g, '')), c => c.charCodeAt(0)));
+const blobToB64 = blob => new Promise((ok, fail) => { const r = new FileReader(); r.onload = () => ok(r.result.split(',')[1]); r.onerror = fail; r.readAsDataURL(blob); });
+
+function explain(e) {
+  if (e.status === 401) return 'Token không đúng hoặc đã hết hạn.';
+  if (e.status === 403) return 'Token chưa có quyền "Contents: Read and write" cho repo này.';
+  if (e.status === 404) return 'Không tìm thấy repo hoặc file. Kiểm tra tên repo và quyền của token.';
+  if (e.status === 409) return 'Nội dung vừa được sửa ở nơi khác. Bấm "Tải lại" rồi sửa lại.';
+  if (e.status === 422) return 'GitHub từ chối file (có thể file quá lớn).';
+  return 'Lỗi: ' + e.message;
+}
+
+async function loadConfig() {
+  const f = await gh(repoPath(CONFIG_PATH) + '?ref=main&t=' + Date.now());
+  sha = f.sha;
+  const text = b64ToUtf8(f.content);
+  cfg = JSON.parse(text.slice(text.indexOf('{'), text.lastIndexOf('}') + 1));
+  pending.clear();
+  render();
+  setDirty(false);
+}
+
+async function save() {
+  const problem = validate();
+  if (problem) { toast(problem, true); return; }
+  $('saveBtn').disabled = true;
+  try {
+    let i = 0;
+    for (const [path, f] of pending) {
+      $('status').textContent = `Đang tải lên file ${++i}/${pending.size}…`;
+      await gh(repoPath(path), { method: 'PUT', body: JSON.stringify({ message: 'Tải lên ' + path, content: f.b64, branch: 'main' }) });
+    }
+    $('status').textContent = 'Đang lưu nội dung…';
+    const text = 'window.SITE_CONFIG = ' + JSON.stringify(cfg, null, 2) + ';\n';
+    const r = await gh(repoPath(CONFIG_PATH), { method: 'PUT', body: JSON.stringify({ message: 'Cập nhật nội dung trang từ trang quản trị', content: utf8ToB64(text), sha, branch: 'main' }) });
+    sha = r.content.sha;
+    pending.clear();
+    const time = new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+    $('status').dataset.saved = `Đã lưu lúc ${time}. Trang bán hàng cập nhật sau khoảng 1–10 phút.`;
+    setDirty(false);
+    toast('Đã lưu. Trang bán hàng sẽ cập nhật sau khoảng 1–10 phút.');
+  } catch (e) {
+    toast(explain(e), true);
+    setDirty(true);
+  }
+}
+
+function validate() {
+  if (!(cfg.price.perTree > 0) || !(cfg.price.original > 0)) return 'Giá mỗi cây và giá gốc phải lớn hơn 0.';
+  if (!cfg.combos.length) return 'Cần ít nhất 1 gói combo.';
+  const bad = cfg.combos.find(c => !c.name.trim() || !(c.price > 0));
+  if (bad) return 'Mỗi gói cần có tên và giá lớn hơn 0.';
+  if (cfg.bulk.enabled && !(cfg.bulk.min > 0 && cfg.bulk.price > 0)) return 'Mua số lượng lớn: cần số lượng tối thiểu và giá lớn hơn 0.';
+  if (cfg.addon.enabled && !(cfg.addon.price > 0)) return 'Giá sản phẩm mua kèm phải lớn hơn 0.';
+  return '';
+}
+
+// ---- Vẽ form ----
+function fieldHTML(path, label, type = 'text', wide = false) {
+  const v = getP(cfg, path), id = 'f_' + path.replace(/\W/g, '_');
+  const cls = 'f' + (wide || type === 'textarea' || type === 'image' || type === 'video' ? ' wide' : '');
+  if (type === 'bool') return `<div class="${cls}"><label class="check"><input type="checkbox" id="${id}" data-p="${path}" data-type="bool"${v ? ' checked' : ''}>${esc(label)}</label></div>`;
+  if (type === 'textarea') return `<div class="${cls}"><label class="lbl" for="${id}">${esc(label)}</label><textarea id="${id}" data-p="${path}">${esc(v)}</textarea></div>`;
+  if (type === 'money' || type === 'number') return `<div class="${cls}"><label class="lbl" for="${id}">${esc(label)}</label><input type="number" inputmode="numeric" min="0" step="${type === 'money' ? 1000 : 1}" id="${id}" data-p="${path}" data-type="number" value="${esc(v)}">${type === 'money' ? `<div class="money-hint" data-money="${path}">${fmt(v)}</div>` : ''}</div>`;
+  if (type === 'image' || type === 'video') {
+    const src = pending.get(v)?.url || v;
+    const preview = type === 'image' ? `<img src="${esc(src)}" alt="">` : `<video src="${esc(src)}" muted playsinline preload="metadata"></video>`;
+    return `<div class="${cls}"><span class="lbl" style="display:block;font-weight:600;font-size:14px;color:var(--forest);margin-bottom:5px">${esc(label)}</span>
+      <div class="media">${preview}<div class="info">${pending.has(v) ? '<span class="new">Ảnh/video mới, sẽ tải lên khi bấm Lưu</span><br>' : ''}${esc(v)}<br><br>
+      <label class="btn btn-ghost btn-sm">Chọn ${type === 'image' ? 'ảnh' : 'video'} khác<input type="file" hidden accept="${type === 'image' ? 'image/*' : 'video/mp4'}" data-p="${path}" data-type="${type}"></label></div></div></div>`;
+  }
+  return `<div class="${cls}"><label class="lbl" for="${id}">${esc(label)}</label><input type="text" id="${id}" data-p="${path}" value="${esc(v)}"></div>`;
+}
+
+function render() {
+  $('toc').innerHTML = SECTIONS.map(s => `<a href="#sec-${s.id}">${esc(s.title)}</a>`).join('');
+  $('sections').innerHTML = SECTIONS.map(s => `
+    <section class="sec" id="sec-${s.id}">
+      <h2>${esc(s.title)}</h2>${s.hint ? `<p class="hint">${esc(s.hint)}</p>` : ''}
+      ${s.fields ? `<div class="fields">${s.fields.map(f => fieldHTML(...f)).join('')}</div>` : ''}
+      ${(s.lists || []).map(l => {
+        const arr = getP(cfg, l.key) || [];
+        return `<div class="list"><h3>${esc(l.title)}</h3>
+          ${arr.map((it, i) => `<div class="item">
+            <div class="item-head"><b>${i + 1}. ${esc(l.label(it))}</b>
+              <button class="icon-btn" type="button" data-move="${l.key}" data-i="${i}" data-d="-1" aria-label="Lên"${i ? '' : ' disabled'}>↑</button>
+              <button class="icon-btn" type="button" data-move="${l.key}" data-i="${i}" data-d="1" aria-label="Xuống"${i < arr.length - 1 ? '' : ' disabled'}>↓</button>
+              <button class="icon-btn del" type="button" data-del="${l.key}" data-i="${i}" aria-label="Xoá">✕</button></div>
+            <div class="fields">${l.fields.map(([k, lab, t, w]) => fieldHTML(`${l.key}.${i}.${k}`, lab, t, w)).join('')}</div>
+          </div>`).join('')}
+          <button class="btn btn-ghost btn-sm" type="button" data-add="${l.key}">+ Thêm</button></div>`;
+      }).join('')}
+    </section>`).join('');
+}
+
+const findList = key => SECTIONS.flatMap(s => s.lists || []).find(l => l.key === key);
+
+$('sections').addEventListener('input', e => {
+  const el = e.target, p = el.dataset.p;
+  if (!p || el.type === 'file') return;
+  let v = el.dataset.type === 'bool' ? el.checked : el.dataset.type === 'number' ? (el.value === '' ? 0 : +el.value) : el.value;
+  setP(cfg, p, v);
+  const hint = document.querySelector(`[data-money="${p}"]`);
+  if (hint) hint.textContent = fmt(v);
+  setDirty();
+});
+$('sections').addEventListener('change', async e => {
+  const el = e.target;
+  if (el.type !== 'file' || !el.files[0]) return;
+  const file = el.files[0], p = el.dataset.p;
+  try {
+    let blob = file, path;
+    const stamp = Date.now().toString(36);
+    if (el.dataset.type === 'image') {
+      blob = await resizeImage(file, 1600, 0.82);
+      path = `images/anh-${stamp}.jpg`;
+    } else {
+      if (file.size > MAX_VIDEO_MB * 1048576) { toast(`Video nặng ${(file.size / 1048576).toFixed(0)}MB, tối đa ${MAX_VIDEO_MB}MB. Hãy nén video trước khi tải lên.`, true); el.value = ''; return; }
+      if (file.size > 20 * 1048576) toast('Video trên 20MB sẽ tải chậm trên điện thoại.');
+      path = `video/video-${stamp}.mp4`;
+    }
+    pending.set(path, { b64: await blobToB64(blob), url: URL.createObjectURL(blob) });
+    setP(cfg, p, path);
+    render(); setDirty();
+  } catch (err) {
+    toast('Không đọc được file này. Thử ảnh JPG/PNG hoặc video MP4.', true);
+  }
+});
+$('sections').addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  if (b.dataset.add) { const l = findList(b.dataset.add); getP(cfg, l.key).push(structuredClone(l.newItem)); }
+  else if (b.dataset.del) { const arr = getP(cfg, b.dataset.del); const l = findList(b.dataset.del); if (!confirmDelete(b, l.label(arr[+b.dataset.i]))) return; arr.splice(+b.dataset.i, 1); }
+  else if (b.dataset.move) { const arr = getP(cfg, b.dataset.move), i = +b.dataset.i, j = i + +b.dataset.d; [arr[i], arr[j]] = [arr[j], arr[i]]; }
+  else return;
+  render(); setDirty();
+});
+// Bấm ✕ lần đầu để hỏi, bấm lần hai trong 3 giây để xoá
+function confirmDelete(btn, name) {
+  if (btn.dataset.armed) return true;
+  btn.dataset.armed = '1'; btn.textContent = 'Xoá?'; btn.style.width = 'auto'; btn.style.padding = '0 10px';
+  toast(`Bấm "Xoá?" lần nữa để xoá "${name}"`);
+  setTimeout(() => { if (btn.isConnected) { delete btn.dataset.armed; btn.textContent = '✕'; btn.style.cssText = ''; } }, 3000);
+  return false;
+}
+
+async function resizeImage(file, max, q) {
+  const bmp = await createImageBitmap(file);
+  const s = Math.min(1, max / Math.max(bmp.width, bmp.height));
+  const c = document.createElement('canvas');
+  c.width = Math.round(bmp.width * s); c.height = Math.round(bmp.height * s);
+  c.getContext('2d').drawImage(bmp, 0, 0, c.width, c.height);
+  return new Promise(ok => c.toBlob(ok, 'image/jpeg', q));
+}
+
+// ---- Đăng nhập ----
+function guessRepo() {
+  const m = location.hostname.match(/^([^.]+)\.github\.io$/);
+  const seg = location.pathname.split('/').filter(Boolean)[0];
+  return m && seg && !seg.endsWith('.html') ? `${m[1]}/${seg}` : '';
+}
+async function start(a) {
+  auth = a;
+  await gh(`/repos/${auth.repo}`);
+  await loadConfig();
+  $('loginView').hidden = true; $('editorView').hidden = false;
+}
+$('loginForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const a = { token: $('l-token').value.trim(), repo: $('l-repo').value.trim().replace(/^https?:\/\/github\.com\//, '').replace(/\/$/, '') };
+  $('loginErr').hidden = true;
+  if (!a.token || !a.repo.includes('/')) { $('loginErr').textContent = 'Nhập token và repo dạng tên-tài-khoản/tên-repo.'; $('loginErr').hidden = false; return; }
+  $('loginBtn').disabled = true; $('loginBtn').textContent = 'Đang kiểm tra…';
+  try {
+    await start(a);
+    try { $('l-remember').checked ? localStorage.setItem(LS_KEY, JSON.stringify(a)) : localStorage.removeItem(LS_KEY); } catch (e) {}
+  } catch (err) {
+    $('loginErr').textContent = explain(err); $('loginErr').hidden = false;
+  }
+  $('loginBtn').disabled = false; $('loginBtn').textContent = 'Đăng nhập';
+});
+$('logoutBtn').addEventListener('click', () => {
+  if (dirty && !window.confirm('Có thay đổi chưa lưu. Vẫn đăng xuất?')) return;
+  try { localStorage.removeItem(LS_KEY); } catch (e) {}
+  location.reload();
+});
+$('reloadBtn').addEventListener('click', async () => {
+  if (dirty && !window.confirm('Bỏ các thay đổi chưa lưu và tải lại?')) return;
+  try { await loadConfig(); toast('Đã tải lại nội dung mới nhất.'); } catch (e) { toast(explain(e), true); }
+});
+$('saveBtn').addEventListener('click', save);
+window.addEventListener('beforeunload', e => { if (dirty) { e.preventDefault(); e.returnValue = ''; } });
+
+(async () => {
+  $('l-repo').value = guessRepo();
+  let saved = null;
+  try { saved = JSON.parse(localStorage.getItem(LS_KEY)); } catch (e) {}
+  if (saved?.token) {
+    $('l-token').value = saved.token; $('l-repo').value = saved.repo;
+    try { await start(saved); } catch (e) { $('loginErr').textContent = explain(e); $('loginErr').hidden = false; }
+  }
+})();
+</script>
+</body>
+</html>

@@ -310,7 +310,7 @@
 <body>
 <div class="page">
 
-<div class="topbar">Giao hàng toàn quốc · Kiểm tra cây trước khi trả tiền · <b>Giảm 50% tháng này</b></div>
+<div class="topbar"><span data-t="topbar.text"></span> <b data-t="topbar.highlight"></b></div>
 
 <header>
   <div class="nav pad">
@@ -329,27 +329,25 @@
   </div>
 </header>
 
+<!-- Nội dung có data-t / data-src / id danh sách được điền từ config.js (sửa qua admin.html) -->
+
 <!-- HERO -->
 <section class="hero pad">
   <div class="hero-photo">
-    <img src="images/vuon-cau-trai-dai.jpg" alt="Vườn cau Thái trái dài đang trĩu buồng" fetchpriority="high">
-    <span class="tag">-50% tháng này</span>
-    <div class="facts">
-      <div class="fact"><b>9–12 tháng</b>là ra trái</div>
-      <div class="fact"><b>40–80 quả</b>mỗi buồng</div>
-      <div class="fact"><b>Sống 99%</b>bảo hành 30 ngày</div>
-    </div>
+    <img data-src="hero.image" alt="Vườn cau Thái trái dài đang trĩu buồng" fetchpriority="high">
+    <span class="tag" data-t="hero.tag"></span>
+    <div class="facts" id="facts"></div>
   </div>
-  <h1>Cau Thái <em>Trái Dài</em> – siêu trái, ra quả quanh năm</h1>
-  <p class="sub">Giống lùn chuẩn nhà vườn: thấp cây, dễ thu hoạch, buồng sai quả dài đều. Phù hợp vườn nhà lẫn nông hộ lớn.</p>
+  <h1><span data-t="hero.titleStart"></span> <em data-t="hero.titleHighlight"></em> <span data-t="hero.titleEnd"></span></h1>
+  <p class="sub" data-t="hero.sub"></p>
   <div class="price-box">
     <div>
-      <div class="price">25.000đ <small>/cây</small></div>
-      <div class="old">Giá gốc 180.000đ</div>
+      <div class="price"><span class="js-price"></span> <small>/cây</small></div>
+      <div class="old">Giá gốc <span class="js-old"></span></div>
     </div>
-    <div class="off">TIẾT KIỆM<br>86%</div>
+    <div class="off" id="saveLabel"></div>
   </div>
-  <a href="#dat-hang" class="btn btn-primary pulse">ĐẶT MUA NGAY
+  <a href="#dat-hang" class="btn btn-primary pulse"><span data-t="hero.button"></span>
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
   <div class="chips">
     <div class="chip"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3f7d4e" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>Giống chuẩn 100%</div>
@@ -361,30 +359,21 @@
 <!-- VIDEO -->
 <section id="video" class="video pad">
   <span class="eyebrow">Quay trực tiếp tại vườn</span>
-  <h2 class="title">Xem tận mắt buồng cau trước khi mua</h2>
-  <p class="lead">Video thực tế tại vườn, không cắt ghép: cây mẹ, buồng quả dài và cây giống xuất vườn.</p>
+  <h2 class="title" data-t="video.title"></h2>
+  <p class="lead" data-t="video.lead"></p>
   <div class="player">
-    <video id="vid" src="video/vuon-cau.mp4" poster="video/poster.jpg" preload="none" playsinline controls></video>
+    <video id="vid" preload="none" playsinline controls></video>
     <button class="play" id="playBtn" type="button" aria-label="Phát video">
       <span><svg width="28" height="28" viewBox="0 0 24 24" fill="#e9792f"><path d="M8 5v14l11-7z"/></svg></span>
-      <em>Bấm để xem video (1:53)</em>
+      <em>Bấm để xem video</em>
     </button>
   </div>
-  <ul class="checks">
-    <li>Cây mẹ đầu dòng, buồng sai quả dài đều</li>
-    <li>Cây giống ươm bầu, rễ khỏe, trồng là bén</li>
-    <li>Đóng gói kỹ, giao tận nhà toàn quốc</li>
-  </ul>
+  <ul class="checks" id="checks"></ul>
 </section>
 
 <!-- STATS -->
 <div class="pad" style="background:var(--paper);padding-top:1px">
-  <div class="stats" style="margin-top:20px">
-    <div class="stat"><b>99%</b><span>Tỷ lệ sống</span></div>
-    <div class="stat"><b>30 ngày</b><span>Bảo hành đổi cây</span></div>
-    <div class="stat"><b>12.000+</b><span>Khách tin dùng</span></div>
-    <div class="stat"><b>2–4 ngày</b><span>Giao toàn quốc</span></div>
-  </div>
+  <div class="stats" id="stats" style="margin-top:20px"></div>
 </div>
 
 <!-- PRICING -->
@@ -392,36 +381,16 @@
   <div class="center">
     <span class="eyebrow">Bảng giá ưu đãi</span>
     <h2 class="title">Mua càng nhiều, càng rẻ</h2>
-    <p class="lead">Giá gốc <s>180.000đ/cây</s>, nay chỉ từ <b style="color:var(--red)">25.000đ/cây</b>.</p>
+    <p class="lead">Giá gốc <s class="js-old"></s>, nay chỉ từ <b style="color:var(--red)"><span class="js-price"></span>/cây</b>.</p>
   </div>
-  <div class="plans">
-    <div class="plan">
-      <div class="qty">4 cây</div>
-      <div class="per">Đã gồm phí ship</div>
-      <div class="amt">130K</div>
-      <a href="#dat-hang" class="btn btn-dark" data-combo="4">Chọn gói 4 cây</a>
-    </div>
-    <div class="plan hot">
-      <span class="ribbon">Bán chạy nhất</span>
-      <div class="qty">6 cây</div>
-      <div class="per">Miễn phí ship · 25.000đ/cây</div>
-      <div class="amt">150K</div>
-      <a href="#dat-hang" class="btn btn-primary" data-combo="6">Chọn gói 6 cây</a>
-    </div>
-    <div class="plan">
-      <div class="qty">10 + 1 cây</div>
-      <div class="per">Tặng 1 cây · Miễn phí ship</div>
-      <div class="amt">250K</div>
-      <a href="#dat-hang" class="btn btn-dark" data-combo="10">Chọn gói 10 + 1 cây</a>
-    </div>
-  </div>
-  <p class="bulk">Cần nhiều hơn 10 cây? <a href="#dat-hang" data-combo="custom">Tự điền số lượng</a></p>
-  <div class="addon">
+  <div class="plans" id="plans"></div>
+  <p class="bulk" id="bulkLink">Cần nhiều hơn <span class="js-bulkmax"></span> cây? <a href="#dat-hang" data-combo="custom">Tự điền số lượng</a></p>
+  <div class="addon" id="addonBox">
     <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#3f7d4e" stroke-width="2" style="flex:none"><path d="M9 3h6M10 3v6L4 19a2 2 0 0 0 1.7 3h12.6a2 2 0 0 0 1.7-3L14 9V3"/><path d="M7 15h10"/></svg>
-    <p><b>Phân kích rễ 25.000đ/gói</b><br>Giúp cây bén rễ nhanh, tăng tỷ lệ sống. Không bắt buộc.</p>
+    <p><b><span data-t="addon.name"></span> <span class="js-addon-price"></span>/gói</b><br><span data-t="addon.desc"></span></p>
   </div>
   <div class="countdown">
-    <div class="label">NHANH TAY! ƯU ĐÃI CHỈ CÒN</div>
+    <div class="label" data-t="countdown.label"></div>
     <div class="cd"><b data-cd="d">00</b><span>Ngày</span></div>
     <div class="cd"><b data-cd="h">00</b><span>Giờ</span></div>
     <div class="cd"><b data-cd="m">00</b><span>Phút</span></div>
@@ -432,42 +401,29 @@
 <!-- PRODUCT -->
 <section id="dac-diem" class="product pad">
   <span class="eyebrow">Đặc điểm giống</span>
-  <h2 class="title">Giống cây lùn, ra trái sớm, sai quả</h2>
-  <p class="lead">Cây giống tuyển từ cây mẹ đầu dòng, ươm trong bầu đất dinh dưỡng.</p>
+  <h2 class="title" data-t="product.title"></h2>
+  <p class="lead" data-t="product.lead"></p>
   <div class="photos">
-    <img src="images/cay-giong-tai-vuon.jpg" alt="Cây giống cau Thái trái dài bên cây mẹ đang ra buồng" loading="lazy">
-    <img src="images/cay-giong-bau.jpg" alt="Cây giống cau Thái trái dài trong bầu" loading="lazy">
+    <img data-src="product.photo1" alt="Cây giống cau Thái trái dài tại vườn" loading="lazy">
+    <img data-src="product.photo2" alt="Cây giống cau Thái trái dài trong bầu" loading="lazy">
   </div>
-  <div class="specs">
-    <div class="spec"><div class="num">Lùn</div><div><h4>Thân thấp, dễ thu hái</h4><p>Không cần trèo cao, chăm sóc nhẹ công.</p></div></div>
-    <div class="spec"><div class="num">9–12</div><div><h4>Tháng là ra trái</h4><p>Sớm hơn cau thường 1–2 năm, nhanh thu hồi vốn.</p></div></div>
-    <div class="spec"><div class="num">8–15kg</div><div><h4>Mỗi buồng 40–80 quả</h4><p>Quả dài, hạt to đều, mã đẹp, dễ bán.</p></div></div>
-  </div>
+  <div class="specs" id="specs"></div>
 </section>
 
 <!-- BENEFITS -->
 <section class="pad">
   <div class="center">
     <span class="eyebrow">Vì sao nên trồng</span>
-    <h2 class="title">Trồng một lần, thu hoạch nhiều năm</h2>
+    <h2 class="title" data-t="benefits.title"></h2>
   </div>
-  <div class="benefits">
-    <div class="benefit"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3f7d4e" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></div><h3>Ra trái quanh năm</h3><p>Buồng nối buồng, thu đều cả 4 mùa.</p></div>
-    <div class="benefit"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3f7d4e" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></div><h3>Ít sâu bệnh</h3><p>Sức đề kháng tốt, người mới cũng trồng được.</p></div>
-    <div class="benefit"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3f7d4e" stroke-width="2"><path d="M3 20h18M5 20c0-4 3-7 7-7s7 3 7 7"/><path d="M12 13V4M9 7l3-3 3 3"/></svg></div><h3>Hợp nhiều loại đất</h3><p>Đất đỏ, đất thịt, đất cát pha đều lên tốt.</p></div>
-    <div class="benefit"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3f7d4e" stroke-width="2"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></div><h3>Giá trị kinh tế cao</h3><p>Quả dài đẹp mã, thương lái thu mua giá tốt.</p></div>
-  </div>
+  <div class="benefits" id="benefits"></div>
 </section>
 
-<!-- REVIEWS (mẫu: thay bằng phản hồi thật của khách hàng) -->
-<section class="pad" style="padding-top:0">
+<!-- REVIEWS -->
+<section class="pad" style="padding-top:0" id="reviewSection">
   <span class="eyebrow">Khách hàng nói gì</span>
   <h2 class="title">Nhà vườn khắp nơi tin chọn</h2>
-  <div class="reviews">
-    <div class="review"><div class="stars">★★★★★</div><p>“Đặt 6 cây, nhận hàng cây xanh tốt, bầu đất chắc. Trồng hơn tháng đã ra lá mới, cây nào cũng sống.”</p><div class="who"><div class="avatar">T</div><div><b>Anh Tuấn</b><span>Krông Pắc, Đắk Lắk</span></div></div></div>
-    <div class="review"><div class="stars">★★★★★</div><p>“Được kiểm tra cây rồi mới trả tiền nên rất yên tâm. Nhà vườn tư vấn cách bón phân nhiệt tình.”</p><div class="who"><div class="avatar">H</div><div><b>Chị Hạnh</b><span>Châu Thành, Bến Tre</span></div></div></div>
-    <div class="review"><div class="stars">★★★★★</div><p>“Lấy gói 10 tặng 1, cây đều và đẹp. Sẽ đặt thêm để trồng hết vườn sau nhà.”</p><div class="who"><div class="avatar">M</div><div><b>Chú Minh</b><span>Đồng Phú, Bình Phước</span></div></div></div>
-  </div>
+  <div class="reviews" id="reviews"></div>
   <p class="swipe-hint">Vuốt để xem thêm →</p>
 </section>
 
@@ -485,27 +441,20 @@
       <div class="field"><label for="f-addr">Địa chỉ nhận hàng</label><input id="f-addr" name="address" placeholder="Thôn/xóm, xã, huyện, tỉnh (địa chỉ cũ)" autocomplete="street-address"><div class="msg">Vui lòng nhập địa chỉ</div></div>
 
       <span class="group-label">Chọn gói</span>
-      <div class="opt-group">
-        <label class="opt"><input type="radio" id="c4" name="combo" value="4" data-price="130000">4 cây<span class="r">130.000đ</span></label>
-        <label class="opt"><input type="radio" id="c6" name="combo" value="6" data-price="150000" checked>6 cây <span class="tag">FREESHIP</span><span class="r">150.000đ</span></label>
-        <label class="opt"><input type="radio" id="c10" name="combo" value="10" data-price="250000">10 + 1 cây <span class="tag">FREESHIP</span><span class="r">250.000đ</span></label>
-        <label class="opt"><input type="radio" id="cX" name="combo" value="custom">Số lượng khác <span class="r">Trên 10 cây</span></label>
-      </div>
+      <div class="opt-group" id="comboOpts"></div>
       <div class="field" id="customQty" hidden>
         <label for="f-qty">Số lượng cây bạn cần</label>
-        <input id="f-qty" name="qty" type="number" inputmode="numeric" min="11" step="1" placeholder="Ví dụ: 50">
-        <div class="msg">Vui lòng nhập số lượng từ 11 cây trở lên</div>
-        <p class="qty-note">Tạm tính 25.000đ/cây, miễn phí ship. Mua số lượng lớn, nhân viên sẽ gọi báo giá sỉ.</p>
+        <input id="f-qty" name="qty" type="number" inputmode="numeric" step="1" placeholder="Ví dụ: 50">
+        <div class="msg">Vui lòng nhập số lượng từ <span class="js-bulkmin"></span> cây trở lên</div>
+        <p class="qty-note"><span class="js-bulk-price"></span>/cây. <span data-t="bulk.note"></span></p>
       </div>
 
-      <span class="group-label">Phân kích rễ (không bắt buộc)</span>
-      <div class="addons">
-        <label class="opt"><input type="radio" id="a0" name="addon" value="0" data-price="0" checked>Không mua</label>
-        <label class="opt"><input type="radio" id="a1" name="addon" value="1" data-price="25000">1 gói<br>+25K</label>
-        <label class="opt"><input type="radio" id="a2" name="addon" value="2" data-price="50000">2 gói<br>+50K</label>
+      <div id="addonGroup">
+        <span class="group-label"><span data-t="addon.name"></span> (không bắt buộc)</span>
+        <div class="addons" id="addonOpts"></div>
       </div>
 
-      <div class="total"><span>Tổng thanh toán</span><b id="total">150.000đ</b></div>
+      <div class="total"><span>Tổng thanh toán</span><b id="total"></b></div>
       <button type="submit" class="btn btn-primary pulse">ĐẶT HÀNG NGAY</button>
       <p class="secure">Thông tin được bảo mật · Thanh toán khi nhận hàng</p>
     </div>
@@ -538,13 +487,7 @@
 <section id="faq" class="pad" style="padding-top:0">
   <span class="eyebrow">Hỏi đáp</span>
   <h2 class="title">Bạn còn băn khoăn?</h2>
-  <div class="faq">
-    <details open><summary>Cây giống cao bao nhiêu khi giao?</summary><p>Cây xuất vườn cao khoảng 40–60cm, đã có 4–6 lá, ươm trong bầu đất dinh dưỡng nên trồng xuống là bén rễ.</p></details>
-    <details><summary>Bao lâu thì cây ra trái?</summary><p>Chăm sóc cơ bản, cau Thái trái dài bắt đầu ra trái sau khoảng 9–12 tháng.</p></details>
-    <details><summary>Nếu cây chết thì sao?</summary><p>Bảo hành 30 ngày: cây chết do lỗi giống được đổi cây mới miễn phí.</p></details>
-    <details><summary>Có được kiểm tra cây trước khi trả tiền?</summary><p>Có. Bạn được mở hàng kiểm tra cây rồi mới thanh toán cho nhân viên giao hàng.</p></details>
-    <details><summary>Giao hàng mất bao lâu?</summary><p>2–4 ngày tuỳ khu vực. Cây được đóng gói chống dập, giữ ẩm khi vận chuyển.</p></details>
-  </div>
+  <div class="faq" id="faqList"></div>
 </section>
 
 <footer class="pad">
@@ -566,18 +509,75 @@
   <a href="#dat-hang" class="m-buy">Đặt mua ngay</a>
 </nav>
 
+<script src="config.js"></script>
 <script>
+  const C = window.SITE_CONFIG;
+  const fmt = n => (+n || 0).toLocaleString('vi-VN') + 'đ';
+  const fmtK = n => n % 1000 === 0 ? (n / 1000).toLocaleString('vi-VN') + 'K' : fmt(n);
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const get = path => path.split('.').reduce((o, k) => o?.[k], C);
+  const $ = id => document.getElementById(id);
+  const setAll = (sel, text) => document.querySelectorAll(sel).forEach(el => el.textContent = text);
+  const BENEFIT_ICONS = [
+    '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+    '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/>',
+    '<path d="M3 20h18M5 20c0-4 3-7 7-7s7 3 7 7"/><path d="M12 13V4M9 7l3-3 3 3"/>',
+    '<path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/>'
+  ];
+
+  // Điền nội dung từ config.js
+  document.querySelectorAll('[data-t]').forEach(el => el.textContent = get(el.dataset.t) ?? '');
+  document.querySelectorAll('[data-src]').forEach(el => el.src = get(el.dataset.src) || '');
+  setAll('.js-price', fmt(C.price.perTree));
+  setAll('.js-old', fmt(C.price.original));
+  const save = Math.round((1 - C.price.perTree / C.price.original) * 100);
+  $('saveLabel').innerHTML = save > 0 ? `TIẾT KIỆM<br>${save}%` : '';
+  $('saveLabel').hidden = !(save > 0);
+
+  $('facts').innerHTML = C.hero.facts.map(f => `<div class="fact"><b>${esc(f.big)}</b>${esc(f.small)}</div>`).join('');
+  $('checks').innerHTML = C.video.checks.map(c => `<li>${esc(c.text)}</li>`).join('');
+  $('stats').innerHTML = C.stats.map(s => `<div class="stat"><b>${esc(s.big)}</b><span>${esc(s.small)}</span></div>`).join('');
+  $('specs').innerHTML = C.product.specs.map(s => `<div class="spec"><div class="num">${esc(s.num)}</div><div><h4>${esc(s.title)}</h4><p>${esc(s.desc)}</p></div></div>`).join('');
+  $('benefits').innerHTML = C.benefits.items.map((b, i) => `<div class="benefit"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3f7d4e" stroke-width="2">${BENEFIT_ICONS[i % BENEFIT_ICONS.length]}</svg></div><h3>${esc(b.title)}</h3><p>${esc(b.desc)}</p></div>`).join('');
+  $('reviews').innerHTML = C.reviews.map(r => `<div class="review"><div class="stars">★★★★★</div><p>“${esc(r.text)}”</p><div class="who"><div class="avatar">${esc((r.name.trim().split(' ').pop() || '?')[0])}</div><div><b>${esc(r.name)}</b><span>${esc(r.place)}</span></div></div></div>`).join('');
+  $('reviewSection').hidden = !C.reviews.length;
+  $('faqList').innerHTML = C.faq.map((f, i) => `<details${i ? '' : ' open'}><summary>${esc(f.q)}</summary><p>${esc(f.a)}</p></details>`).join('');
+
+  $('plans').innerHTML = C.combos.map((c, i) => `
+    <div class="plan${c.hot ? ' hot' : ''}">${c.hot ? '<span class="ribbon">Bán chạy nhất</span>' : ''}
+      <div class="qty">${esc(c.name)}</div>
+      <div class="per">${esc(c.note)}</div>
+      <div class="amt">${fmtK(c.price)}</div>
+      <a href="#dat-hang" class="btn ${c.hot ? 'btn-primary' : 'btn-dark'}" data-combo="${i}">Chọn gói ${esc(c.name)}</a>
+    </div>`).join('');
+  const hotIdx = Math.max(0, C.combos.findIndex(c => c.hot));
+  $('comboOpts').innerHTML = C.combos.map((c, i) =>
+    `<label class="opt"><input type="radio" id="combo${i}" name="combo" value="${i}" data-price="${c.price}"${i === hotIdx ? ' checked' : ''}>${esc(c.name)}${c.tag ? ` <span class="tag">${esc(c.tag)}</span>` : ''}<span class="r">${fmt(c.price)}</span></label>`).join('')
+    + (C.bulk.enabled ? `<label class="opt"><input type="radio" id="comboX" name="combo" value="custom">Số lượng khác <span class="r">Từ ${C.bulk.min} cây</span></label>` : '');
+  $('bulkLink').hidden = !C.bulk.enabled;
+  setAll('.js-bulkmax', C.bulk.min - 1);
+  setAll('.js-bulkmin', C.bulk.min);
+  setAll('.js-bulk-price', 'Tạm tính ' + fmt(C.bulk.price));
+  $('f-qty').min = C.bulk.min;
+
+  setAll('.js-addon-price', fmt(C.addon.price));
+  $('addonBox').hidden = $('addonGroup').hidden = !C.addon.enabled;
+  $('addonOpts').innerHTML = [0, 1, 2].map(n =>
+    `<label class="opt"><input type="radio" id="addon${n}" name="addon" value="${n}" data-price="${n * C.addon.price}"${n ? '' : ' checked'}>${n ? `${n} gói<br>+${fmtK(n * C.addon.price)}` : 'Không mua'}</label>`).join('');
+
+  const vid = $('vid'), playBtn = $('playBtn');
+  vid.src = C.video.src; vid.poster = C.video.poster;
+
   // Video: chỉ tải khi khách bấm xem
-  const vid = document.getElementById('vid'), playBtn = document.getElementById('playBtn');
   playBtn.addEventListener('click', () => { playBtn.hidden = true; vid.play().catch(() => {}); });
   vid.addEventListener('play', () => { playBtn.hidden = true; });
 
-  // Đếm ngược: hạn 3 ngày cho mỗi khách, tính từ lần đầu mở trang
+  // Đếm ngược: hạn tính từ lần đầu khách mở trang
   const KEY = 'offer_deadline';
   let deadline;
   try { deadline = +localStorage.getItem(KEY); } catch (e) {}
   if (!deadline || deadline < Date.now()) {
-    deadline = Date.now() + 3 * 864e5;
+    deadline = Date.now() + (+C.countdown.days || 3) * 864e5;
     try { localStorage.setItem(KEY, deadline); } catch (e) {}
   }
   const pad = n => String(n).padStart(2, '0');
@@ -589,33 +589,32 @@
   tick(); setInterval(tick, 1000);
 
   // Tổng tiền
-  const form = document.getElementById('orderForm');
-  const fmt = n => n.toLocaleString('vi-VN') + 'đ';
-  // Giá mỗi cây khi khách tự điền số lượng (trên 10 cây, miễn ship)
-  const BULK_PRICE = 25000, BULK_MIN = 11;
-  const qtyBox = document.getElementById('customQty'), qtyInput = form.qty;
-  const isCustom = () => form.querySelector('[name=combo]:checked').value === 'custom';
+  const form = $('orderForm');
+  const qtyBox = $('customQty'), qtyInput = form.qty;
+  const comboEl = () => form.querySelector('[name=combo]:checked');
+  const isCustom = () => comboEl()?.value === 'custom';
+  const addonPrice = () => C.addon.enabled ? +form.querySelector('[name=addon]:checked').dataset.price : 0;
   function updateTotal() {
     qtyBox.hidden = !isCustom();
-    const a = +form.querySelector('[name=addon]:checked').dataset.price;
     let c;
     if (isCustom()) {
       const q = parseInt(qtyInput.value, 10);
-      if (!(q >= BULK_MIN)) { document.getElementById('total').textContent = '—'; return; }
-      c = q * BULK_PRICE;
+      if (!(q >= C.bulk.min)) { $('total').textContent = '—'; return; }
+      c = q * C.bulk.price;
     } else {
-      c = +form.querySelector('[name=combo]:checked').dataset.price;
+      c = +comboEl().dataset.price;
     }
-    document.getElementById('total').textContent = fmt(c + a);
+    $('total').textContent = fmt(c + addonPrice());
   }
+  updateTotal();
   form.addEventListener('change', updateTotal);
   qtyInput.addEventListener('input', () => { qtyInput.classList.remove('err'); updateTotal(); });
-  form.addEventListener('change', e => { if (e.target.id === 'cX') qtyInput.focus(); });
+  form.addEventListener('change', e => { if (e.target.id === 'comboX') qtyInput.focus(); });
 
   // Nút "Chọn gói" ở bảng giá chọn sẵn gói trong form
   document.querySelectorAll('[data-combo]').forEach(b => b.addEventListener('click', () => {
-    form.querySelector(`[name=combo][value="${b.dataset.combo}"]`).checked = true;
-    updateTotal();
+    const r = form.querySelector(`[name=combo][value="${b.dataset.combo}"]`);
+    if (r) { r.checked = true; updateTotal(); }
   }));
 
   form.addEventListener('submit', e => {
@@ -628,17 +627,19 @@
       if (bad && !first) first = i;
     });
     if (isCustom()) {
-      const bad = !(parseInt(qtyInput.value, 10) >= BULK_MIN);
+      const bad = !(parseInt(qtyInput.value, 10) >= C.bulk.min);
       qtyInput.classList.toggle('err', bad);
       if (bad && !first) first = qtyInput;
     }
     if (first) { first.focus(); return; }
     const data = Object.fromEntries(new FormData(form));
+    data.combo = isCustom() ? `${data.qty} cây (tự điền)` : C.combos[+data.combo].name;
+    data.total = $('total').textContent;
     // TODO: gửi đơn về backend / Google Sheet / Telegram, ví dụ:
     // fetch('https://script.google.com/macros/s/XXX/exec', { method: 'POST', body: JSON.stringify(data) });
     console.log('Đơn hàng:', data);
     form.querySelector('.form-body').hidden = true;
-    document.getElementById('success').hidden = false;
+    $('success').hidden = false;
   });
 </script>
 </body>
