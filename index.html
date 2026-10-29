@@ -11,22 +11,23 @@
 <meta property="og:image" content="images/vuon-cau-trai-dai.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Pangolin&display=swap" rel="stylesheet">
 <style>
-  /* Organic Brutalist: nền sage, chữ Anton cực lớn màu xanh rừng, khối bento bo góc lớn, ảnh nổi nghiêng, lớp hạt nhiễu như giấy.
-     Mobile-first; từ 960px chuyển sang bố cục máy tính. */
+  /* Organic Brutalist (superdesign "Nature Inspired") + chất liệu nhà vườn: thẻ treo cây giấy kraft, ghi chú viết tay.
+     Mobile-first; từ 960px chuyển sang bố cục máy tính.
+     Chữ Anton viết hoa có dấu tiếng Việt cao: mọi tiêu đề nhiều dòng giữ line-height >= 1.15. */
   :root{
-    --sage:#cbd5b1; --sage-2:#b9c79c; --cream:#f0f1dc; --paper:#f7f7ea;
-    --forest:#01472e; --forest-2:#01301f; --ink:#0d2419; --muted:#4a5d4e; --line:rgba(1,71,46,.18);
+    --sage:#cbd5b1; --sage-2:#b9c79c; --cream:#f0f1dc; --paper:#f7f7ea; --kraft:#e6d5ad; --kraft-2:#d9c494;
+    --forest:#01472e; --forest-2:#01301f; --ink:#0d2419; --muted:#4a5d4e; --line:rgba(1,71,46,.2);
     --husk:#ee8a2c; --lime:#d9ef78; --red:#c8401f;
-    --display:"Anton",Impact,"Arial Narrow",sans-serif; --body:"Be Vietnam Pro",system-ui,-apple-system,sans-serif;
-    --r-xl:2.25rem; --r-lg:1.5rem;
+    --display:"Anton",Impact,"Arial Narrow",sans-serif; --body:"Be Vietnam Pro",system-ui,-apple-system,sans-serif; --hand:"Pangolin","Comic Sans MS",cursive;
+    --r-xl:2.25rem; --r-lg:1.25rem;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   [hidden]{display:none!important}
   html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
   body{font-family:var(--body);color:var(--ink);background:var(--sage);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:clip}
-  body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:200;opacity:.09;mix-blend-mode:multiply;
+  body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:200;opacity:.08;mix-blend-mode:multiply;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
   img,video,svg{display:block;max-width:100%}
   a{color:inherit;text-decoration:none}
@@ -34,56 +35,62 @@
   :focus-visible{outline:3px solid var(--husk);outline-offset:3px}
   .pad{padding-inline:max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-area-inset-right,0px))}
   .wrap{max-width:1240px;margin-inline:auto}
-  section{padding-block:56px}
+  section{padding-block:60px}
 
-  .mega,.h2,.num-d{font-family:var(--display);font-weight:400;text-transform:uppercase;letter-spacing:-.005em}
-  .h2{font-size:clamp(40px,11vw,104px);line-height:1.06;color:var(--forest);text-wrap:balance}
-  .kicker{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--forest)}
+  .kicker{display:block;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--forest);margin-bottom:14px}
+  .h2,.h3{font-family:var(--display);font-weight:400;text-transform:uppercase;color:var(--forest);text-wrap:balance}
+  .h2{font-size:clamp(42px,11.5vw,104px);line-height:1.16}
+  .h3{font-size:clamp(32px,8vw,56px);line-height:1.18}
   .lead{font-size:16px;color:var(--muted);max-width:56ch}
+  .hand{font-family:var(--hand);font-weight:400;letter-spacing:0;text-transform:none}
 
   .pill{display:inline-flex;align-items:center;justify-content:center;gap:10px;border:0;cursor:pointer;border-radius:999px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;font-size:14px;padding:16px 22px;transition:transform .2s,background .2s}
   .pill:active{transform:scale(.97)}
   .pill-forest{background:var(--forest);color:var(--cream)}
   .pill-forest:hover{background:var(--forest-2)}
   .pill-lime{background:var(--lime);color:var(--forest)}
-  .pill-ghost{background:transparent;color:var(--forest);box-shadow:inset 0 0 0 1.5px var(--forest)}
   .pill .arr{width:30px;height:30px;border-radius:50%;background:var(--lime);color:var(--forest);display:grid;place-items:center;margin-right:-10px}
   .pill-lime .arr{background:var(--forest);color:var(--lime)}
 
   /* Header */
   .site-head{position:sticky;top:0;z-index:50;padding-top:10px}
-  .nav{display:flex;align-items:center;gap:10px;justify-content:space-between;background:rgba(240,241,220,.82);backdrop-filter:blur(14px);border-radius:999px;padding:6px 6px 6px 18px;box-shadow:0 8px 30px -18px rgba(1,48,31,.5)}
-  .brand{font-family:var(--display);font-size:22px;color:var(--forest);text-transform:uppercase;line-height:1;white-space:nowrap}
-  .brand small{font-family:var(--body);font-size:10px;font-weight:700;letter-spacing:.14em;display:block;color:var(--muted);margin-top:2px}
+  .nav{display:flex;align-items:center;gap:10px;justify-content:space-between;background:rgba(240,241,220,.86);backdrop-filter:blur(14px);border-radius:999px;padding:6px 6px 6px 18px;box-shadow:0 8px 30px -18px rgba(1,48,31,.5)}
+  .brand{font-family:var(--display);font-size:21px;color:var(--forest);text-transform:uppercase;line-height:1.2;white-space:nowrap}
+  .brand small{font-family:var(--body);font-size:10px;font-weight:700;letter-spacing:.14em;display:block;color:var(--muted);line-height:1.2}
   .nav-links{display:none}
+  .nav-right{display:flex;gap:8px}
   .call{display:inline-flex;align-items:center;gap:8px;background:var(--forest);color:var(--cream);border-radius:999px;padding:10px 14px;font-weight:700;font-size:14px;white-space:nowrap}
   .d-only{display:none}
 
   /* Hero */
-  .hero{padding-block:22px 40px;position:relative}
+  .hero{padding-block:22px 44px;position:relative}
   .hero-top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .hero-top .kicker{margin:0}
   .sale{background:var(--husk);color:#fff;font-weight:800;font-size:13px;padding:7px 12px;border-radius:999px;white-space:nowrap}
-  .float-img{border-radius:var(--r-xl);overflow:hidden;box-shadow:0 30px 50px -28px rgba(1,48,31,.7);background:var(--sage-2)}
-  .float-img img{width:100%;height:100%;object-fit:cover}
-  .fa{width:52%;aspect-ratio:1/1;margin:18px 0 6px auto;transform:rotate(5deg);position:relative;z-index:2;animation:float 7s ease-in-out infinite}
+  .float-img{position:relative;border-radius:var(--r-xl);box-shadow:0 30px 50px -28px rgba(1,48,31,.7)}
+  .float-img img{width:100%;height:100%;object-fit:cover;border-radius:inherit}
+  .note{position:absolute;font-family:var(--hand);font-size:17px;line-height:1.2;color:var(--forest);white-space:nowrap}
+  .fa{width:54%;aspect-ratio:1/1;margin:22px 0 10px auto;rotate:5deg;animation:float 7s ease-in-out infinite}
   .fa img{object-position:center 62%}
-  .mega{display:block;color:var(--forest);font-size:clamp(76px,25.5vw,260px);line-height:1;position:relative;z-index:1}
+  .fa .note{right:calc(100% + 8px);bottom:16px;rotate:-5deg;text-align:right}
+  .mega{display:block;font-family:var(--display);font-weight:400;text-transform:uppercase;color:var(--forest);font-size:clamp(72px,24vw,250px);line-height:1.1}
   .mega span{display:block}
-  .hero-row{display:grid;grid-template-columns:1fr 40%;gap:14px;align-items:start;margin-top:14px}
+  .hero-row{display:grid;grid-template-columns:1fr 40%;gap:14px;align-items:start;margin-top:10px}
   .hero-end{font-weight:700;font-size:18px;line-height:1.3;color:var(--forest)}
-  .fb{aspect-ratio:3/4;margin-top:-8px;transform:rotate(-6deg);border-radius:1.75rem;animation:float 8s ease-in-out -3s infinite}
-  .hero .sub{margin-top:14px;color:var(--muted);font-size:15.5px}
+  .fb{aspect-ratio:3/4;rotate:-6deg;border-radius:1.75rem;animation:float 8s ease-in-out -3s infinite}
+  .fb .note{left:-6px;bottom:-30px;rotate:-4deg}
+  .hero .sub{margin-top:26px;color:var(--muted);font-size:15.5px}
   .buy{margin-top:22px;background:var(--cream);border-radius:var(--r-xl);padding:18px;display:grid;gap:14px}
   .buy-price{display:flex;align-items:flex-end;justify-content:space-between;gap:10px}
-  .buy-price .now{font-family:var(--display);font-size:56px;line-height:.9;color:var(--forest)}
+  .buy-price .now{font-family:var(--display);font-size:56px;line-height:1;color:var(--forest)}
   .buy-price .now small{font-family:var(--body);font-size:14px;font-weight:600;color:var(--muted);margin-left:4px}
-  .buy-price .old{font-size:14px;color:var(--muted);text-decoration:line-through;margin-top:6px}
-  .save{font-family:var(--display);font-size:20px;line-height:1;background:var(--lime);color:var(--forest);padding:10px 12px;border-radius:16px;text-align:center;transform:rotate(-4deg)}
+  .buy-price .old{font-size:14px;color:var(--muted);text-decoration:line-through;margin-top:4px}
+  .save{font-family:var(--display);font-size:22px;line-height:1.1;background:var(--lime);color:var(--forest);padding:10px 12px;border-radius:16px;rotate:-4deg}
   .buy .pill{width:100%;padding:18px 22px;font-size:15px}
-  .facts{display:grid;grid-template-columns:repeat(3,1fr);margin-top:22px;border-top:1.5px solid var(--line)}
+  .facts{display:grid;grid-template-columns:repeat(3,1fr);margin-top:24px;border-top:1.5px solid var(--line)}
   .fact{padding:14px 8px 0;border-left:1.5px solid var(--line);font-size:12.5px;color:var(--muted);line-height:1.35}
   .fact:first-child{border-left:0;padding-left:0}
-  .fact b{display:block;font-family:var(--display);font-weight:400;font-size:24px;color:var(--forest);line-height:1.05;text-transform:uppercase}
+  .fact b{display:block;font-family:var(--display);font-weight:400;font-size:24px;color:var(--forest);line-height:1.2;text-transform:uppercase}
   @keyframes float{0%,100%{translate:0 0}50%{translate:0 -12px}}
 
   /* Khối bo góc trên */
@@ -95,91 +102,100 @@
   /* Video */
   .video .h2{color:var(--cream)}
   .video .kicker{color:var(--lime)}
-  .video .lead{color:rgba(240,241,220,.75);margin-top:12px}
-  .player{position:relative;margin-top:24px;border-radius:var(--r-xl);overflow:hidden;aspect-ratio:9/16;max-height:80vh;margin-inline:auto;background:#000}
+  .video .lead{color:rgba(240,241,220,.75);margin-top:14px}
+  .player{position:relative;margin-top:26px;border-radius:var(--r-xl);overflow:hidden;aspect-ratio:9/16;max-height:80vh;margin-inline:auto;background:#000}
   .player video{width:100%;height:100%;object-fit:cover}
   .play{position:absolute;inset:0;border:0;background:linear-gradient(180deg,transparent 45%,rgba(1,48,31,.75));cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:12px;padding-bottom:24px;color:var(--cream)}
   .play .dot{width:84px;height:84px;border-radius:50%;background:var(--lime);display:grid;place-items:center;color:var(--forest)}
-  .play em{font-style:normal;font-weight:800;letter-spacing:.12em;text-transform:uppercase;font-size:13px}
-  .checks{list-style:none;display:grid;gap:10px;margin-top:22px}
-  .checks li{display:flex;gap:12px;align-items:center;font-weight:600;background:rgba(240,241,220,.08);border-radius:18px;padding:14px 16px}
-  .checks li::before{content:"";flex:none;width:10px;height:10px;border-radius:50%;background:var(--lime)}
+  .play em{font-style:normal;font-family:var(--hand);font-size:19px}
+  .checks{list-style:none;margin-top:22px;border-top:1.5px solid rgba(240,241,220,.18)}
+  .checks li{display:flex;gap:14px;align-items:baseline;font-weight:600;padding:14px 0;border-bottom:1.5px solid rgba(240,241,220,.18)}
+  .checks li::before{content:"✓";color:var(--lime);font-weight:800}
 
-  /* Bento số liệu */
-  .stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-  .stat{background:var(--sage);border-radius:var(--r-lg);padding:18px 16px;min-height:120px;display:flex;flex-direction:column;justify-content:space-between}
-  .stat:nth-child(1){background:var(--forest);color:var(--cream)}
-  .stat:nth-child(1) b{color:var(--lime)}
-  .stat:nth-child(4){background:var(--lime)}
-  .stat b{font-family:var(--display);font-weight:400;font-size:44px;line-height:1;color:var(--forest)}
-  .stat span{font-size:13.5px;font-weight:600}
+  /* Dải số liệu */
+  .stats{display:grid;grid-template-columns:1fr 1fr;border-top:2px solid var(--forest);border-bottom:2px solid var(--forest)}
+  .stat{padding:18px 4px 16px;border-bottom:1.5px solid var(--line)}
+  .stat:nth-child(odd){border-right:1.5px solid var(--line);padding-right:12px}
+  .stat:nth-child(even){padding-left:14px}
+  .stat:nth-last-child(-n+2){border-bottom:0}
+  .stat b{display:block;font-family:var(--display);font-weight:400;font-size:42px;line-height:1.15;color:var(--forest)}
+  .stat span{font-size:13.5px;font-weight:600;color:var(--muted)}
 
-  /* Bảng giá */
-  .price-head{display:grid;gap:12px}
+  /* Bảng giá: thẻ treo cây giấy kraft */
+  .price-head{display:grid;gap:14px;margin-top:64px}
   .price-head .lead b{color:var(--forest)}
-  .plans{display:grid;gap:12px;margin-top:26px}
-  .plan{position:relative;background:var(--sage);border-radius:var(--r-xl);padding:22px;display:grid;grid-template-columns:1fr auto;gap:2px 14px;align-items:end}
-  .plan .qty{font-family:var(--display);font-size:36px;line-height:1;color:var(--forest);text-transform:uppercase}
-  .plan .per{grid-column:1;font-size:13.5px;color:var(--muted);font-weight:600}
-  .plan .amt{grid-column:2;grid-row:1/3;font-family:var(--display);font-size:52px;line-height:.9;color:var(--forest)}
-  .plan .pill{grid-column:1/-1;margin-top:14px;width:100%}
-  .plan.hot{background:var(--forest);color:var(--cream);padding-top:30px}
+  .plans{display:grid;gap:22px;margin-top:34px}
+  .plan{position:relative;background:var(--kraft);color:var(--ink);padding:40px 22px 22px;
+    clip-path:polygon(28px 0,calc(100% - 28px) 0,100% 28px,100% 100%,0 100%,0 28px);border-radius:0 0 14px 14px;
+    background-image:repeating-linear-gradient(0deg,transparent 0 23px,rgba(120,90,40,.07) 23px 24px)}
+  .plan:nth-child(odd){rotate:-1.2deg}
+  .plan:nth-child(even){rotate:1deg}
+  .plan::before{content:"";position:absolute;top:14px;left:50%;width:16px;height:16px;margin-left:-8px;border-radius:50%;background:var(--cream);box-shadow:inset 0 0 0 3px var(--kraft-2)}
+  .plan-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;border-bottom:1.5px dashed rgba(1,71,46,.35);padding-bottom:12px}
+  .plan .qty{font-family:var(--display);font-size:34px;line-height:1.2;color:var(--forest);text-transform:uppercase}
+  .plan .amt{font-family:var(--display);font-size:50px;line-height:1.1;color:var(--forest)}
+  .plan .per{font-family:var(--hand);font-size:18px;color:var(--forest);margin:12px 0 16px}
+  .plan .pill{width:100%}
+  .plan.hot{background:var(--forest);background-image:none;color:var(--cream)}
+  .plan.hot::before{box-shadow:inset 0 0 0 3px var(--lime)}
   .plan.hot .qty,.plan.hot .amt{color:var(--lime)}
-  .plan.hot .per{color:rgba(240,241,220,.75)}
-  .ribbon{position:absolute;top:-12px;left:22px;background:var(--husk);color:#fff;font-weight:800;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;padding:6px 12px;border-radius:999px}
-  .bulk{margin-top:14px;font-weight:600;color:var(--muted)}
+  .plan.hot .per{color:var(--cream)}
+  .plan.hot .plan-top{border-color:rgba(240,241,220,.35)}
+  .plan.hot{padding-top:58px}
+  .stamp{position:absolute;top:16px;right:22px;rotate:6deg;border:2px solid var(--husk);color:var(--husk);font-weight:800;font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:4px 8px;border-radius:6px}
+  .plan.hot .plan-top{padding-right:0}
+  .bulk{margin-top:18px;font-weight:600;color:var(--muted)}
   .bulk a{color:var(--forest);font-weight:800;border-bottom:2px solid var(--husk)}
-  .addon{margin-top:12px;display:flex;gap:14px;align-items:center;background:var(--paper);border:1.5px dashed var(--forest);border-radius:var(--r-lg);padding:16px;font-size:14px;color:var(--muted)}
+  .row-2{display:grid;gap:12px;margin-top:22px}
+  .addon{display:flex;gap:14px;align-items:center;border:1.5px dashed var(--forest);border-radius:var(--r-lg);padding:16px;font-size:14px;color:var(--muted)}
   .addon b{color:var(--forest)}
   .addon .ic{flex:none;width:44px;height:44px;border-radius:50%;background:var(--lime);display:grid;place-items:center}
-  .countdown{margin-top:22px;background:var(--forest);border-radius:var(--r-xl);padding:18px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center;color:var(--cream)}
+  .countdown{background:var(--forest);border-radius:var(--r-lg);padding:18px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center;color:var(--cream)}
   .countdown .label{grid-column:1/-1;font-weight:800;letter-spacing:.14em;font-size:12.5px;color:var(--lime)}
-  .cd b{display:block;font-family:var(--display);font-weight:400;font-size:44px;line-height:1;font-variant-numeric:tabular-nums}
+  .cd b{display:block;font-family:var(--display);font-weight:400;font-size:44px;line-height:1.1;font-variant-numeric:tabular-nums}
   .cd span{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(240,241,220,.7)}
 
-  /* Đặc điểm: bento ảnh + thông số */
-  .bento{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:26px}
-  .bento .ph{border-radius:var(--r-xl);overflow:hidden;background:var(--sage-2)}
-  .bento .ph img{width:100%;height:100%;object-fit:cover}
+  /* Đặc điểm: ảnh + thông số */
+  .product .lead{margin-top:14px}
+  .bento{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:28px}
+  .bento .ph{position:relative;border-radius:var(--r-xl);background:var(--sage-2)}
+  .bento .ph img{width:100%;height:100%;object-fit:cover;border-radius:inherit}
   .bento .ph-a{grid-column:1/-1;aspect-ratio:4/3.4}
   .bento .ph-b{aspect-ratio:3/4}
-  .spec{border-radius:var(--r-lg);padding:16px;background:var(--sage);display:flex;flex-direction:column;justify-content:space-between;gap:10px}
-  .spec .num{font-family:var(--display);font-size:38px;line-height:1;color:var(--forest);text-transform:uppercase}
+  .ph .note{left:18px;bottom:16px;color:var(--cream);font-size:19px;text-shadow:0 1px 8px rgba(0,0,0,.45);white-space:normal;max-width:70%}
+  .specs{display:contents}
+  .spec{border-radius:var(--r-lg);padding:16px;background:var(--cream);display:flex;flex-direction:column;justify-content:space-between;gap:10px}
+  .spec .num{font-family:var(--display);font-size:38px;line-height:1.15;color:var(--forest);text-transform:uppercase}
   .spec h4{font-size:14.5px;color:var(--forest);line-height:1.3}
   .spec p{font-size:13px;color:var(--muted);line-height:1.4}
-  .specs{display:contents}
-  .specs .spec:first-child{background:var(--lime)}
   .specs .spec:nth-child(n+2){grid-column:1/-1;flex-direction:row;align-items:center;gap:18px}
   .specs .spec:nth-child(n+2) .num{min-width:110px}
-  .specs .spec:last-child{background:var(--forest);color:var(--cream)}
-  .specs .spec:last-child .num{color:var(--lime)}
-  .specs .spec:last-child h4{color:var(--cream)}
-  .specs .spec:last-child p{color:rgba(240,241,220,.75)}
+  .specs .spec:first-child{background:var(--lime)}
 
-  /* Lợi ích */
-  .benefits{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:26px}
-  .benefit{background:var(--paper);border-radius:var(--r-lg);padding:18px 16px;border:1.5px solid var(--line)}
-  .benefit .ic{width:46px;height:46px;border-radius:50%;background:var(--forest);display:grid;place-items:center;margin-bottom:28px}
-  .benefit h3{font-size:16px;color:var(--forest);line-height:1.25;margin-bottom:4px}
-  .benefit p{font-size:13px;color:var(--muted);line-height:1.45}
+  /* Lợi ích: kiểu trang báo, không hộp */
+  .benefits{display:grid;margin-top:26px;border-top:2px solid var(--forest)}
+  .benefit{display:grid;grid-template-columns:44px 1fr;gap:4px 14px;padding:18px 0;border-bottom:1.5px solid var(--line)}
+  .benefit .no{grid-row:1/3;font-family:var(--hand);font-size:22px;color:var(--husk);line-height:1.3}
+  .benefit h3{font-family:var(--display);font-weight:400;font-size:26px;line-height:1.2;text-transform:uppercase;color:var(--forest)}
+  .benefit p{font-size:14.5px;color:var(--muted)}
 
   /* Đánh giá */
-  .reviews{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin-top:24px;padding-bottom:6px;scrollbar-width:none}
+  .reviews{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin-top:24px;padding:4px 2px 8px;scrollbar-width:none}
   .reviews::-webkit-scrollbar{display:none}
-  .review{flex:0 0 86%;scroll-snap-align:start;background:var(--sage);border-radius:var(--r-xl);padding:22px;display:flex;flex-direction:column;gap:18px}
-  .review .q{font-family:var(--display);font-size:56px;line-height:.6;color:var(--forest);height:24px}
-  .review p{font-size:15.5px;font-weight:500;color:var(--ink);flex:1}
-  .who{display:flex;align-items:center;gap:10px;border-top:1.5px solid var(--line);padding-top:14px}
-  .avatar{width:40px;height:40px;border-radius:50%;background:var(--forest);color:var(--lime);display:grid;place-items:center;font-family:var(--display);font-size:18px}
+  .review{flex:0 0 86%;scroll-snap-align:start;background:var(--cream);border-radius:var(--r-lg);padding:22px;display:flex;flex-direction:column;gap:14px;border:1.5px solid var(--line)}
+  .review .stars{color:var(--husk);letter-spacing:3px}
+  .review p{font-family:var(--hand);font-size:19px;line-height:1.4;color:var(--ink);flex:1}
+  .who{display:flex;align-items:center;gap:10px;border-top:1.5px dashed var(--line);padding-top:14px}
+  .avatar{width:40px;height:40px;border-radius:50%;background:var(--forest);color:var(--lime);display:grid;place-items:center;font-weight:800}
   .who b{display:block;font-size:14px;color:var(--forest)}
   .who span{font-size:12.5px;color:var(--muted)}
-  .swipe-hint{font-size:12.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:8px}
+  .swipe-hint{font-family:var(--hand);font-size:17px;color:var(--muted);margin-top:6px}
 
   /* Đặt hàng */
   .order .h2{color:var(--cream)}
   .order .kicker{color:var(--lime)}
-  .order .lead{color:rgba(240,241,220,.75);margin-top:12px}
-  form.card{background:var(--cream);color:var(--ink);border-radius:var(--r-xl);padding:22px 16px;margin-top:24px}
+  .order .lead{color:rgba(240,241,220,.75);margin-top:14px}
+  form.card{background:var(--cream);color:var(--ink);border-radius:var(--r-xl);padding:22px 16px;margin-top:26px}
   .field{margin-bottom:12px}
   .field label,.group-label{display:block;font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px;color:var(--forest)}
   .field input{width:100%;font:500 16px var(--body);padding:15px 18px;border-radius:999px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink)}
@@ -200,41 +216,40 @@
   .addons .opt input{position:absolute;opacity:0;pointer-events:none}
   .total{display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-top:1.5px dashed var(--line)}
   .total span{font-weight:700;color:var(--muted)}
-  .total b{font-family:var(--display);font-weight:400;font-size:40px;line-height:1;color:var(--forest)}
+  .total b{font-family:var(--display);font-weight:400;font-size:40px;line-height:1.1;color:var(--forest)}
   form .pill{width:100%;padding:19px;font-size:15px}
   .secure{text-align:center;font-size:12.5px;color:var(--muted);margin-top:10px}
   .success{text-align:center;padding:24px 6px}
-  .success .ok{width:72px;height:72px;border-radius:50%;background:var(--lime);color:var(--forest);display:grid;place-items:center;margin:0 auto 14px;font-family:var(--display);font-size:34px}
-  .success h3{font-family:var(--display);font-weight:400;font-size:36px;text-transform:uppercase;color:var(--forest);margin-bottom:6px}
-  .guarantees{display:grid;gap:8px;margin-top:14px}
-  .g{display:flex;gap:12px;align-items:center;border-radius:20px;padding:14px 16px;background:rgba(240,241,220,.08);font-size:13.5px;color:rgba(240,241,220,.75)}
-  .g b{display:block;color:var(--cream);font-size:15px}
-  .g .ic{flex:none;width:38px;height:38px;border-radius:50%;background:var(--lime);color:var(--forest);display:grid;place-items:center}
+  .success .ok{width:72px;height:72px;border-radius:50%;background:var(--lime);color:var(--forest);display:grid;place-items:center;margin:0 auto 14px;font-size:30px;font-weight:800}
+  .success h3{font-family:var(--display);font-weight:400;font-size:34px;line-height:1.2;text-transform:uppercase;color:var(--forest);margin-bottom:6px}
+  .guarantees{list-style:none;margin-top:22px;border-top:1.5px solid rgba(240,241,220,.18)}
+  .guarantees li{padding:14px 0;border-bottom:1.5px solid rgba(240,241,220,.18);font-size:14px;color:rgba(240,241,220,.75)}
+  .guarantees b{display:block;color:var(--cream);font-size:15.5px}
 
-  /* Quy trình */
-  .steps{list-style:none;display:grid;gap:10px;margin-top:24px;counter-reset:s}
-  .steps li{display:flex;gap:14px;align-items:center;background:var(--sage);border-radius:var(--r-lg);padding:16px}
-  .steps li::before{counter-increment:s;content:counter(s);flex:none;font-family:var(--display);font-size:40px;line-height:1;color:var(--forest);width:36px}
-  .steps b{display:block;color:var(--forest);font-size:15.5px}
-  .steps span{font-size:13.5px;color:var(--muted)}
+  /* Quy trình: đường đi có thứ tự */
+  .steps{list-style:none;position:relative;margin-top:26px;counter-reset:s;display:grid;gap:22px}
+  .steps::before{content:"";position:absolute;left:21px;top:10px;bottom:10px;border-left:2px dashed var(--forest);opacity:.4}
+  .steps li{position:relative;display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:center}
+  .steps li::before{counter-increment:s;content:counter(s);width:44px;height:44px;border-radius:50%;background:var(--forest);color:var(--lime);font-family:var(--display);font-size:22px;display:grid;place-items:center;position:relative}
+  .steps b{display:block;color:var(--forest);font-size:16px}
+  .steps span{font-size:14px;color:var(--muted)}
 
   /* Hỏi đáp */
-  .faq{display:grid;gap:8px;margin-top:24px}
-  details{background:var(--paper);border-radius:var(--r-lg);padding:0 20px;border:1.5px solid var(--line)}
-  details[open]{background:var(--lime);border-color:transparent}
-  summary{list-style:none;cursor:pointer;padding:18px 0;font-weight:700;color:var(--forest);display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .faq{display:grid;margin-top:24px;border-top:2px solid var(--forest)}
+  details{border-bottom:1.5px solid var(--line)}
+  summary{list-style:none;cursor:pointer;padding:18px 0;font-weight:700;color:var(--forest);display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:16px}
   summary::-webkit-details-marker{display:none}
-  summary::after{content:"+";flex:none;width:30px;height:30px;border-radius:50%;background:var(--forest);color:var(--cream);display:grid;place-items:center;font-size:20px;line-height:1;transition:transform .2s}
-  details[open] summary::after{transform:rotate(45deg)}
-  details p{padding-bottom:18px;color:var(--ink);font-size:15px}
+  summary::after{content:"+";flex:none;width:30px;height:30px;border-radius:50%;border:1.5px solid var(--forest);color:var(--forest);display:grid;place-items:center;font-size:20px;line-height:1;transition:transform .2s,background .2s}
+  details[open] summary::after{transform:rotate(45deg);background:var(--forest);color:var(--cream)}
+  details p{padding-bottom:18px;color:var(--muted);font-size:15px;max-width:62ch}
 
   /* Footer */
   footer{background:var(--forest-2);color:rgba(240,241,220,.75);padding-top:44px;padding-bottom:110px;overflow:hidden}
   .foot{display:grid;gap:20px;font-size:14px}
   .foot b{color:var(--cream)}
   .foot ul{list-style:none;display:grid;gap:6px}
-  .wordmark{font-family:var(--display);text-transform:uppercase;color:var(--sage);font-size:clamp(64px,19vw,300px);line-height:.85;margin-top:36px;white-space:nowrap;opacity:.9}
-  .copy{font-size:12.5px;margin-top:16px;color:rgba(240,241,220,.5)}
+  .wordmark{font-family:var(--display);text-transform:uppercase;color:var(--sage);font-size:clamp(60px,18vw,280px);line-height:1.15;margin-top:30px;white-space:nowrap}
+  .copy{font-size:12.5px;margin-top:10px;color:rgba(240,241,220,.5)}
 
   /* Thanh nổi dưới màn hình (điện thoại) */
   .mbar{position:fixed;left:max(10px,env(safe-area-inset-left,0px));right:max(10px,env(safe-area-inset-right,0px));bottom:calc(10px + env(safe-area-inset-bottom,0px));z-index:60;display:flex;gap:6px;background:var(--forest);border-radius:999px;padding:6px;box-shadow:0 18px 40px -14px rgba(1,30,20,.7)}
@@ -246,98 +261,90 @@
   /* Máy tính bảng */
   @media (min-width:640px){
     .stats{grid-template-columns:repeat(4,1fr)}
-    .benefits{grid-template-columns:repeat(4,1fr)}
+    .stat,.stat:nth-child(odd),.stat:nth-child(even){border-bottom:0;border-right:1.5px solid var(--line);padding:22px 18px}
+    .stat:last-child{border-right:0}
     .player{max-width:440px}
     .review{flex-basis:46%}
     .fa{width:46%}
+    .benefits{grid-template-columns:1fr 1fr;column-gap:40px}
   }
 
   /* Máy tính */
   @media (min-width:960px){
-    section{padding-block:96px}
+    section{padding-block:100px}
     .pad{padding-inline:max(40px,calc((100% - 1240px)/2))}
     .site-head{padding-top:16px}
     .nav{padding:8px 8px 8px 26px}
-    .brand{font-size:26px}
+    .brand{font-size:25px}
     .nav-links{display:flex;gap:4px;background:rgba(1,71,46,.07);border-radius:999px;padding:4px}
     .nav-links a{padding:9px 16px;border-radius:999px;font-weight:700;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--forest)}
     .nav-links a:hover{background:var(--forest);color:var(--cream)}
     .d-only{display:inline-flex}
-    .nav-right{display:flex;gap:8px}
     .mbar{display:none}
     footer{padding-bottom:0}
 
-    .hero{padding-block:30px 80px}
-    .fa{position:absolute;left:max(40px,calc((100% - 1240px)/2));top:130px;width:250px;margin:0;transform:rotate(-7deg)}
-    .mega{font-size:clamp(150px,15.5vw,250px);text-align:right;margin-top:40px}
+    .hero{padding-block:30px 90px}
+    .fa{position:absolute;left:max(40px,calc((100% - 1240px)/2));top:126px;width:250px;margin:0;rotate:-7deg}
+    .fa .note{left:calc(100% + 22px);right:auto;bottom:auto;top:-6px;text-align:left;rotate:4deg;font-size:20px}
+    .mega{font-size:clamp(140px,14.5vw,232px);text-align:right;margin-top:34px}
     .mega span:last-child{text-align:left;padding-left:6%}
-    .hero-row{position:absolute;right:max(60px,calc((100% - 1200px)/2));top:calc(70px + clamp(150px,15.5vw,250px));margin:0;display:block;width:200px}
+    .hero-row{position:absolute;right:max(60px,calc((100% - 1200px)/2));top:calc(80px + clamp(140px,14.5vw,232px) * 1.1);margin:0;display:block;width:190px}
     .hero-row .hero-end{display:none}
-    .fb{margin:0;width:200px;transform:rotate(7deg)}
-    .hero-bottom{display:grid;grid-template-columns:1fr 1fr 440px;gap:32px;align-items:end;margin-top:36px}
-    .hero-bottom .hero-end-d{display:block;font-family:var(--display);font-size:40px;line-height:1;text-transform:uppercase;color:var(--forest)}
+    .fb{margin:0;width:190px;rotate:7deg}
+    .fb .note{font-size:20px;left:auto;right:-6px;bottom:-34px;rotate:3deg}
+    .hero-bottom{display:grid;grid-template-columns:1fr 1fr 440px;gap:32px;align-items:end;margin-top:40px}
+    .hero-bottom .hero-end-d{display:block;font-family:var(--display);font-size:38px;line-height:1.2;text-transform:uppercase;color:var(--forest)}
     .hero .sub{margin:0;font-size:17px}
     .buy{margin:0;padding:22px}
-    .facts{grid-column:1/-1;margin-top:40px}
+    .facts{grid-column:1/-1;margin-top:44px}
     .fact{font-size:14px;padding:18px 18px 0}
     .fact b{font-size:38px}
 
     .slab{border-radius:5rem 5rem 0 0}
-    .video{display:grid;grid-template-columns:1fr 400px;gap:72px;align-items:center}
+    .video{display:grid;grid-template-columns:1fr 400px;gap:80px;align-items:center}
     .video .player{margin:0;max-height:none;width:100%}
-    .video .text{grid-column:1;grid-row:1}
-    .stats{gap:16px}
-    .stat{min-height:180px;padding:26px;border-radius:var(--r-xl)}
-    .stat b{font-size:72px}
+    .stat b{font-size:64px}
 
-    .price-head{grid-template-columns:1.2fr 1fr;align-items:end;gap:40px}
-    .plans{grid-template-columns:repeat(3,1fr);gap:16px;margin-top:44px}
-    .plan{grid-template-columns:1fr;align-content:start;padding:30px;min-height:330px;gap:6px}
-    .plan .amt{grid-column:1;grid-row:auto;font-size:96px;margin:18px 0 8px;order:2}
-    .plan .per{order:3}
-    .plan .pill{order:4;margin-top:auto}
-    .plan.hot{padding-top:30px}
-    .row-2{display:grid;grid-template-columns:1fr 1.3fr;gap:16px;margin-top:16px}
-    .row-2 .addon,.row-2 .countdown,.row-2 .bulk-box{margin:0}
-    .cd b{font-size:64px}
+    .price-head{grid-template-columns:1.2fr 1fr;align-items:end;gap:40px;margin-top:96px}
+    .plans{grid-template-columns:repeat(3,1fr);gap:28px;margin-top:52px;align-items:start}
+    .plan{padding:46px 28px 28px}
+    .plan .amt{font-size:72px}
+    .plan .qty{font-size:40px}
+    .plan-top{flex-direction:column;align-items:flex-start;gap:6px}
+    .plan.hot{margin-top:-14px}
+    .row-2{grid-template-columns:1fr 1.3fr;gap:16px;margin-top:28px}
+    .cd b{font-size:60px}
 
     .product .top{display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:end}
-    .bento{grid-template-columns:1.4fr 1fr 1fr;grid-template-rows:auto auto;gap:16px;margin-top:44px}
+    .bento{grid-template-columns:1.4fr 1fr 1fr;gap:16px;margin-top:48px}
     .bento .ph-a{grid-column:1;grid-row:1/3;aspect-ratio:auto;min-height:560px}
     .bento .ph-b{grid-column:2;grid-row:1/3;aspect-ratio:auto}
-    .specs .spec:last-child{grid-column:auto}
     .spec{padding:24px;border-radius:var(--r-xl)}
-    .spec .num{font-size:56px}
-    .bento{grid-template-areas:none}
+    .spec .num{font-size:52px}
     .specs .spec:nth-child(1){grid-column:3;grid-row:1}
     .specs .spec:nth-child(2){grid-column:3;grid-row:2;flex-direction:column;align-items:stretch}
-    .specs .spec:nth-child(3){grid-column:1/-1;grid-row:3;flex-direction:row;align-items:center;gap:28px}
+    .specs .spec:nth-child(3){grid-column:1/-1;grid-row:3}
 
-    .benefits{gap:16px;margin-top:44px}
-    .benefit{padding:26px;border-radius:var(--r-xl);min-height:240px;display:flex;flex-direction:column}
-    .benefit .ic{margin-bottom:auto}
-    .benefit h3{font-size:20px;margin-top:40px}
-    .benefit p{font-size:14.5px}
+    .two-col{display:grid;grid-template-columns:1fr 1.5fr;gap:80px;align-items:start}
+    .two-col .benefits,.two-col .faq{margin-top:0}
+    .benefit{padding:24px 0}
+    .benefit h3{font-size:30px}
 
-    .reviews{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;overflow:visible;margin-top:44px}
-    .review{padding:30px}
+    .reviews{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;overflow:visible;margin-top:44px}
+    .review{padding:28px}
     .swipe-hint{display:none}
 
-    .order{display:grid;grid-template-columns:1fr 520px;gap:72px;align-items:start}
+    .order{display:grid;grid-template-columns:1fr 520px;gap:80px;align-items:start}
     .order .text{position:sticky;top:110px}
     .order form.card{margin:0;padding:34px}
 
-    .steps{grid-template-columns:repeat(4,1fr);gap:16px;margin-top:44px}
-    .steps li{flex-direction:column;align-items:flex-start;padding:26px;border-radius:var(--r-xl);min-height:200px}
-    .steps li::before{font-size:72px;width:auto;margin-bottom:auto}
-
-    .faq-wrap{display:grid;grid-template-columns:1fr 1.4fr;gap:72px;align-items:start}
-    .faq{margin-top:0}
+    .steps{grid-template-columns:repeat(4,1fr);gap:24px;margin-top:44px}
+    .steps::before{left:22px;right:22px;top:21px;bottom:auto;border-left:0;border-top:2px dashed var(--forest)}
+    .steps li{grid-template-columns:1fr;align-items:start}
 
     .foot{grid-template-columns:1.5fr 1fr 1fr;font-size:15px}
-    .wordmark{font-size:clamp(120px,16.5vw,270px);margin-top:60px}
+    .wordmark{font-size:clamp(120px,16vw,260px);margin-top:50px}
   }
-  @media (min-width:960px) and (max-width:1180px){ .hero-bottom{grid-template-columns:1fr 400px} .hero-bottom .hero-end-d{grid-column:1/-1} }
   .hero-end-d{display:none}
 
   @media (prefers-reduced-motion:reduce){.fa,.fb{animation:none}html{scroll-behavior:auto}}
@@ -367,14 +374,14 @@
 <section class="hero pad">
   <div class="wrap">
     <div class="hero-top">
-      <span class="kicker"><span data-t="topbar.text"></span></span>
+      <span class="kicker" data-t="topbar.text"></span>
       <span class="sale" data-t="hero.tag"></span>
     </div>
-    <figure class="float-img fa"><img data-src="hero.image" alt="Vườn cau Thái trái dài đang trĩu buồng" fetchpriority="high"></figure>
+    <figure class="float-img fa"><img data-src="hero.image" alt="Vườn cau Thái trái dài đang trĩu buồng" fetchpriority="high"><span class="note">buồng dài, sai trĩu ↘</span></figure>
     <h1 class="mega"><span data-t="hero.titleStart"></span><span data-t="hero.titleHighlight"></span></h1>
     <div class="hero-row">
       <p class="hero-end" data-t="hero.titleEnd"></p>
-      <figure class="float-img fb"><img data-src="product.photo2" alt="Cây giống cau trong bầu"></figure>
+      <figure class="float-img fb"><img data-src="product.photo2" alt="Cây giống cau trong bầu"><span class="note">cây giống ươm bầu ↑</span></figure>
     </div>
     <div class="hero-bottom">
       <p class="hero-end-d" data-t="hero.titleEnd"></p>
@@ -407,23 +414,23 @@
       <video id="vid" preload="none" playsinline controls></video>
       <button class="play" id="playBtn" type="button" aria-label="Phát video">
         <span class="dot"><svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
-        <em>Bấm để xem video</em>
+        <em>Bấm xem video tại vườn</em>
       </button>
     </div>
   </div>
 </section>
 
-<!-- STATS + BẢNG GIÁ -->
+<!-- SỐ LIỆU + BẢNG GIÁ -->
 <section id="bang-gia" class="slab slab-cream pad">
   <div class="wrap">
     <div class="stats" id="stats"></div>
 
-    <div class="price-head" style="margin-top:64px">
+    <div class="price-head">
       <div>
         <span class="kicker">Bảng giá ưu đãi</span>
-        <h2 class="h2">Mua càng nhiều<br>càng rẻ</h2>
+        <h2 class="h2">Mua càng nhiều, càng rẻ</h2>
       </div>
-      <p class="lead">Giá gốc <s class="js-old"></s>, nay chỉ từ <b><span class="js-price"></span>/cây</b>. Tất cả gói đều được kiểm tra cây trước khi trả tiền.</p>
+      <p class="lead">Giá gốc <s class="js-old"></s>, nay chỉ từ <b><span class="js-price"></span>/cây</b>. Gói nào cũng được kiểm tra cây trước khi trả tiền.</p>
     </div>
     <div class="plans" id="plans"></div>
     <p class="bulk" id="bulkLink">Cần nhiều hơn <span class="js-bulkmax"></span> cây? <a href="#dat-hang" data-combo="custom">Tự điền số lượng</a></p>
@@ -454,27 +461,31 @@
       <p class="lead" data-t="product.lead"></p>
     </div>
     <div class="bento">
-      <div class="ph ph-a"><img data-src="product.photo1" alt="Cây giống cau Thái trái dài tại vườn" loading="lazy"></div>
+      <div class="ph ph-a"><img data-src="product.photo1" alt="Cây giống cau Thái trái dài tại vườn" loading="lazy"><span class="note">cây giống đứng cạnh cây mẹ đang ra buồng</span></div>
       <div class="ph ph-b"><img data-src="hero.image" alt="Buồng cau Thái trái dài" loading="lazy" style="object-position:center 62%"></div>
       <div class="specs" id="specs"></div>
     </div>
   </div>
 </section>
 
-<!-- LỢI ÍCH + ĐÁNH GIÁ -->
+<!-- LỢI ÍCH -->
 <section class="pad" style="background:var(--paper);padding-top:0">
-  <div class="wrap">
-    <span class="kicker">Vì sao nên trồng</span>
-    <h2 class="h2" data-t="benefits.title"></h2>
+  <div class="wrap two-col">
+    <div>
+      <span class="kicker">Vì sao nên trồng</span>
+      <h2 class="h3" data-t="benefits.title"></h2>
+    </div>
     <div class="benefits" id="benefits"></div>
   </div>
 </section>
+
+<!-- ĐÁNH GIÁ -->
 <section class="pad" style="background:var(--paper);padding-top:0" id="reviewSection">
   <div class="wrap">
     <span class="kicker">Khách hàng nói gì</span>
-    <h2 class="h2">Nhà vườn tin chọn</h2>
+    <h2 class="h3">Nhà vườn tin chọn</h2>
     <div class="reviews" id="reviews"></div>
-    <p class="swipe-hint">Vuốt để xem thêm →</p>
+    <p class="swipe-hint">vuốt sang để xem thêm →</p>
   </div>
 </section>
 
@@ -483,13 +494,13 @@
   <div class="wrap order">
     <div class="text">
       <span class="kicker">Đặt mua ngay</span>
-      <h2 class="h2">Giữ suất<br>ưu đãi</h2>
+      <h2 class="h2">Giữ suất ưu đãi</h2>
       <p class="lead">Điền thông tin, nhân viên gọi xác nhận trong 30 phút. Thanh toán khi nhận hàng.</p>
-      <div class="guarantees">
-        <div class="g"><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></span><div><b>Giống chuẩn 100%</b>Sai giống hoàn tiền</div></div>
-        <div class="g"><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg></span><div><b>Bảo hành đổi cây 30 ngày</b>Cây chết được đổi mới</div></div>
-        <div class="g"><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span><div><b>Xem cây rồi trả tiền</b>Hài lòng mới thanh toán</div></div>
-      </div>
+      <ul class="guarantees">
+        <li><b>Giống chuẩn 100%</b>Sai giống hoàn tiền</li>
+        <li><b>Bảo hành đổi cây 30 ngày</b>Cây chết được đổi cây mới</li>
+        <li><b>Xem cây rồi trả tiền</b>Hài lòng mới thanh toán</li>
+      </ul>
     </div>
     <form class="card" id="orderForm" novalidate>
       <div class="form-body">
@@ -524,11 +535,11 @@
   </div>
 </section>
 
-<!-- QUY TRÌNH + HỎI ĐÁP -->
+<!-- QUY TRÌNH -->
 <section class="slab slab-cream pad">
   <div class="wrap">
     <span class="kicker">Quy trình mua hàng</span>
-    <h2 class="h2">Nhận cây tận nhà</h2>
+    <h2 class="h3">Từ vườn đến tận nhà</h2>
     <ol class="steps">
       <li><div><b>Điền đơn đặt hàng</b><span>Tên, số điện thoại, địa chỉ nhận cây.</span></div></li>
       <li><div><b>Nhân viên gọi xác nhận</b><span>Trong vòng 30 phút.</span></div></li>
@@ -537,11 +548,13 @@
     </ol>
   </div>
 </section>
+
+<!-- HỎI ĐÁP -->
 <section id="faq" class="pad" style="background:var(--cream);padding-top:0">
-  <div class="wrap faq-wrap">
+  <div class="wrap two-col">
     <div>
       <span class="kicker">Hỏi đáp</span>
-      <h2 class="h2">Bạn còn băn khoăn?</h2>
+      <h2 class="h3">Bạn còn băn khoăn?</h2>
     </div>
     <div class="faq" id="faqList"></div>
   </div>
@@ -550,7 +563,7 @@
 <footer class="slab pad" style="background:var(--forest-2)">
   <div class="wrap">
     <div class="foot">
-      <div><b style="font-family:var(--display);font-size:28px;font-weight:400;text-transform:uppercase">Vườn Cau Việt</b><p style="margin-top:8px;max-width:40ch">Chuyên cung cấp giống cây ăn quả chất lượng cao. Giống chuẩn, giá tốt, giao toàn quốc.</p></div>
+      <div><b style="font-family:var(--display);font-size:28px;font-weight:400;text-transform:uppercase;line-height:1.2">Vườn Cau Việt</b><p style="margin-top:8px;max-width:40ch">Chuyên cung cấp giống cây ăn quả chất lượng cao. Giống chuẩn, giá tốt, giao toàn quốc.</p></div>
       <ul><li><b>Liên hệ</b></li><li>Hotline: 0900.000.000</li><li>Email: [email@nhavuon.vn]</li></ul>
       <ul><li><b>Địa chỉ</b></li><li>[Địa chỉ nhà vườn]</li><li>Chính sách vận chuyển · Đổi trả</li></ul>
     </div>
@@ -584,12 +597,6 @@
   const get = path => path.split('.').reduce((o, k) => o?.[k], C);
   const $ = id => document.getElementById(id);
   const setAll = (sel, text) => document.querySelectorAll(sel).forEach(el => el.textContent = text);
-  const ICONS = [
-    '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
-    '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/>',
-    '<path d="M3 20h18M5 20c0-4 3-7 7-7s7 3 7 7"/><path d="M12 13V4M9 7l3-3 3 3"/>',
-    '<path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/>'
-  ];
 
   // Điền nội dung từ config.js
   document.querySelectorAll('[data-t]').forEach(el => el.textContent = get(el.dataset.t) ?? '');
@@ -604,16 +611,15 @@
   $('checks').innerHTML = C.video.checks.map(c => `<li>${esc(c.text)}</li>`).join('');
   $('stats').innerHTML = C.stats.map(s => `<div class="stat"><b>${esc(s.big)}</b><span>${esc(s.small)}</span></div>`).join('');
   $('specs').innerHTML = C.product.specs.map(s => `<div class="spec"><div class="num">${esc(s.num)}</div><div><h4>${esc(s.title)}</h4><p>${esc(s.desc)}</p></div></div>`).join('');
-  $('benefits').innerHTML = C.benefits.items.map((b, i) => `<div class="benefit"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d9ef78" stroke-width="2">${ICONS[i % ICONS.length]}</svg></div><h3>${esc(b.title)}</h3><p>${esc(b.desc)}</p></div>`).join('');
-  $('reviews').innerHTML = C.reviews.map(r => `<div class="review"><div class="q">“</div><p>${esc(r.text)}</p><div class="who"><div class="avatar">${esc((r.name.trim().split(' ').pop() || '?')[0])}</div><div><b>${esc(r.name)}</b><span>${esc(r.place)}</span></div></div></div>`).join('');
+  $('benefits').innerHTML = C.benefits.items.map((b, i) => `<div class="benefit"><span class="no">✓</span><h3>${esc(b.title)}</h3><p>${esc(b.desc)}</p></div>`).join('');
+  $('reviews').innerHTML = C.reviews.map(r => `<div class="review"><div class="stars">★★★★★</div><p>“${esc(r.text)}”</p><div class="who"><div class="avatar">${esc((r.name.trim().split(' ').pop() || '?')[0])}</div><div><b>${esc(r.name)}</b><span>${esc(r.place)}</span></div></div></div>`).join('');
   $('reviewSection').hidden = !C.reviews.length;
   $('faqList').innerHTML = C.faq.map((f, i) => `<details${i ? '' : ' open'}><summary>${esc(f.q)}</summary><p>${esc(f.a)}</p></details>`).join('');
 
   $('plans').innerHTML = C.combos.map((c, i) => `
-    <div class="plan${c.hot ? ' hot' : ''}">${c.hot ? '<span class="ribbon">Bán chạy nhất</span>' : ''}
-      <div class="qty">${esc(c.name)}</div>
+    <div class="plan${c.hot ? ' hot' : ''}">${c.hot ? '<span class="stamp">Bán chạy nhất</span>' : ''}
+      <div class="plan-top"><div class="qty">${esc(c.name)}</div><div class="amt">${fmtK(c.price)}</div></div>
       <div class="per">${esc(c.note)}</div>
-      <div class="amt">${fmtK(c.price)}</div>
       <a href="#dat-hang" class="pill ${c.hot ? 'pill-lime' : 'pill-forest'}" data-combo="${i}">Chọn gói này<span class="arr">→</span></a>
     </div>`).join('');
   const hotIdx = Math.max(0, C.combos.findIndex(c => c.hot));
