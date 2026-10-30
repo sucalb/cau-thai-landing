@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#cbd5b1">
-<title>Cau Thái Trái Dài – Giống Chuẩn Nhà Vườn</title>
-<meta name="description" content="Cây giống cau Thái trái dài, giống lùn ra trái sớm, sai quả. Giống chuẩn, tỷ lệ sống 99%, giao hàng toàn quốc, kiểm tra cây khi nhận.">
-<meta property="og:title" content="Cau Thái Trái Dài – chỉ 25.000đ/cây">
-<meta property="og:description" content="Giống lùn, ra trái sau 9–12 tháng, mỗi buồng 40–80 quả. Giao toàn quốc, kiểm tra cây khi nhận.">
+<title>Vườn Giống Xanh – Cây Giống Chuẩn Nhà Vườn</title>
+<meta name="description" content="Cây giống ăn quả chuẩn nhà vườn: cau, bơ, sầu riêng, mít, xoài, chanh, bưởi. Ươm bầu kỹ, giao toàn quốc, kiểm tra cây rồi trả tiền.">
+<meta property="og:title" content="Cây giống chuẩn nhà vườn – giao toàn quốc">
+<meta property="og:description" content="Cau, bơ, sầu riêng, mít, xoài, chanh, bưởi. Ươm bầu kỹ, kiểm tra cây rồi trả tiền.">
 <meta property="og:image" content="images/vuon-cau-trai-dai.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,7 +31,7 @@
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
   img,video,svg{display:block;max-width:100%}
   a{color:inherit;text-decoration:none}
-  button{font:inherit;color:inherit}
+  button{font:inherit;color:inherit;cursor:pointer}
   :focus-visible{outline:3px solid var(--husk);outline-offset:3px}
   .pad{padding-inline:max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-area-inset-right,0px))}
   .wrap{max-width:1240px;margin-inline:auto}
@@ -42,25 +42,29 @@
   .h2{font-size:clamp(42px,11.5vw,104px);line-height:1.16}
   .h3{font-size:clamp(32px,8vw,56px);line-height:1.18}
   .lead{font-size:16px;color:var(--muted);max-width:56ch}
-  .hand{font-family:var(--hand);font-weight:400;letter-spacing:0;text-transform:none}
 
-  .pill{display:inline-flex;align-items:center;justify-content:center;gap:10px;border:0;cursor:pointer;border-radius:999px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;font-size:14px;padding:16px 22px;transition:transform .2s,background .2s}
+  .pill{display:inline-flex;align-items:center;justify-content:center;gap:10px;border:0;border-radius:999px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;font-size:14px;padding:16px 22px;transition:transform .2s,background .2s}
   .pill:active{transform:scale(.97)}
   .pill-forest{background:var(--forest);color:var(--cream)}
   .pill-forest:hover{background:var(--forest-2)}
   .pill-lime{background:var(--lime);color:var(--forest)}
+  .pill-line{background:transparent;color:var(--forest);box-shadow:inset 0 0 0 1.5px var(--forest)}
   .pill .arr{width:30px;height:30px;border-radius:50%;background:var(--lime);color:var(--forest);display:grid;place-items:center;margin-right:-10px}
   .pill-lime .arr{background:var(--forest);color:var(--lime)}
+  .pill:disabled{opacity:.5;cursor:not-allowed}
 
   /* Header */
   .site-head{position:sticky;top:0;z-index:50;padding-top:10px}
-  .nav{display:flex;align-items:center;gap:10px;justify-content:space-between;background:rgba(240,241,220,.86);backdrop-filter:blur(14px);border-radius:999px;padding:6px 6px 6px 18px;box-shadow:0 8px 30px -18px rgba(1,48,31,.5)}
-  .brand{font-family:var(--display);font-size:21px;color:var(--forest);text-transform:uppercase;line-height:1.2;white-space:nowrap}
+  .nav{display:flex;align-items:center;gap:10px;justify-content:space-between;background:rgba(240,241,220,.88);backdrop-filter:blur(14px);border-radius:999px;padding:6px 6px 6px 18px;box-shadow:0 8px 30px -18px rgba(1,48,31,.5)}
+  .brand{font-family:var(--display);font-size:21px;color:var(--forest);text-transform:uppercase;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
   .brand small{font-family:var(--body);font-size:10px;font-weight:700;letter-spacing:.14em;display:block;color:var(--muted);line-height:1.2}
   .nav-links{display:none}
-  .nav-right{display:flex;gap:8px}
-  .call{display:inline-flex;align-items:center;gap:8px;background:var(--forest);color:var(--cream);border-radius:999px;padding:10px 14px;font-weight:700;font-size:14px;white-space:nowrap}
-  .d-only{display:none}
+  .nav-right{display:flex;gap:6px;flex:none}
+  .call,.cart-btn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:999px;padding:10px 14px;font-weight:700;font-size:14px;white-space:nowrap}
+  .call{background:var(--forest);color:var(--cream)}
+  .cart-btn{background:var(--lime);color:var(--forest);position:relative}
+  .count{min-width:22px;height:22px;border-radius:999px;background:var(--forest);color:var(--lime);font-size:12px;font-weight:800;display:grid;place-items:center;padding:0 6px}
+  .call .num-txt{display:none}
 
   /* Hero */
   .hero{padding-block:22px 44px;position:relative}
@@ -73,20 +77,18 @@
   .fa{width:54%;aspect-ratio:1/1;margin:22px 0 10px auto;rotate:5deg;animation:float 7s ease-in-out infinite}
   .fa img{object-position:center 62%}
   .fa .note{right:calc(100% + 8px);bottom:16px;rotate:-5deg;text-align:right}
-  .mega{display:block;font-family:var(--display);font-weight:400;text-transform:uppercase;color:var(--forest);font-size:clamp(72px,24vw,250px);line-height:1.1}
+  .mega{display:block;font-family:var(--display);font-weight:400;text-transform:uppercase;color:var(--forest);font-size:clamp(52px,18vw,230px);line-height:1.1}
   .mega span{display:block}
-  .hero-row{display:grid;grid-template-columns:1fr 40%;gap:14px;align-items:start;margin-top:10px}
-  .hero-end{font-weight:700;font-size:18px;line-height:1.3;color:var(--forest)}
-  .fb{aspect-ratio:3/4;rotate:-6deg;border-radius:1.75rem;animation:float 8s ease-in-out -3s infinite}
+  .hero-row{margin-top:48px}
+  .hero-row .sub{color:var(--muted);font-size:15.5px}
+  .fb{width:44%;margin:4px 6px 0 auto;aspect-ratio:3/4;rotate:-6deg;border-radius:1.75rem;animation:float 8s ease-in-out -3s infinite}
   .fb .note{left:-6px;bottom:-30px;rotate:-4deg}
-  .hero .sub{margin-top:26px;color:var(--muted);font-size:15.5px}
-  .buy{margin-top:22px;background:var(--cream);border-radius:var(--r-xl);padding:18px;display:grid;gap:14px}
-  .buy-price{display:flex;align-items:flex-end;justify-content:space-between;gap:10px}
-  .buy-price .now{font-family:var(--display);font-size:56px;line-height:1;color:var(--forest)}
-  .buy-price .now small{font-family:var(--body);font-size:14px;font-weight:600;color:var(--muted);margin-left:4px}
-  .buy-price .old{font-size:14px;color:var(--muted);text-decoration:line-through;margin-top:4px}
-  .save{font-family:var(--display);font-size:22px;line-height:1.1;background:var(--lime);color:var(--forest);padding:10px 12px;border-radius:16px;rotate:-4deg}
-  .buy .pill{width:100%;padding:18px 22px;font-size:15px}
+  .deal{margin-top:40px;background:var(--cream);border-radius:var(--r-xl);padding:18px;display:grid;gap:14px}
+  .deal .label{font-weight:800;letter-spacing:.14em;font-size:12px;color:var(--forest)}
+  .clock{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;text-align:center}
+  .clock b{display:block;font-family:var(--display);font-weight:400;font-size:40px;line-height:1.1;color:var(--forest);font-variant-numeric:tabular-nums}
+  .clock span{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .deal .pill{width:100%;padding:18px 22px;font-size:15px}
   .facts{display:grid;grid-template-columns:repeat(3,1fr);margin-top:24px;border-top:1.5px solid var(--line)}
   .fact{padding:14px 8px 0;border-left:1.5px solid var(--line);font-size:12.5px;color:var(--muted);line-height:1.35}
   .fact:first-child{border-left:0;padding-left:0}
@@ -99,20 +101,75 @@
   .slab-cream{background:var(--cream)}
   .slab-paper{background:var(--paper)}
 
+  /* Sản phẩm */
+  .shop-head{display:grid;gap:14px}
+  .chips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:24px -16px 0;padding:2px 16px}
+  .chips::-webkit-scrollbar{display:none}
+  .chip{flex:none;border:0;border-radius:999px;padding:10px 16px;font-weight:700;font-size:14px;background:transparent;color:var(--forest);box-shadow:inset 0 0 0 1.5px var(--line)}
+  .chip[aria-pressed="true"]{background:var(--forest);color:var(--cream);box-shadow:none}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px 12px;margin-top:22px}
+  .card{display:flex;flex-direction:column;min-width:0}
+  .card .pic{position:relative;border:0;padding:0;background:var(--sage-2);border-radius:var(--r-lg);overflow:hidden;aspect-ratio:4/5;display:block;width:100%}
+  .card .pic img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+  .card:hover .pic img{transform:scale(1.04)}
+  .badge{position:absolute;top:10px;left:10px;background:var(--kraft);color:var(--forest);font-weight:800;font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:5px 10px 5px 18px;border-radius:4px 8px 8px 4px;clip-path:polygon(10px 0,100% 0,100% 100%,10px 100%,0 50%)}
+  .badge::before{content:"";position:absolute;left:9px;top:50%;width:5px;height:5px;margin-top:-2.5px;border-radius:50%;background:var(--paper)}
+  .off{position:absolute;top:10px;right:10px;background:var(--husk);color:#fff;font-weight:800;font-size:12px;padding:4px 8px;border-radius:999px}
+  .card h3{font-family:var(--display);font-weight:400;text-transform:uppercase;font-size:21px;line-height:1.25;color:var(--forest);margin-top:10px}
+  .card h3 button{all:unset;cursor:pointer}
+  .card .short{display:none;font-size:13.5px;color:var(--muted);margin-top:4px}
+  .card .price{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap;margin-top:4px}
+  .card .price b{font-size:17px;color:var(--forest)}
+  .card .price s{font-size:13px;color:var(--muted)}
+  .card .price small{font-size:12.5px;color:var(--muted)}
+  .card .add{margin-top:10px;padding:11px 12px;font-size:12.5px;width:100%}
+  .empty-cat{grid-column:1/-1;font-family:var(--hand);font-size:20px;color:var(--muted);padding:20px 0}
+
+  /* Chi tiết sản phẩm */
+  dialog.sheet{border:0;padding:0;margin:auto auto 0;width:100%;max-width:100%;max-height:92vh;border-radius:var(--r-xl) var(--r-xl) 0 0;background:var(--paper);color:var(--ink);overflow:auto}
+  dialog.sheet::backdrop{background:rgba(1,30,20,.55);backdrop-filter:blur(3px)}
+  .sheet-in{display:grid}
+  .sheet-pics{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+  .sheet-pics img{flex:0 0 100%;aspect-ratio:1/1;object-fit:cover;scroll-snap-align:start}
+  .sheet-body{padding:20px 16px calc(24px + env(safe-area-inset-bottom,0px))}
+  .x{position:absolute;top:12px;right:12px;width:42px;height:42px;border-radius:50%;border:0;background:rgba(240,241,220,.92);color:var(--forest);font-size:22px;font-weight:700;z-index:2}
+  .sheet h2{font-family:var(--display);font-weight:400;text-transform:uppercase;font-size:38px;line-height:1.2;color:var(--forest)}
+  .sheet .p-price{display:flex;align-items:baseline;gap:10px;margin-top:6px}
+  .sheet .p-price b{font-family:var(--display);font-weight:400;font-size:40px;line-height:1.1;color:var(--forest)}
+  .sheet .p-price s{color:var(--muted)}
+  .sheet .desc{margin-top:12px;color:var(--muted)}
+  .specs{margin-top:16px;border-top:2px solid var(--forest)}
+  .specs div{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1.5px solid var(--line);font-size:14.5px}
+  .specs dt{color:var(--muted)}
+  .specs dd{font-weight:700;color:var(--forest);text-align:right}
+  .opt-title{display:block;font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--forest);margin:20px 0 8px}
+  .opts{display:grid;gap:8px}
+  .opt{display:flex;align-items:center;gap:10px;border:1.5px solid var(--line);border-radius:18px;padding:12px 14px;cursor:pointer;background:var(--cream);font-weight:600}
+  .opt input{accent-color:var(--forest);width:20px;height:20px;flex:none}
+  .opt small{display:block;font-weight:500;color:var(--muted);font-size:12.5px}
+  .opt .r{margin-left:auto;font-weight:800;color:var(--forest);white-space:nowrap}
+  .opt:has(input:checked){border-color:var(--forest);background:var(--lime)}
+  .buy-row{display:flex;gap:10px;align-items:center;margin-top:18px}
+  .stepper{display:flex;align-items:center;border-radius:999px;box-shadow:inset 0 0 0 1.5px var(--forest);flex:none}
+  .stepper button{width:44px;height:48px;border:0;background:none;font-size:20px;font-weight:700;color:var(--forest)}
+  .stepper output{min-width:28px;text-align:center;font-weight:800;color:var(--forest)}
+  .buy-row .pill{flex:1;padding:15px 14px;font-size:13px}
+  .sheet .pill-lime.full{width:100%;margin-top:10px}
+
   /* Video */
   .video .h2{color:var(--cream)}
   .video .kicker{color:var(--lime)}
   .video .lead{color:rgba(240,241,220,.75);margin-top:14px}
   .player{position:relative;margin-top:26px;border-radius:var(--r-xl);overflow:hidden;aspect-ratio:9/16;max-height:80vh;margin-inline:auto;background:#000}
   .player video{width:100%;height:100%;object-fit:cover}
-  .play{position:absolute;inset:0;border:0;background:linear-gradient(180deg,transparent 45%,rgba(1,48,31,.75));cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:12px;padding-bottom:24px;color:var(--cream)}
+  .play{position:absolute;inset:0;border:0;background:linear-gradient(180deg,transparent 45%,rgba(1,48,31,.75));display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:12px;padding-bottom:24px;color:var(--cream)}
   .play .dot{width:84px;height:84px;border-radius:50%;background:var(--lime);display:grid;place-items:center;color:var(--forest)}
   .play em{font-style:normal;font-family:var(--hand);font-size:19px}
   .checks{list-style:none;margin-top:22px;border-top:1.5px solid rgba(240,241,220,.18)}
   .checks li{display:flex;gap:14px;align-items:baseline;font-weight:600;padding:14px 0;border-bottom:1.5px solid rgba(240,241,220,.18)}
   .checks li::before{content:"✓";color:var(--lime);font-weight:800}
 
-  /* Dải số liệu */
+  /* Số liệu */
   .stats{display:grid;grid-template-columns:1fr 1fr;border-top:2px solid var(--forest);border-bottom:2px solid var(--forest)}
   .stat{padding:18px 4px 16px;border-bottom:1.5px solid var(--line)}
   .stat:nth-child(odd){border-right:1.5px solid var(--line);padding-right:12px}
@@ -121,60 +178,9 @@
   .stat b{display:block;font-family:var(--display);font-weight:400;font-size:42px;line-height:1.15;color:var(--forest)}
   .stat span{font-size:13.5px;font-weight:600;color:var(--muted)}
 
-  /* Bảng giá: thẻ treo cây giấy kraft */
-  .price-head{display:grid;gap:14px;margin-top:64px}
-  .price-head .lead b{color:var(--forest)}
-  .plans{display:grid;gap:22px;margin-top:34px}
-  .plan{position:relative;background:var(--kraft);color:var(--ink);padding:40px 22px 22px;
-    clip-path:polygon(28px 0,calc(100% - 28px) 0,100% 28px,100% 100%,0 100%,0 28px);border-radius:0 0 14px 14px;
-    background-image:repeating-linear-gradient(0deg,transparent 0 23px,rgba(120,90,40,.07) 23px 24px)}
-  .plan:nth-child(odd){rotate:-1.2deg}
-  .plan:nth-child(even){rotate:1deg}
-  .plan::before{content:"";position:absolute;top:14px;left:50%;width:16px;height:16px;margin-left:-8px;border-radius:50%;background:var(--cream);box-shadow:inset 0 0 0 3px var(--kraft-2)}
-  .plan-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;border-bottom:1.5px dashed rgba(1,71,46,.35);padding-bottom:12px}
-  .plan .qty{font-family:var(--display);font-size:34px;line-height:1.2;color:var(--forest);text-transform:uppercase}
-  .plan .amt{font-family:var(--display);font-size:50px;line-height:1.1;color:var(--forest)}
-  .plan .per{font-family:var(--hand);font-size:18px;color:var(--forest);margin:12px 0 16px}
-  .plan .pill{width:100%}
-  .plan.hot{background:var(--forest);background-image:none;color:var(--cream)}
-  .plan.hot::before{box-shadow:inset 0 0 0 3px var(--lime)}
-  .plan.hot .qty,.plan.hot .amt{color:var(--lime)}
-  .plan.hot .per{color:var(--cream)}
-  .plan.hot .plan-top{border-color:rgba(240,241,220,.35)}
-  .plan.hot{padding-top:58px}
-  .stamp{position:absolute;top:16px;right:22px;rotate:6deg;border:2px solid var(--husk);color:var(--husk);font-weight:800;font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:4px 8px;border-radius:6px}
-  .plan.hot .plan-top{padding-right:0}
-  .bulk{margin-top:18px;font-weight:600;color:var(--muted)}
-  .bulk a{color:var(--forest);font-weight:800;border-bottom:2px solid var(--husk)}
-  .row-2{display:grid;gap:12px;margin-top:22px}
-  .addon{display:flex;gap:14px;align-items:center;border:1.5px dashed var(--forest);border-radius:var(--r-lg);padding:16px;font-size:14px;color:var(--muted)}
-  .addon b{color:var(--forest)}
-  .addon .ic{flex:none;width:44px;height:44px;border-radius:50%;background:var(--lime);display:grid;place-items:center}
-  .countdown{background:var(--forest);border-radius:var(--r-lg);padding:18px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center;color:var(--cream)}
-  .countdown .label{grid-column:1/-1;font-weight:800;letter-spacing:.14em;font-size:12.5px;color:var(--lime)}
-  .cd b{display:block;font-family:var(--display);font-weight:400;font-size:44px;line-height:1.1;font-variant-numeric:tabular-nums}
-  .cd span{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(240,241,220,.7)}
-
-  /* Đặc điểm: ảnh + thông số */
-  .product .lead{margin-top:14px}
-  .bento{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:28px}
-  .bento .ph{position:relative;border-radius:var(--r-xl);background:var(--sage-2)}
-  .bento .ph img{width:100%;height:100%;object-fit:cover;border-radius:inherit}
-  .bento .ph-a{grid-column:1/-1;aspect-ratio:4/3.4}
-  .bento .ph-b{aspect-ratio:3/4}
-  .ph .note{left:18px;bottom:16px;color:var(--cream);font-size:19px;text-shadow:0 1px 8px rgba(0,0,0,.45);white-space:normal;max-width:70%}
-  .specs{display:contents}
-  .spec{border-radius:var(--r-lg);padding:16px;background:var(--cream);display:flex;flex-direction:column;justify-content:space-between;gap:10px}
-  .spec .num{font-family:var(--display);font-size:38px;line-height:1.15;color:var(--forest);text-transform:uppercase}
-  .spec h4{font-size:14.5px;color:var(--forest);line-height:1.3}
-  .spec p{font-size:13px;color:var(--muted);line-height:1.4}
-  .specs .spec:nth-child(n+2){grid-column:1/-1;flex-direction:row;align-items:center;gap:18px}
-  .specs .spec:nth-child(n+2) .num{min-width:110px}
-  .specs .spec:first-child{background:var(--lime)}
-
-  /* Lợi ích: kiểu trang báo, không hộp */
+  /* Lợi ích */
   .benefits{display:grid;margin-top:26px;border-top:2px solid var(--forest)}
-  .benefit{display:grid;grid-template-columns:44px 1fr;gap:4px 14px;padding:18px 0;border-bottom:1.5px solid var(--line)}
+  .benefit{display:grid;grid-template-columns:34px 1fr;gap:4px 12px;padding:18px 0;border-bottom:1.5px solid var(--line)}
   .benefit .no{grid-row:1/3;font-family:var(--hand);font-size:22px;color:var(--husk);line-height:1.3}
   .benefit h3{font-family:var(--display);font-weight:400;font-size:26px;line-height:1.2;text-transform:uppercase;color:var(--forest)}
   .benefit p{font-size:14.5px;color:var(--muted)}
@@ -195,38 +201,41 @@
   .order .h2{color:var(--cream)}
   .order .kicker{color:var(--lime)}
   .order .lead{color:rgba(240,241,220,.75);margin-top:14px}
-  form.card{background:var(--cream);color:var(--ink);border-radius:var(--r-xl);padding:22px 16px;margin-top:26px}
+  .cart{background:var(--kraft);color:var(--ink);border-radius:var(--r-lg);padding:18px 16px;margin-top:24px;background-image:repeating-linear-gradient(0deg,transparent 0 23px,rgba(120,90,40,.07) 23px 24px)}
+  .cart h3{font-family:var(--hand);font-weight:400;font-size:22px;color:var(--forest);margin-bottom:6px}
+  .line{display:grid;grid-template-columns:56px 1fr auto;gap:10px;align-items:center;padding:12px 0;border-bottom:1.5px dashed rgba(1,71,46,.3)}
+  .line img{width:56px;height:56px;border-radius:12px;object-fit:cover}
+  .line b{display:block;font-size:14.5px;color:var(--forest);line-height:1.3}
+  .line small{font-size:12.5px;color:var(--muted)}
+  .line .right{display:grid;justify-items:end;gap:6px}
+  .line .lt{font-weight:800;color:var(--forest);font-size:14.5px}
+  .line .stepper button{width:32px;height:32px;font-size:16px}
+  .line .stepper output{min-width:22px;font-size:14px}
+  .rm{border:0;background:none;color:var(--red);font-size:12.5px;font-weight:700;text-decoration:underline}
+  .sum{display:grid;gap:6px;padding-top:12px;font-size:14.5px}
+  .sum div{display:flex;justify-content:space-between}
+  .sum .grand{font-weight:800;color:var(--forest);font-size:16px;padding-top:8px;border-top:1.5px solid rgba(1,71,46,.3)}
+  .sum .grand b{font-family:var(--display);font-weight:400;font-size:34px;line-height:1.1}
+  .ship-note{font-size:12.5px;color:var(--muted)}
+  .cart-empty{font-family:var(--hand);font-size:19px;color:var(--forest);padding:10px 0}
+  .cart-empty a{text-decoration:underline}
+  form.card-f{background:var(--cream);color:var(--ink);border-radius:var(--r-xl);padding:22px 16px;margin-top:14px}
   .field{margin-bottom:12px}
-  .field label,.group-label{display:block;font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px;color:var(--forest)}
-  .field input{width:100%;font:500 16px var(--body);padding:15px 18px;border-radius:999px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink)}
-  .field input:focus{outline:0;border-color:var(--forest);box-shadow:0 0 0 4px rgba(1,71,46,.15)}
+  .field label{display:block;font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px;color:var(--forest)}
+  .field input,.field textarea{width:100%;font:500 16px var(--body);padding:15px 18px;border-radius:24px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink)}
+  .field textarea{min-height:80px;resize:vertical}
+  .field input:focus,.field textarea:focus{outline:0;border-color:var(--forest);box-shadow:0 0 0 4px rgba(1,71,46,.15)}
   .field input.err{border-color:var(--red)}
   .field .msg{display:none;color:var(--red);font-size:13px;margin:4px 0 0 18px}
   .field input.err + .msg{display:block}
-  .opt-group{display:grid;gap:8px;margin-bottom:16px}
-  .opt{display:flex;align-items:center;gap:10px;border:1.5px solid var(--line);border-radius:18px;padding:13px 16px;cursor:pointer;font-weight:600;min-height:52px;background:var(--paper)}
-  .opt input{accent-color:var(--forest);width:20px;height:20px;flex:none}
-  .opt .r{margin-left:auto;font-weight:800;color:var(--forest);white-space:nowrap}
-  .opt:has(input:checked){border-color:var(--forest);background:var(--lime)}
-  .opt .tag{font-size:10.5px;font-weight:800;letter-spacing:.06em;background:var(--forest);color:var(--lime);padding:3px 8px;border-radius:999px}
-  #customQty{margin-top:-6px;margin-bottom:16px}
-  .qty-note{font-size:13px;color:var(--muted);margin:6px 0 0 18px}
-  .addons{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
-  .addons .opt{justify-content:center;text-align:center;padding:10px 4px;font-size:13.5px;line-height:1.25}
-  .addons .opt input{position:absolute;opacity:0;pointer-events:none}
-  .total{display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-top:1.5px dashed var(--line)}
-  .total span{font-weight:700;color:var(--muted)}
-  .total b{font-family:var(--display);font-weight:400;font-size:40px;line-height:1.1;color:var(--forest)}
   form .pill{width:100%;padding:19px;font-size:15px}
+  .form-err{color:var(--red);font-weight:700;font-size:14px;margin-bottom:10px}
   .secure{text-align:center;font-size:12.5px;color:var(--muted);margin-top:10px}
   .success{text-align:center;padding:24px 6px}
   .success .ok{width:72px;height:72px;border-radius:50%;background:var(--lime);color:var(--forest);display:grid;place-items:center;margin:0 auto 14px;font-size:30px;font-weight:800}
   .success h3{font-family:var(--display);font-weight:400;font-size:34px;line-height:1.2;text-transform:uppercase;color:var(--forest);margin-bottom:6px}
-  .guarantees{list-style:none;margin-top:22px;border-top:1.5px solid rgba(240,241,220,.18)}
-  .guarantees li{padding:14px 0;border-bottom:1.5px solid rgba(240,241,220,.18);font-size:14px;color:rgba(240,241,220,.75)}
-  .guarantees b{display:block;color:var(--cream);font-size:15.5px}
 
-  /* Quy trình: đường đi có thứ tự */
+  /* Quy trình */
   .steps{list-style:none;position:relative;margin-top:26px;counter-reset:s;display:grid;gap:22px}
   .steps::before{content:"";position:absolute;left:21px;top:10px;bottom:10px;border-left:2px dashed var(--forest);opacity:.4}
   .steps li{position:relative;display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:center}
@@ -248,18 +257,23 @@
   .foot{display:grid;gap:20px;font-size:14px}
   .foot b{color:var(--cream)}
   .foot ul{list-style:none;display:grid;gap:6px}
-  .wordmark{font-family:var(--display);text-transform:uppercase;color:var(--sage);font-size:clamp(60px,18vw,280px);line-height:1.15;margin-top:30px;white-space:nowrap}
+  .wordmark{font-family:var(--display);text-transform:uppercase;color:var(--sage);font-size:clamp(56px,16vw,250px);line-height:1.15;margin-top:30px;white-space:nowrap}
   .copy{font-size:12.5px;margin-top:10px;color:rgba(240,241,220,.5)}
 
   /* Thanh nổi dưới màn hình (điện thoại) */
   .mbar{position:fixed;left:max(10px,env(safe-area-inset-left,0px));right:max(10px,env(safe-area-inset-right,0px));bottom:calc(10px + env(safe-area-inset-bottom,0px));z-index:60;display:flex;gap:6px;background:var(--forest);border-radius:999px;padding:6px;box-shadow:0 18px 40px -14px rgba(1,30,20,.7)}
-  .mbar a{display:flex;align-items:center;justify-content:center;border-radius:999px;font-weight:800;font-size:13px;color:var(--cream);min-height:48px}
+  .mbar a{display:flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;font-weight:800;font-size:13px;color:var(--cream);min-height:48px}
   .mbar .m-call{width:48px;background:rgba(240,241,220,.12)}
   .mbar .m-zalo{padding:0 14px;background:rgba(240,241,220,.12)}
-  .mbar .m-buy{flex:1;background:var(--lime);color:var(--forest);letter-spacing:.08em;text-transform:uppercase;font-size:14px}
+  .mbar .m-buy{flex:1;background:var(--lime);color:var(--forest);font-size:14px}
+  .mbar .m-buy .count{background:var(--forest);color:var(--lime)}
+
+  .toast{position:fixed;left:50%;bottom:calc(80px + env(safe-area-inset-bottom,0px));translate:-50% 0;z-index:90;background:var(--forest-2);color:var(--cream);padding:12px 18px;border-radius:999px;font-weight:700;font-size:14px;box-shadow:0 10px 30px rgba(0,0,0,.25);max-width:calc(100% - 32px);text-align:center}
 
   /* Máy tính bảng */
   @media (min-width:640px){
+    .grid{grid-template-columns:repeat(3,1fr);gap:28px 18px}
+    .card .short{display:block}
     .stats{grid-template-columns:repeat(4,1fr)}
     .stat,.stat:nth-child(odd),.stat:nth-child(even){border-bottom:0;border-right:1.5px solid var(--line);padding:22px 18px}
     .stat:last-child{border-right:0}
@@ -267,6 +281,7 @@
     .review{flex-basis:46%}
     .fa{width:46%}
     .benefits{grid-template-columns:1fr 1fr;column-gap:40px}
+    dialog.sheet{max-width:560px;margin:auto;border-radius:var(--r-xl)}
   }
 
   /* Máy tính */
@@ -279,73 +294,63 @@
     .nav-links{display:flex;gap:4px;background:rgba(1,71,46,.07);border-radius:999px;padding:4px}
     .nav-links a{padding:9px 16px;border-radius:999px;font-weight:700;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--forest)}
     .nav-links a:hover{background:var(--forest);color:var(--cream)}
-    .d-only{display:inline-flex}
+    .call .num-txt{display:inline}
     .mbar{display:none}
     footer{padding-bottom:0}
+    .toast{bottom:28px}
 
     .hero{padding-block:30px 90px}
     .fa{position:absolute;left:max(40px,calc((100% - 1240px)/2));top:126px;width:250px;margin:0;rotate:-7deg}
     .fa .note{left:calc(100% + 22px);right:auto;bottom:auto;top:-6px;text-align:left;rotate:4deg;font-size:20px}
-    .mega{font-size:clamp(140px,14.5vw,232px);text-align:right;margin-top:34px}
-    .mega span:last-child{text-align:left;padding-left:6%}
-    .hero-row{position:absolute;right:max(60px,calc((100% - 1200px)/2));top:calc(80px + clamp(140px,14.5vw,232px) * 1.1);margin:0;display:block;width:190px}
-    .hero-row .hero-end{display:none}
-    .fb{margin:0;width:190px;rotate:7deg}
+    .mega{font-size:clamp(130px,13.5vw,220px);text-align:right;margin-top:34px}
+    .mega span:last-child{text-align:left;padding-left:4%}
+    .hero-row{display:grid;grid-template-columns:1fr 1fr 440px;gap:32px;align-items:end;margin-top:40px}
+    .hero-row .sub{font-size:17px;grid-column:2}
+    .fb{margin:0;position:absolute;right:max(60px,calc((100% - 1200px)/2));top:calc(80px + clamp(130px,13.5vw,220px) * 1.1);width:190px;rotate:7deg}
     .fb .note{font-size:20px;left:auto;right:-6px;bottom:-34px;rotate:3deg}
-    .hero-bottom{display:grid;grid-template-columns:1fr 1fr 440px;gap:32px;align-items:end;margin-top:40px}
-    .hero-bottom .hero-end-d{display:block;font-family:var(--display);font-size:38px;line-height:1.2;text-transform:uppercase;color:var(--forest)}
-    .hero .sub{margin:0;font-size:17px}
-    .buy{margin:0;padding:22px}
-    .facts{grid-column:1/-1;margin-top:44px}
+    .deal{margin:0;grid-column:3;padding:22px}
+    .hero-row .lead-d{display:block;grid-column:1;font-family:var(--display);font-size:36px;line-height:1.2;text-transform:uppercase;color:var(--forest)}
+    .facts{margin-top:44px}
     .fact{font-size:14px;padding:18px 18px 0}
     .fact b{font-size:38px}
 
     .slab{border-radius:5rem 5rem 0 0}
+    .shop-head{grid-template-columns:1.2fr 1fr;align-items:end;gap:40px}
+    .chips{margin:40px 0 0;padding:2px}
+    .grid{grid-template-columns:repeat(4,1fr);gap:40px 22px;margin-top:30px}
+    .card h3{font-size:24px}
+
+    dialog.sheet{max-width:980px;overflow:hidden}
+    .sheet-in{grid-template-columns:1fr 1fr;max-height:88vh}
+    .sheet-pics{flex-direction:column;overflow:auto;scroll-snap-type:none}
+    .sheet-pics img{flex:none;aspect-ratio:4/5}
+    .sheet-body{padding:34px;overflow:auto}
+    .sheet h2{font-size:48px}
+
     .video{display:grid;grid-template-columns:1fr 400px;gap:80px;align-items:center}
     .video .player{margin:0;max-height:none;width:100%}
     .stat b{font-size:64px}
-
-    .price-head{grid-template-columns:1.2fr 1fr;align-items:end;gap:40px;margin-top:96px}
-    .plans{grid-template-columns:repeat(3,1fr);gap:28px;margin-top:52px;align-items:start}
-    .plan{padding:46px 28px 28px}
-    .plan .amt{font-size:72px}
-    .plan .qty{font-size:40px}
-    .plan-top{flex-direction:column;align-items:flex-start;gap:6px}
-    .plan.hot{margin-top:-14px}
-    .row-2{grid-template-columns:1fr 1.3fr;gap:16px;margin-top:28px}
-    .cd b{font-size:60px}
-
-    .product .top{display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:end}
-    .bento{grid-template-columns:1.4fr 1fr 1fr;gap:16px;margin-top:48px}
-    .bento .ph-a{grid-column:1;grid-row:1/3;aspect-ratio:auto;min-height:560px}
-    .bento .ph-b{grid-column:2;grid-row:1/3;aspect-ratio:auto}
-    .spec{padding:24px;border-radius:var(--r-xl)}
-    .spec .num{font-size:52px}
-    .specs .spec:nth-child(1){grid-column:3;grid-row:1}
-    .specs .spec:nth-child(2){grid-column:3;grid-row:2;flex-direction:column;align-items:stretch}
-    .specs .spec:nth-child(3){grid-column:1/-1;grid-row:3}
 
     .two-col{display:grid;grid-template-columns:1fr 1.5fr;gap:80px;align-items:start}
     .two-col .benefits,.two-col .faq{margin-top:0}
     .benefit{padding:24px 0}
     .benefit h3{font-size:30px}
-
     .reviews{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;overflow:visible;margin-top:44px}
     .review{padding:28px}
     .swipe-hint{display:none}
 
-    .order{display:grid;grid-template-columns:1fr 520px;gap:80px;align-items:start}
-    .order .text{position:sticky;top:110px}
-    .order form.card{margin:0;padding:34px}
+    .order{display:grid;grid-template-columns:1fr 520px;gap:64px;align-items:start}
+    .order form.card-f{margin-top:0}
+    .cart{padding:24px}
 
     .steps{grid-template-columns:repeat(4,1fr);gap:24px;margin-top:44px}
     .steps::before{left:22px;right:22px;top:21px;bottom:auto;border-left:0;border-top:2px dashed var(--forest)}
     .steps li{grid-template-columns:1fr;align-items:start}
 
     .foot{grid-template-columns:1.5fr 1fr 1fr;font-size:15px}
-    .wordmark{font-size:clamp(120px,16vw,260px);margin-top:50px}
+    .wordmark{font-size:clamp(110px,14vw,230px);margin-top:50px}
   }
-  .hero-end-d{display:none}
+  .lead-d{display:none}
 
   @media (prefers-reduced-motion:reduce){.fa,.fb{animation:none}html{scroll-behavior:auto}}
 </style>
@@ -354,16 +359,15 @@
 
 <header class="site-head pad">
   <div class="nav wrap">
-    <a href="#" class="brand">Vườn Cau Việt<small>Giống chuẩn nhà vườn</small></a>
+    <a href="#" class="brand"><span data-t="site.name"></span><small data-t="site.tagline"></small></a>
     <nav class="nav-links">
-      <a href="#video">Video</a>
-      <a href="#bang-gia">Bảng giá</a>
-      <a href="#dac-diem">Đặc điểm</a>
+      <a href="#san-pham">Cây giống</a>
+      <a href="#video">Video vườn</a>
       <a href="#faq">Hỏi đáp</a>
     </nav>
     <div class="nav-right">
-      <a class="call" href="tel:0900000000"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>0900.000.000</a>
-      <a href="#dat-hang" class="pill pill-lime d-only" style="padding:10px 18px">Đặt mua</a>
+      <a class="call js-tel" aria-label="Gọi điện"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg><span class="num-txt" data-t="site.hotline"></span></a>
+      <a class="cart-btn" href="#dat-hang" aria-label="Giỏ hàng"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 7h12l-1 13H7z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg><span class="count js-count">0</span></a>
     </div>
   </div>
 </header>
@@ -374,30 +378,42 @@
 <section class="hero pad">
   <div class="wrap">
     <div class="hero-top">
-      <span class="kicker" data-t="topbar.text"></span>
-      <span class="sale" data-t="hero.tag"></span>
+      <span class="kicker" data-t="promo.topText"></span>
+      <span class="sale" data-t="promo.tag"></span>
     </div>
-    <figure class="float-img fa"><img data-src="hero.image" alt="Vườn cau Thái trái dài đang trĩu buồng" fetchpriority="high"><span class="note">buồng dài, sai trĩu ↘</span></figure>
-    <h1 class="mega"><span data-t="hero.titleStart"></span><span data-t="hero.titleHighlight"></span></h1>
+    <figure class="float-img fa"><img data-src="hero.image1" alt="Vườn cây giống" fetchpriority="high"><span class="note" data-t="hero.note1"></span></figure>
+    <h1 class="mega"><span data-t="hero.titleLine1"></span><span data-t="hero.titleLine2"></span></h1>
+    <figure class="float-img fb"><img data-src="hero.image2" alt="Cây giống ươm bầu"><span class="note" data-t="hero.note2"></span></figure>
     <div class="hero-row">
-      <p class="hero-end" data-t="hero.titleEnd"></p>
-      <figure class="float-img fb"><img data-src="product.photo2" alt="Cây giống cau trong bầu"><span class="note">cây giống ươm bầu ↑</span></figure>
-    </div>
-    <div class="hero-bottom">
-      <p class="hero-end-d" data-t="hero.titleEnd"></p>
+      <p class="lead-d" data-t="site.tagline"></p>
       <p class="sub" data-t="hero.sub"></p>
-      <div class="buy">
-        <div class="buy-price">
-          <div>
-            <div class="now"><span class="js-price"></span><small>/cây</small></div>
-            <div class="old">Giá gốc <span class="js-old"></span></div>
-          </div>
-          <div class="save" id="saveLabel"></div>
+      <div class="deal">
+        <span class="label" data-t="promo.countdownLabel"></span>
+        <div class="clock">
+          <div><b data-cd="d">00</b><span>Ngày</span></div>
+          <div><b data-cd="h">00</b><span>Giờ</span></div>
+          <div><b data-cd="m">00</b><span>Phút</span></div>
+          <div><b data-cd="s">00</b><span>Giây</span></div>
         </div>
-        <a href="#dat-hang" class="pill pill-forest"><span data-t="hero.button"></span><span class="arr">→</span></a>
+        <a href="#san-pham" class="pill pill-forest"><span data-t="hero.button"></span><span class="arr">↓</span></a>
       </div>
-      <div class="facts" id="facts"></div>
     </div>
+    <div class="facts" id="facts"></div>
+  </div>
+</section>
+
+<!-- SẢN PHẨM -->
+<section id="san-pham" class="slab slab-cream pad">
+  <div class="wrap">
+    <div class="shop-head">
+      <div>
+        <span class="kicker">Cây giống đang có</span>
+        <h2 class="h2">Chọn cây cho vườn</h2>
+      </div>
+      <p class="lead">Bấm vào cây để xem chi tiết và các gói ưu đãi. Mua nhiều loại trong một đơn, phí ship tính chung.</p>
+    </div>
+    <div class="chips" id="chips" role="group" aria-label="Lọc theo loại cây"></div>
+    <div class="grid" id="grid"></div>
   </div>
 </section>
 
@@ -420,62 +436,17 @@
   </div>
 </section>
 
-<!-- SỐ LIỆU + BẢNG GIÁ -->
-<section id="bang-gia" class="slab slab-cream pad">
+<!-- SỐ LIỆU + LỢI ÍCH -->
+<section class="slab slab-paper pad" id="whySection">
   <div class="wrap">
     <div class="stats" id="stats"></div>
-
-    <div class="price-head">
+    <div class="two-col" style="margin-top:64px">
       <div>
-        <span class="kicker">Bảng giá ưu đãi</span>
-        <h2 class="h2">Mua càng nhiều, càng rẻ</h2>
+        <span class="kicker">Cam kết của vườn</span>
+        <h2 class="h3" data-t="benefits.title"></h2>
       </div>
-      <p class="lead">Giá gốc <s class="js-old"></s>, nay chỉ từ <b><span class="js-price"></span>/cây</b>. Gói nào cũng được kiểm tra cây trước khi trả tiền.</p>
+      <div class="benefits" id="benefits"></div>
     </div>
-    <div class="plans" id="plans"></div>
-    <p class="bulk" id="bulkLink">Cần nhiều hơn <span class="js-bulkmax"></span> cây? <a href="#dat-hang" data-combo="custom">Tự điền số lượng</a></p>
-    <div class="row-2">
-      <div class="addon" id="addonBox">
-        <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#01472e" stroke-width="2"><path d="M9 3h6M10 3v6L4 19a2 2 0 0 0 1.7 3h12.6a2 2 0 0 0 1.7-3L14 9V3"/><path d="M7 15h10"/></svg></span>
-        <p><b><span data-t="addon.name"></span> · <span class="js-addon-price"></span>/gói</b><br><span data-t="addon.desc"></span></p>
-      </div>
-      <div class="countdown">
-        <div class="label" data-t="countdown.label"></div>
-        <div class="cd"><b data-cd="d">00</b><span>Ngày</span></div>
-        <div class="cd"><b data-cd="h">00</b><span>Giờ</span></div>
-        <div class="cd"><b data-cd="m">00</b><span>Phút</span></div>
-        <div class="cd"><b data-cd="s">00</b><span>Giây</span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ĐẶC ĐIỂM -->
-<section id="dac-diem" class="slab slab-paper pad product">
-  <div class="wrap">
-    <div class="top">
-      <div>
-        <span class="kicker">Đặc điểm giống</span>
-        <h2 class="h2" data-t="product.title"></h2>
-      </div>
-      <p class="lead" data-t="product.lead"></p>
-    </div>
-    <div class="bento">
-      <div class="ph ph-a"><img data-src="product.photo1" alt="Cây giống cau Thái trái dài tại vườn" loading="lazy"><span class="note">cây giống đứng cạnh cây mẹ đang ra buồng</span></div>
-      <div class="ph ph-b"><img data-src="hero.image" alt="Buồng cau Thái trái dài" loading="lazy" style="object-position:center 62%"></div>
-      <div class="specs" id="specs"></div>
-    </div>
-  </div>
-</section>
-
-<!-- LỢI ÍCH -->
-<section class="pad" style="background:var(--paper);padding-top:0">
-  <div class="wrap two-col">
-    <div>
-      <span class="kicker">Vì sao nên trồng</span>
-      <h2 class="h3" data-t="benefits.title"></h2>
-    </div>
-    <div class="benefits" id="benefits"></div>
   </div>
 </section>
 
@@ -493,37 +464,19 @@
 <section id="dat-hang" class="slab slab-forest pad">
   <div class="wrap order">
     <div class="text">
-      <span class="kicker">Đặt mua ngay</span>
-      <h2 class="h2">Giữ suất ưu đãi</h2>
-      <p class="lead">Điền thông tin, nhân viên gọi xác nhận trong 30 phút. Thanh toán khi nhận hàng.</p>
-      <ul class="guarantees">
-        <li><b>Giống chuẩn 100%</b>Sai giống hoàn tiền</li>
-        <li><b>Bảo hành đổi cây 30 ngày</b>Cây chết được đổi cây mới</li>
-        <li><b>Xem cây rồi trả tiền</b>Hài lòng mới thanh toán</li>
-      </ul>
+      <span class="kicker">Đặt mua</span>
+      <h2 class="h2">Giỏ cây của bạn</h2>
+      <p class="lead">Kiểm tra giỏ, điền thông tin, nhân viên gọi xác nhận trong 30 phút. Thanh toán khi nhận hàng.</p>
+      <div class="cart" id="cart"></div>
     </div>
-    <form class="card" id="orderForm" novalidate>
+    <form class="card-f" id="orderForm" novalidate>
       <div class="form-body">
         <div class="field"><label for="f-name">Họ và tên</label><input id="f-name" name="name" placeholder="Nguyễn Văn A" autocomplete="name"><div class="msg">Vui lòng nhập họ tên</div></div>
         <div class="field"><label for="f-phone">Số điện thoại</label><input id="f-phone" name="phone" type="tel" inputmode="tel" placeholder="09xx xxx xxx" autocomplete="tel"><div class="msg">Số điện thoại chưa đúng (10 số, bắt đầu bằng 0)</div></div>
         <div class="field"><label for="f-addr">Địa chỉ nhận hàng</label><input id="f-addr" name="address" placeholder="Thôn/xóm, xã, huyện, tỉnh (địa chỉ cũ)" autocomplete="street-address"><div class="msg">Vui lòng nhập địa chỉ</div></div>
-
-        <span class="group-label">Chọn gói</span>
-        <div class="opt-group" id="comboOpts"></div>
-        <div class="field" id="customQty" hidden>
-          <label for="f-qty">Số lượng cây bạn cần</label>
-          <input id="f-qty" name="qty" type="number" inputmode="numeric" step="1" placeholder="Ví dụ: 50">
-          <div class="msg">Vui lòng nhập số lượng từ <span class="js-bulkmin"></span> cây trở lên</div>
-          <p class="qty-note"><span class="js-bulk-price"></span>/cây. <span data-t="bulk.note"></span></p>
-        </div>
-
-        <div id="addonGroup">
-          <span class="group-label"><span data-t="addon.name"></span> (không bắt buộc)</span>
-          <div class="addons" id="addonOpts"></div>
-        </div>
-
-        <div class="total"><span>Tổng thanh toán</span><b id="total"></b></div>
-        <button type="submit" class="pill pill-forest">Đặt hàng ngay<span class="arr">→</span></button>
+        <div class="field"><label for="f-note">Ghi chú (không bắt buộc)</label><textarea id="f-note" name="note" placeholder="Giờ nhận hàng, yêu cầu thêm…"></textarea></div>
+        <p class="form-err" id="cartErr" hidden>Giỏ hàng đang trống. Hãy chọn cây ở phần trên trước khi đặt.</p>
+        <button type="submit" class="pill pill-lime">Đặt hàng · <span class="js-grand">0đ</span><span class="arr">→</span></button>
         <p class="secure">Thông tin được bảo mật · Thanh toán khi nhận hàng</p>
       </div>
       <div class="success" id="success" hidden>
@@ -541,7 +494,7 @@
     <span class="kicker">Quy trình mua hàng</span>
     <h2 class="h3">Từ vườn đến tận nhà</h2>
     <ol class="steps">
-      <li><div><b>Điền đơn đặt hàng</b><span>Tên, số điện thoại, địa chỉ nhận cây.</span></div></li>
+      <li><div><b>Chọn cây, đặt hàng</b><span>Thêm cây vào giỏ, điền địa chỉ.</span></div></li>
       <li><div><b>Nhân viên gọi xác nhận</b><span>Trong vòng 30 phút.</span></div></li>
       <li><div><b>Đóng gói và giao hàng</b><span>2–4 ngày toàn quốc.</span></div></li>
       <li><div><b>Kiểm tra cây rồi trả tiền</b><span>Hài lòng mới thanh toán.</span></div></li>
@@ -563,93 +516,75 @@
 <footer class="slab pad" style="background:var(--forest-2)">
   <div class="wrap">
     <div class="foot">
-      <div><b style="font-family:var(--display);font-size:28px;font-weight:400;text-transform:uppercase;line-height:1.2">Vườn Cau Việt</b><p style="margin-top:8px;max-width:40ch">Chuyên cung cấp giống cây ăn quả chất lượng cao. Giống chuẩn, giá tốt, giao toàn quốc.</p></div>
-      <ul><li><b>Liên hệ</b></li><li>Hotline: 0900.000.000</li><li>Email: [email@nhavuon.vn]</li></ul>
-      <ul><li><b>Địa chỉ</b></li><li>[Địa chỉ nhà vườn]</li><li>Chính sách vận chuyển · Đổi trả</li></ul>
+      <div><b style="font-family:var(--display);font-size:28px;font-weight:400;text-transform:uppercase;line-height:1.2" data-t="site.name"></b><p style="margin-top:8px;max-width:40ch" data-t="site.about"></p></div>
+      <ul><li><b>Liên hệ</b></li><li>Hotline: <span data-t="site.hotline"></span></li><li>Email: <span data-t="site.email"></span></li></ul>
+      <ul><li><b>Địa chỉ</b></li><li data-t="site.address"></li><li>Chính sách vận chuyển · Đổi trả</li></ul>
     </div>
-    <div class="wordmark" aria-hidden="true">Cau trái dài</div>
-    <p class="copy">© 2026 Vườn Cau Việt</p>
+    <div class="wordmark" aria-hidden="true" data-t="site.name"></div>
+    <p class="copy">© 2026 <span data-t="site.name"></span></p>
   </div>
 </footer>
 
 <nav class="mbar" aria-label="Liên hệ nhanh">
-  <a href="tel:0900000000" class="m-call" aria-label="Gọi 0900.000.000"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg></a>
-  <a href="https://zalo.me/0900000000" class="m-zalo" target="_blank" rel="noopener">Zalo</a>
-  <a href="#dat-hang" class="m-buy">Đặt mua ngay</a>
+  <a class="m-call js-tel" aria-label="Gọi điện"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg></a>
+  <a class="m-zalo js-zalo" target="_blank" rel="noopener">Zalo</a>
+  <a href="#dat-hang" class="m-buy">Giỏ hàng <span class="count js-count">0</span> · <span class="js-grand">0đ</span></a>
 </nav>
 
-<script src="config.js"></script>
+<dialog class="sheet" id="sheet" aria-labelledby="sheetTitle"></dialog>
+<div class="toast" id="toast" hidden></div>
+
+<script src="config.js?v=2"></script>
 <script>
   // ?preview=1: hiện bản nháp đã lưu từ trang quản trị (bản demo, chỉ trên máy đó)
   if (new URLSearchParams(location.search).has('preview')) {
     try {
       const draft = JSON.parse(localStorage.getItem('cfg_preview'));
-      if (draft) {
+      if (draft && Array.isArray(draft.products)) {
         window.SITE_CONFIG = draft;
         document.body.insertAdjacentHTML('afterbegin', '<div style="position:relative;z-index:70;background:#ee8a2c;color:#fff;font:700 13px/1.4 var(--body);text-align:center;padding:8px 16px">Đang xem bản nháp từ trang quản trị (chỉ hiện trên máy này)</div>');
       }
     } catch (e) {}
   }
   const C = window.SITE_CONFIG;
+  const P = C.products;
   const fmt = n => (+n || 0).toLocaleString('vi-VN') + 'đ';
-  const fmtK = n => n % 1000 === 0 ? (n / 1000).toLocaleString('vi-VN') + 'K' : fmt(n);
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const get = path => path.split('.').reduce((o, k) => o?.[k], C);
   const $ = id => document.getElementById(id);
-  const setAll = (sel, text) => document.querySelectorAll(sel).forEach(el => el.textContent = text);
+  const pct = p => p.original > p.price ? Math.round((1 - p.price / p.original) * 100) : 0;
+  function toast(msg) {
+    const t = $('toast'); t.textContent = msg; t.hidden = false;
+    clearTimeout(toast.t); toast.t = setTimeout(() => t.hidden = true, 2600);
+  }
 
-  // Điền nội dung từ config.js
+  // ---- Nội dung chung ----
+  document.title = `${C.site.name} – ${C.site.tagline}`;
   document.querySelectorAll('[data-t]').forEach(el => el.textContent = get(el.dataset.t) ?? '');
   document.querySelectorAll('[data-src]').forEach(el => el.src = get(el.dataset.src) || '');
-  setAll('.js-price', fmt(C.price.perTree));
-  setAll('.js-old', fmt(C.price.original));
-  const save = Math.round((1 - C.price.perTree / C.price.original) * 100);
-  $('saveLabel').textContent = save > 0 ? `-${save}%` : '';
-  $('saveLabel').hidden = !(save > 0);
-
+  document.querySelectorAll('.js-tel').forEach(a => a.href = 'tel:' + C.site.hotline.replace(/\D/g, ''));
+  document.querySelectorAll('.js-zalo').forEach(a => a.href = 'https://zalo.me/' + C.site.zalo.replace(/\D/g, ''));
   $('facts').innerHTML = C.hero.facts.map(f => `<div class="fact"><b>${esc(f.big)}</b>${esc(f.small)}</div>`).join('');
-  $('checks').innerHTML = C.video.checks.map(c => `<li>${esc(c.text)}</li>`).join('');
   $('stats').innerHTML = C.stats.map(s => `<div class="stat"><b>${esc(s.big)}</b><span>${esc(s.small)}</span></div>`).join('');
-  $('specs').innerHTML = C.product.specs.map(s => `<div class="spec"><div class="num">${esc(s.num)}</div><div><h4>${esc(s.title)}</h4><p>${esc(s.desc)}</p></div></div>`).join('');
-  $('benefits').innerHTML = C.benefits.items.map((b, i) => `<div class="benefit"><span class="no">✓</span><h3>${esc(b.title)}</h3><p>${esc(b.desc)}</p></div>`).join('');
+  $('benefits').innerHTML = C.benefits.items.map(b => `<div class="benefit"><span class="no">✓</span><h3>${esc(b.title)}</h3><p>${esc(b.desc)}</p></div>`).join('');
   $('reviews').innerHTML = C.reviews.map(r => `<div class="review"><div class="stars">★★★★★</div><p>“${esc(r.text)}”</p><div class="who"><div class="avatar">${esc((r.name.trim().split(' ').pop() || '?')[0])}</div><div><b>${esc(r.name)}</b><span>${esc(r.place)}</span></div></div></div>`).join('');
   $('reviewSection').hidden = !C.reviews.length;
   $('faqList').innerHTML = C.faq.map((f, i) => `<details${i ? '' : ' open'}><summary>${esc(f.q)}</summary><p>${esc(f.a)}</p></details>`).join('');
 
-  $('plans').innerHTML = C.combos.map((c, i) => `
-    <div class="plan${c.hot ? ' hot' : ''}">${c.hot ? '<span class="stamp">Bán chạy nhất</span>' : ''}
-      <div class="plan-top"><div class="qty">${esc(c.name)}</div><div class="amt">${fmtK(c.price)}</div></div>
-      <div class="per">${esc(c.note)}</div>
-      <a href="#dat-hang" class="pill ${c.hot ? 'pill-lime' : 'pill-forest'}" data-combo="${i}">Chọn gói này<span class="arr">→</span></a>
-    </div>`).join('');
-  const hotIdx = Math.max(0, C.combos.findIndex(c => c.hot));
-  $('comboOpts').innerHTML = C.combos.map((c, i) =>
-    `<label class="opt"><input type="radio" id="combo${i}" name="combo" value="${i}" data-price="${c.price}"${i === hotIdx ? ' checked' : ''}>${esc(c.name)}${c.tag ? ` <span class="tag">${esc(c.tag)}</span>` : ''}<span class="r">${fmt(c.price)}</span></label>`).join('')
-    + (C.bulk.enabled ? `<label class="opt"><input type="radio" id="comboX" name="combo" value="custom">Số lượng khác <span class="r">Từ ${C.bulk.min} cây</span></label>` : '');
-  $('bulkLink').hidden = !C.bulk.enabled;
-  setAll('.js-bulkmax', C.bulk.min - 1);
-  setAll('.js-bulkmin', C.bulk.min);
-  setAll('.js-bulk-price', 'Tạm tính ' + fmt(C.bulk.price));
-  $('f-qty').min = C.bulk.min;
-
-  setAll('.js-addon-price', fmt(C.addon.price));
-  $('addonBox').hidden = $('addonGroup').hidden = !C.addon.enabled;
-  $('addonOpts').innerHTML = [0, 1, 2].map(n =>
-    `<label class="opt"><input type="radio" id="addon${n}" name="addon" value="${n}" data-price="${n * C.addon.price}"${n ? '' : ' checked'}>${n ? `${n} gói<br>+${fmtK(n * C.addon.price)}` : 'Không mua'}</label>`).join('');
-
+  // ---- Video ----
+  $('video').hidden = !C.video.enabled;
+  $('checks').innerHTML = C.video.checks.map(c => `<li>${esc(c.text)}</li>`).join('');
   const vid = $('vid'), playBtn = $('playBtn');
-  vid.src = C.video.src; vid.poster = C.video.poster;
-
-  // Video: chỉ tải khi khách bấm xem
+  if (C.video.enabled) { vid.src = C.video.src; vid.poster = C.video.poster; }
   playBtn.addEventListener('click', () => { playBtn.hidden = true; vid.play().catch(() => {}); });
   vid.addEventListener('play', () => { playBtn.hidden = true; });
 
-  // Đếm ngược: hạn tính từ lần đầu khách mở trang
+  // ---- Đếm ngược: hạn tính từ lần đầu khách mở trang ----
   const KEY = 'offer_deadline';
   let deadline;
   try { deadline = +localStorage.getItem(KEY); } catch (e) {}
   if (!deadline || deadline < Date.now()) {
-    deadline = Date.now() + (+C.countdown.days || 3) * 864e5;
+    deadline = Date.now() + (+C.promo.countdownDays || 3) * 864e5;
     try { localStorage.setItem(KEY, deadline); } catch (e) {}
   }
   const pad = n => String(n).padStart(2, '0');
@@ -660,35 +595,137 @@
   }
   tick(); setInterval(tick, 1000);
 
-  // Tổng tiền
-  const form = $('orderForm');
-  const qtyBox = $('customQty'), qtyInput = form.qty;
-  const comboEl = () => form.querySelector('[name=combo]:checked');
-  const isCustom = () => comboEl()?.value === 'custom';
-  const addonPrice = () => C.addon.enabled ? +form.querySelector('[name=addon]:checked').dataset.price : 0;
-  function updateTotal() {
-    qtyBox.hidden = !isCustom();
-    let c;
-    if (isCustom()) {
-      const q = parseInt(qtyInput.value, 10);
-      if (!(q >= C.bulk.min)) { $('total').textContent = '—'; return; }
-      c = q * C.bulk.price;
-    } else {
-      c = +comboEl().dataset.price;
-    }
-    $('total').textContent = fmt(c + addonPrice());
+  // ---- Danh sách sản phẩm ----
+  let cat = '';
+  function renderChips() {
+    const cats = C.categories.map(c => c.name).filter(n => P.some(p => p.category === n));
+    $('chips').innerHTML = ['', ...cats].map(n => `<button class="chip" type="button" data-cat="${esc(n)}" aria-pressed="${n === cat}">${n ? esc(n) : 'Tất cả'}</button>`).join('');
+    $('chips').hidden = cats.length < 2;
   }
-  updateTotal();
-  form.addEventListener('change', updateTotal);
-  qtyInput.addEventListener('input', () => { qtyInput.classList.remove('err'); updateTotal(); });
-  form.addEventListener('change', e => { if (e.target.id === 'comboX') qtyInput.focus(); });
+  function renderGrid() {
+    const list = P.map((p, i) => [p, i]).filter(([p]) => !cat || p.category === cat);
+    $('grid').innerHTML = list.length ? list.map(([p, i]) => `
+      <article class="card">
+        <button class="pic" type="button" data-open="${i}" aria-label="Xem ${esc(p.name)}">
+          <img src="${esc(p.image)}" alt="${esc(p.name)}" loading="lazy">
+          ${p.badge ? `<span class="badge">${esc(p.badge)}</span>` : ''}
+          ${pct(p) ? `<span class="off">-${pct(p)}%</span>` : ''}
+        </button>
+        <h3><button type="button" data-open="${i}">${esc(p.name)}</button></h3>
+        <p class="short">${esc(p.short)}</p>
+        <div class="price"><b>${fmt(p.price)}</b><small>/${esc(p.unit || 'cây')}</small>${p.original > p.price ? `<s>${fmt(p.original)}</s>` : ''}</div>
+        <button class="pill pill-forest add" type="button" data-open="${i}">${p.bundles?.length ? 'Chọn gói' : 'Thêm vào giỏ'}</button>
+      </article>`).join('') : '<p class="empty-cat">Chưa có cây nào trong mục này.</p>';
+  }
+  $('chips').addEventListener('click', e => {
+    const b = e.target.closest('[data-cat]'); if (!b) return;
+    cat = b.dataset.cat; renderChips(); renderGrid();
+  });
+  renderChips(); renderGrid();
 
-  // Nút "Chọn gói" ở bảng giá chọn sẵn gói trong form
-  document.querySelectorAll('[data-combo]').forEach(b => b.addEventListener('click', () => {
-    const r = form.querySelector(`[name=combo][value="${b.dataset.combo}"]`);
-    if (r) { r.checked = true; updateTotal(); }
-  }));
+  // ---- Chi tiết sản phẩm ----
+  const sheet = $('sheet');
+  let cur = null, qty = 1;
+  function openProduct(i) {
+    cur = P[i]; qty = 1;
+    const p = cur, pics = [p.image, p.image2].filter(Boolean);
+    const opts = [{ name: '', price: p.price, note: `Mua lẻ theo ${p.unit || 'cây'}` }, ...(p.bundles || [])];
+    sheet.innerHTML = `
+      <button class="x" type="button" data-close aria-label="Đóng">×</button>
+      <div class="sheet-in">
+        <div class="sheet-pics">${pics.map(src => `<img src="${esc(src)}" alt="${esc(p.name)}">`).join('')}</div>
+        <div class="sheet-body">
+          ${p.badge ? `<span class="kicker" style="color:var(--husk)">${esc(p.badge)}</span>` : ''}
+          <h2 id="sheetTitle">${esc(p.name)}</h2>
+          <div class="p-price"><b>${fmt(p.price)}</b><span>/${esc(p.unit || 'cây')}</span>${p.original > p.price ? `<s>${fmt(p.original)}</s>` : ''}</div>
+          <p class="desc">${esc(p.desc || p.short)}</p>
+          ${p.specs?.length ? `<dl class="specs">${p.specs.map(s => `<div><dt>${esc(s.label)}</dt><dd>${esc(s.value)}</dd></div>`).join('')}</dl>` : ''}
+          <span class="opt-title">Chọn cách mua</span>
+          <div class="opts">${opts.map((o, k) => `<label class="opt"><input type="radio" name="opt" value="${k}"${k ? '' : ' checked'}><span>${o.name ? esc(o.name) : 'Mua lẻ'}<small>${esc(o.note || '')}</small></span><span class="r">${fmt(o.price)}${o.name ? '' : '/' + esc(p.unit || 'cây')}</span></label>`).join('')}</div>
+          <div class="buy-row">
+            <div class="stepper"><button type="button" data-q="-1" aria-label="Bớt">−</button><output id="qty">1</output><button type="button" data-q="1" aria-label="Thêm">+</button></div>
+            <button class="pill pill-forest" type="button" data-add>Thêm vào giỏ</button>
+          </div>
+          <button class="pill pill-lime full" type="button" data-buy>Mua ngay<span class="arr">→</span></button>
+        </div>
+      </div>`;
+    sheet.showModal();
+  }
+  function addCurrent() {
+    const k = +sheet.querySelector('[name=opt]:checked').value;
+    const opt = k ? cur.bundles[k - 1].name : '';
+    addToCart(cur.name, opt, qty);
+    toast(`Đã thêm ${qty} × ${opt || cur.name} vào giỏ`);
+    sheet.close();
+  }
+  document.addEventListener('click', e => {
+    const o = e.target.closest('[data-open]'); if (o) openProduct(+o.dataset.open);
+  });
+  sheet.addEventListener('click', e => {
+    if (e.target === sheet || e.target.closest('[data-close]')) return sheet.close();
+    const q = e.target.closest('[data-q]');
+    if (q) { qty = Math.max(1, Math.min(999, qty + +q.dataset.q)); $('qty').textContent = qty; }
+    if (e.target.closest('[data-add]')) addCurrent();
+    if (e.target.closest('[data-buy]')) { addCurrent(); $('dat-hang').scrollIntoView(); }
+  });
 
+  // ---- Giỏ hàng (lưu trên máy khách) ----
+  const CART_KEY = 'cart_v1';
+  let cart = [];
+  try { cart = JSON.parse(localStorage.getItem(CART_KEY)) || []; } catch (e) {}
+  // Mỗi dòng: { p: tên sản phẩm, o: tên gói ('' = mua lẻ), q: số lượng }. Giá luôn lấy từ cấu hình hiện tại.
+  const lineInfo = l => {
+    const p = P.find(x => x.name === l.p); if (!p) return null;
+    const b = l.o ? (p.bundles || []).find(x => x.name === l.o) : null;
+    if (l.o && !b) return null;
+    return { p, b, unit: b ? b.price : p.price, total: (b ? b.price : p.price) * l.q };
+  };
+  cart = cart.filter(lineInfo);
+  function addToCart(p, o, q) {
+    const ex = cart.find(l => l.p === p && l.o === o);
+    ex ? ex.q += q : cart.push({ p, o, q });
+    saveCart();
+  }
+  function totals() {
+    const items = cart.map(lineInfo);
+    const sub = items.reduce((s, x) => s + x.total, 0);
+    const free = !cart.length || sub >= C.shipping.freeFrom || items.some(x => x.b?.freeship);
+    const ship = free ? 0 : +C.shipping.fee || 0;
+    return { sub, ship, grand: sub + ship, count: cart.reduce((s, l) => s + l.q, 0) };
+  }
+  function saveCart() {
+    try { localStorage.setItem(CART_KEY, JSON.stringify(cart)); } catch (e) {}
+    renderCart();
+  }
+  function renderCart() {
+    const t = totals();
+    document.querySelectorAll('.js-count').forEach(el => el.textContent = t.count);
+    document.querySelectorAll('.js-grand').forEach(el => el.textContent = fmt(t.grand));
+    if (!cart.length) {
+      $('cart').innerHTML = `<h3>Giỏ cây</h3><p class="cart-empty">Giỏ đang trống. <a href="#san-pham">Chọn cây ở đây ↑</a></p>`;
+      return;
+    }
+    $('cart').innerHTML = `<h3>Giỏ cây</h3>` + cart.map((l, i) => {
+      const x = lineInfo(l);
+      return `<div class="line"><img src="${esc(x.p.image)}" alt="">
+        <div><b>${esc(x.p.name)}</b><small>${x.b ? esc(x.b.name) : 'Mua lẻ'} · ${fmt(x.unit)}</small></div>
+        <div class="right"><span class="lt">${fmt(x.total)}</span>
+          <div class="stepper"><button type="button" data-cq="${i}" data-d="-1" aria-label="Bớt">−</button><output>${l.q}</output><button type="button" data-cq="${i}" data-d="1" aria-label="Thêm">+</button></div>
+          <button class="rm" type="button" data-rm="${i}">Xoá</button></div></div>`;
+    }).join('') + `<div class="sum"><div><span>Tạm tính</span><span>${fmt(t.sub)}</span></div>
+      <div><span>Phí ship</span><span>${t.ship ? fmt(t.ship) : 'Miễn phí'}</span></div>
+      <p class="ship-note">${esc(C.shipping.note)}</p>
+      <div class="grand"><span>Tổng</span><b>${fmt(t.grand)}</b></div></div>`;
+  }
+  $('cart').addEventListener('click', e => {
+    const q = e.target.closest('[data-cq]'), r = e.target.closest('[data-rm]');
+    if (q) { const l = cart[+q.dataset.cq]; l.q += +q.dataset.d; if (l.q < 1) cart.splice(+q.dataset.cq, 1); saveCart(); }
+    if (r) { cart.splice(+r.dataset.rm, 1); saveCart(); }
+  });
+  renderCart();
+
+  // ---- Đặt hàng ----
+  const form = $('orderForm');
   form.addEventListener('submit', e => {
     e.preventDefault();
     let first = null;
@@ -698,18 +735,15 @@
       i.classList.toggle('err', bad);
       if (bad && !first) first = i;
     });
-    if (isCustom()) {
-      const bad = !(parseInt(qtyInput.value, 10) >= C.bulk.min);
-      qtyInput.classList.toggle('err', bad);
-      if (bad && !first) first = qtyInput;
-    }
+    $('cartErr').hidden = !!cart.length;
+    if (!cart.length) { $('cart').scrollIntoView({ block: 'center' }); return; }
     if (first) { first.focus(); return; }
-    const data = Object.fromEntries(new FormData(form));
-    data.combo = isCustom() ? `${data.qty} cây (tự điền)` : C.combos[+data.combo].name;
-    data.total = $('total').textContent;
+    const t = totals();
+    const data = { ...Object.fromEntries(new FormData(form)), items: cart.map(l => ({ ...l, ...{ total: lineInfo(l).total } })), ship: t.ship, total: t.grand };
     // TODO: gửi đơn về backend / Google Sheet / Telegram, ví dụ:
     // fetch('https://script.google.com/macros/s/XXX/exec', { method: 'POST', body: JSON.stringify(data) });
     console.log('Đơn hàng:', data);
+    cart = []; saveCart();
     form.querySelector('.form-body').hidden = true;
     $('success').hidden = false;
   });

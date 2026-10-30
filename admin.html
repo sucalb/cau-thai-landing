@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Quản trị – Cau Thái Trái Dài</title>
+<title>Quản trị cửa hàng cây giống</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -81,6 +81,20 @@
 
   .toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--forest);color:#fff;padding:12px 18px;border-radius:12px;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,.25);z-index:20;max-width:calc(100% - 32px)}
   .toast.bad{background:var(--red)}
+
+  /* Mục sản phẩm thu gọn được, danh sách lồng nhau */
+  details.item{padding:0}
+  details.item > summary{list-style:none;cursor:pointer;padding:12px 14px}
+  details.item > summary::-webkit-details-marker{display:none}
+  details.item > summary .item-head{margin:0}
+  details.item > summary .item-head b::before{content:"▸ ";color:var(--leaf)}
+  details.item[open] > summary .item-head b::before{content:"▾ "}
+  details.item > .fields{padding:0 14px 14px}
+  .thumb{width:40px;height:40px;border-radius:8px;object-fit:cover;flex:none;background:var(--mint)}
+  .f select{width:100%;font:inherit;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;background:var(--paper);color:var(--ink)}
+  .sub-list{grid-column:1/-1;background:#fff;border:1px dashed var(--line);border-radius:12px;padding:12px}
+  .sub-list > h3{font-size:14px}
+  .sub-list .item{background:var(--cream)}
 </style>
 </head>
 <body>
@@ -88,8 +102,8 @@
 <!-- ĐĂNG NHẬP -->
 <div class="login" id="loginView">
   <div class="card">
-    <h1>Quản trị trang bán hàng</h1>
-    <p class="sub">Đăng nhập để sửa giá, chữ, ảnh và video.</p>
+    <h1>Quản trị cửa hàng</h1>
+    <p class="sub">Đăng nhập để sửa sản phẩm, giá, nội dung và hình ảnh.</p>
     <p class="sub" style="background:var(--mint);border-radius:10px;padding:10px 12px;color:var(--forest)">Bản demo: tài khoản <b>admin</b>, mật khẩu <b>demo123</b>. Thay đổi chỉ lưu trên máy này để xem trước, chưa đưa lên trang thật.</p>
     <form id="loginForm" class="fields">
       <div class="f"><label class="lbl" for="l-user">Tài khoản</label><input type="text" id="l-user" autocomplete="username" autocapitalize="none" spellcheck="false"></div>
@@ -104,7 +118,7 @@
 <!-- TRÌNH SỬA -->
 <div id="editorView" hidden>
   <div class="bar"><div class="bar-in">
-    <h1>Quản trị · Cau Thái Trái Dài</h1>
+    <h1>Quản trị cửa hàng</h1>
     <a href="./?preview=1" target="_blank" rel="noopener">Xem trước ↗</a>
     <button class="btn btn-ghost btn-sm" id="reloadBtn" type="button">Khôi phục mặc định</button>
     <button class="btn btn-ghost btn-sm" id="logoutBtn" type="button">Đăng xuất</button>
@@ -119,36 +133,42 @@
 
 <div class="toast" id="toast" hidden></div>
 
-<script src="config.js"></script>
+<script src="config.js?v=2"></script>
 <script>
-// Cấu trúc các mục sửa được. Mỗi field: [đường dẫn trong config, nhãn, kiểu]
-// Kiểu: text (mặc định), textarea, money, number, bool, image, video
+// Các mục sửa được. Field: [đường dẫn, nhãn, kiểu, rộng cả dòng | định nghĩa danh sách con]
+// Kiểu: text (mặc định), textarea, money, number, bool, image, video, category, list
+const SPEC_LIST = { title: 'Thông số', label: it => it.label || 'Thông số mới', newItem: { label: '', value: '' },
+  fields: [['label', 'Tên (vd: Ra trái sau)'], ['value', 'Giá trị (vd: 9–12 tháng)']] };
+const BUNDLE_LIST = { title: 'Gói ưu đãi (khách chọn mua theo gói)', label: it => it.name || 'Gói mới', newItem: { name: '', price: 0, note: '', freeship: false },
+  fields: [['name', 'Tên gói (vd: Gói 6 cây)'], ['price', 'Giá cả gói', 'money'], ['note', 'Ghi chú (vd: Miễn ship · 25.000đ/cây)'], ['freeship', 'Gói này miễn phí ship', 'bool']] };
 const SECTIONS = [
-  { id: 'gia', title: 'Giá bán', hint: 'Phần "Tiết kiệm %" ở đầu trang tự tính từ hai giá này.',
-    fields: [['price.perTree', 'Giá mỗi cây (hiện to ở đầu trang)', 'money'], ['price.original', 'Giá gốc (bị gạch ngang)', 'money']] },
-  { id: 'goi', title: 'Các gói combo', hint: 'Hiện trong bảng giá và trong form đặt hàng.',
-    lists: [{ key: 'combos', title: 'Danh sách gói', label: it => it.name || 'Gói mới', newItem: { name: '', price: 0, note: '', tag: '', hot: false },
-      fields: [['name', 'Tên gói (vd: 6 cây)'], ['price', 'Giá gói', 'money'], ['note', 'Ghi chú (vd: Miễn phí ship)'], ['tag', 'Nhãn nhỏ trong form (vd: FREESHIP, để trống nếu không cần)'], ['hot', 'Đánh dấu "Bán chạy nhất" (gói này được chọn sẵn)', 'bool']] }] },
-  { id: 'si', title: 'Mua số lượng lớn', hint: 'Lựa chọn "Số lượng khác" để khách tự điền số cây.',
-    fields: [['bulk.enabled', 'Cho khách tự điền số lượng', 'bool'], ['bulk.min', 'Số lượng tối thiểu (cây)', 'number'], ['bulk.price', 'Giá mỗi cây khi tự điền', 'money'], ['bulk.note', 'Ghi chú dưới ô số lượng', 'textarea']] },
-  { id: 'kem', title: 'Sản phẩm mua kèm', hint: 'Khách chọn mua 0, 1 hoặc 2 gói trong form.',
-    fields: [['addon.enabled', 'Hiện sản phẩm mua kèm', 'bool'], ['addon.name', 'Tên (vd: Phân kích rễ)'], ['addon.price', 'Giá mỗi gói', 'money'], ['addon.desc', 'Mô tả', 'textarea']] },
-  { id: 'km', title: 'Khuyến mãi & đếm ngược',
-    fields: [['topbar.text', 'Dòng chữ trên cùng'], ['topbar.highlight', 'Phần chữ vàng nổi bật'], ['hero.tag', 'Nhãn đỏ trên ảnh đầu trang'], ['countdown.label', 'Chữ trên đồng hồ đếm ngược'], ['countdown.days', 'Số ngày đếm ngược (tính từ lần đầu khách mở trang)', 'number']] },
+  { id: 'sp', title: 'Sản phẩm', hint: 'Thêm, sửa, xoá, sắp xếp cây giống. Bấm vào tên cây để mở ra sửa.',
+    lists: [{ key: 'products', title: 'Danh sách cây', collapsible: true, thumb: 'image', label: it => it.name || 'Cây mới',
+      newItem: { name: '', category: '', price: 0, original: 0, unit: 'cây', image: '', image2: '', badge: '', short: '', desc: '', specs: [], bundles: [] },
+      fields: [['name', 'Tên cây'], ['category', 'Danh mục', 'category'], ['price', 'Giá bán lẻ', 'money'], ['original', 'Giá gốc (gạch ngang, để 0 nếu không có)', 'money'],
+        ['unit', 'Đơn vị (vd: cây, bầu)'], ['badge', 'Nhãn trên ảnh (vd: Bán chạy, Mới về)'], ['image', 'Ảnh chính', 'image'], ['image2', 'Ảnh phụ (không bắt buộc)', 'image'],
+        ['short', 'Mô tả ngắn (hiện trong danh sách)', 'text', true], ['desc', 'Mô tả chi tiết', 'textarea'],
+        ['specs', '', 'list', SPEC_LIST], ['bundles', '', 'list', BUNDLE_LIST]] }] },
+  { id: 'dm', title: 'Danh mục', hint: 'Dùng để lọc cây trên trang. Đổi tên danh mục thì chọn lại danh mục cho các cây.',
+    lists: [{ key: 'categories', title: 'Danh mục', label: it => it.name || 'Danh mục mới', newItem: { name: '' }, fields: [['name', 'Tên danh mục', 'text', true]] }] },
+  { id: 'ship', title: 'Phí ship',
+    fields: [['shipping.fee', 'Phí ship mỗi đơn', 'money'], ['shipping.freeFrom', 'Miễn ship cho đơn từ', 'money'], ['shipping.note', 'Ghi chú phí ship (hiện trong giỏ hàng)', 'textarea']] },
+  { id: 'ch', title: 'Thông tin cửa hàng',
+    fields: [['site.name', 'Tên cửa hàng'], ['site.tagline', 'Khẩu hiệu ngắn'], ['site.hotline', 'Hotline'], ['site.zalo', 'Số Zalo'], ['site.address', 'Địa chỉ'], ['site.email', 'Email'], ['site.about', 'Giới thiệu ngắn (chân trang)', 'textarea']] },
+  { id: 'km', title: 'Khuyến mãi',
+    fields: [['promo.topText', 'Dòng chữ nhỏ đầu trang'], ['promo.tag', 'Nhãn khuyến mãi (màu cam)'], ['promo.countdownLabel', 'Chữ trên đồng hồ đếm ngược'], ['promo.countdownDays', 'Số ngày đếm ngược (tính từ lần đầu khách mở trang)', 'number']] },
   { id: 'dau', title: 'Đầu trang',
-    fields: [['hero.image', 'Ảnh đầu trang', 'image'], ['hero.titleStart', 'Tiêu đề chữ lớn – dòng 1 (nên 2 chữ, vd: Cau Thái)'], ['hero.titleHighlight', 'Tiêu đề chữ lớn – dòng 2 (nên 2 chữ, vd: Trái Dài)'], ['hero.titleEnd', 'Dòng phụ dưới tiêu đề'], ['hero.sub', 'Mô tả ngắn', 'textarea'], ['hero.button', 'Chữ trên nút đặt mua']],
-    lists: [{ key: 'hero.facts', title: 'Ô thông số trên ảnh (nên để 3 ô)', label: it => it.big || 'Ô mới', newItem: { big: '', small: '' }, fields: [['big', 'Chữ lớn'], ['small', 'Chữ nhỏ']] }] },
+    fields: [['hero.titleLine1', 'Tiêu đề lớn – dòng 1 (nên 1–2 chữ)'], ['hero.titleLine2', 'Tiêu đề lớn – dòng 2 (nên 1–2 chữ)'], ['hero.sub', 'Mô tả', 'textarea'], ['hero.button', 'Chữ trên nút'],
+      ['hero.image1', 'Ảnh 1', 'image'], ['hero.note1', 'Ghi chú viết tay cạnh ảnh 1'], ['hero.image2', 'Ảnh 2', 'image'], ['hero.note2', 'Ghi chú viết tay cạnh ảnh 2']],
+    lists: [{ key: 'hero.facts', title: 'Ô thông số đầu trang (nên để 3 ô)', label: it => it.big || 'Ô mới', newItem: { big: '', small: '' }, fields: [['big', 'Chữ lớn'], ['small', 'Chữ nhỏ']] }] },
   { id: 'video', title: 'Video',
-    fields: [['video.src', 'File video (.mp4, nên dưới 20MB)', 'video'], ['video.poster', 'Ảnh bìa video', 'image'], ['video.title', 'Tiêu đề'], ['video.lead', 'Mô tả', 'textarea']],
+    fields: [['video.enabled', 'Hiện phần video', 'bool'], ['video.src', 'File video (.mp4)', 'video'], ['video.poster', 'Ảnh bìa video', 'image'], ['video.title', 'Tiêu đề'], ['video.lead', 'Mô tả', 'textarea']],
     lists: [{ key: 'video.checks', title: 'Các dòng có dấu tích', label: it => it.text || 'Dòng mới', newItem: { text: '' }, fields: [['text', 'Nội dung', 'text', true]] }] },
-  { id: 'so', title: 'Ô số liệu',
+  { id: 'so', title: 'Số liệu',
     lists: [{ key: 'stats', title: 'Các ô số liệu (nên để 4 ô)', label: it => it.big || 'Ô mới', newItem: { big: '', small: '' }, fields: [['big', 'Số lớn (vd: 99%)'], ['small', 'Chữ nhỏ']] }] },
-  { id: 'dd', title: 'Đặc điểm giống',
-    fields: [['product.title', 'Tiêu đề'], ['product.lead', 'Mô tả', 'textarea'], ['product.photo1', 'Ảnh 1', 'image'], ['product.photo2', 'Ảnh 2', 'image']],
-    lists: [{ key: 'product.specs', title: 'Thông số', label: it => it.title || 'Thông số mới', newItem: { num: '', title: '', desc: '' }, fields: [['num', 'Số nổi bật (vd: 9–12)'], ['title', 'Tiêu đề'], ['desc', 'Mô tả', 'text', true]] }] },
-  { id: 'loi', title: 'Lợi ích',
+  { id: 'loi', title: 'Cam kết',
     fields: [['benefits.title', 'Tiêu đề']],
-    lists: [{ key: 'benefits.items', title: 'Các lợi ích (nên để 4)', label: it => it.title || 'Lợi ích mới', newItem: { title: '', desc: '' }, fields: [['title', 'Tiêu đề'], ['desc', 'Mô tả']] }] },
+    lists: [{ key: 'benefits.items', title: 'Các cam kết', label: it => it.title || 'Cam kết mới', newItem: { title: '', desc: '' }, fields: [['title', 'Tiêu đề'], ['desc', 'Mô tả']] }] },
   { id: 'dg', title: 'Đánh giá khách hàng', hint: 'Xoá hết đánh giá thì phần này tự ẩn.',
     lists: [{ key: 'reviews', title: 'Đánh giá', label: it => it.name || 'Đánh giá mới', newItem: { text: '', name: '', place: '' }, fields: [['text', 'Nội dung', 'textarea', true], ['name', 'Tên khách'], ['place', 'Nơi ở']] }] },
   { id: 'faq', title: 'Hỏi đáp',
@@ -160,6 +180,8 @@ const SECTIONS = [
 const DEMO_USER = 'admin', DEMO_PASS = 'demo123';
 const LS_AUTH = 'admin_demo_login', LS_DRAFT = 'cfg_preview';
 let cfg = null, dirty = false;
+let defs = {};                 // đường dẫn danh sách -> định nghĩa, dựng lại mỗi lần vẽ
+const openItems = new Set();   // mục sản phẩm đang mở
 
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -181,6 +203,8 @@ function setDirty(v = true) {
 function loadConfig() {
   let draft = null;
   try { draft = JSON.parse(localStorage.getItem(LS_DRAFT)); } catch (e) {}
+  // Bản nháp kiểu cũ (trang chỉ bán cau) không có danh sách sản phẩm: bỏ qua
+  if (draft && !Array.isArray(draft.products)) draft = null;
   cfg = draft || structuredClone(window.SITE_CONFIG);
   if (draft) $('status').dataset.saved = 'Đang sửa bản nháp đã lưu trên máy này';
   render();
@@ -202,54 +226,78 @@ function save() {
 }
 
 function validate() {
-  if (!(cfg.price.perTree > 0) || !(cfg.price.original > 0)) return 'Giá mỗi cây và giá gốc phải lớn hơn 0.';
-  if (!cfg.combos.length) return 'Cần ít nhất 1 gói combo.';
-  if (cfg.combos.find(c => !c.name.trim() || !(c.price > 0))) return 'Mỗi gói cần có tên và giá lớn hơn 0.';
-  if (cfg.bulk.enabled && !(cfg.bulk.min > 0 && cfg.bulk.price > 0)) return 'Mua số lượng lớn: cần số lượng tối thiểu và giá lớn hơn 0.';
-  if (cfg.addon.enabled && !(cfg.addon.price > 0)) return 'Giá sản phẩm mua kèm phải lớn hơn 0.';
+  if (!cfg.products.length) return 'Cần ít nhất 1 sản phẩm.';
+  const names = new Set();
+  for (const [i, p] of cfg.products.entries()) {
+    const n = p.name.trim();
+    if (!n) return `Sản phẩm thứ ${i + 1} chưa có tên.`;
+    if (names.has(n)) return `Có 2 sản phẩm cùng tên "${n}". Mỗi sản phẩm cần tên khác nhau.`;
+    names.add(n);
+    if (!(p.price > 0)) return `"${n}" cần giá bán lớn hơn 0.`;
+    if (!p.image) return `"${n}" chưa có ảnh chính.`;
+    const b = (p.bundles || []).find(b => !b.name.trim() || !(b.price > 0));
+    if (b) return `"${n}": mỗi gói ưu đãi cần tên và giá lớn hơn 0.`;
+  }
   return '';
 }
 
 // ---- Vẽ form ----
-function fieldHTML(path, label, type = 'text', wide = false) {
+function fieldHTML(path, label, type = 'text', extra = false) {
+  if (type === 'list') return listHTML(path, extra, true);
   const v = getP(cfg, path), id = 'f_' + path.replace(/\W/g, '_');
-  const cls = 'f' + (wide || type === 'textarea' || type === 'image' || type === 'video' ? ' wide' : '');
+  const cls = 'f' + (extra === true || type === 'textarea' || type === 'image' || type === 'video' ? ' wide' : '');
   if (type === 'bool') return `<div class="${cls}"><label class="check"><input type="checkbox" id="${id}" data-p="${path}" data-type="bool"${v ? ' checked' : ''}>${esc(label)}</label></div>`;
   if (type === 'textarea') return `<div class="${cls}"><label class="lbl" for="${id}">${esc(label)}</label><textarea id="${id}" data-p="${path}">${esc(v)}</textarea></div>`;
   if (type === 'money' || type === 'number') return `<div class="${cls}"><label class="lbl" for="${id}">${esc(label)}</label><input type="number" inputmode="numeric" min="0" step="${type === 'money' ? 1000 : 1}" id="${id}" data-p="${path}" data-type="number" value="${esc(v)}">${type === 'money' ? `<div class="money-hint" data-money="${path}">${fmt(v)}</div>` : ''}</div>`;
+  if (type === 'category') {
+    const names = cfg.categories.map(c => c.name).filter(Boolean);
+    const opts = ['', ...names, ...(v && !names.includes(v) ? [v] : [])];
+    return `<div class="${cls}"><label class="lbl" for="${id}">${esc(label)}</label><select id="${id}" data-p="${path}">${opts.map(n => `<option value="${esc(n)}"${n === v ? ' selected' : ''}>${n ? esc(n) + (names.includes(n) ? '' : ' (đã xoá)') : '— Chưa chọn —'}</option>`).join('')}</select></div>`;
+  }
   if (type === 'image' || type === 'video') {
     const isNew = String(v).startsWith('data:');
-    const preview = type === 'image' ? `<img src="${esc(v)}" alt="">` : `<video src="${esc(v)}" muted playsinline preload="metadata"></video>`;
+    const preview = !v ? '<span class="thumb" style="width:120px;height:120px;border-radius:12px"></span>' : type === 'image' ? `<img src="${esc(v)}" alt="">` : `<video src="${esc(v)}" muted playsinline preload="metadata"></video>`;
     return `<div class="${cls}"><span class="lbl" style="display:block;font-weight:600;font-size:14px;color:var(--forest);margin-bottom:5px">${esc(label)}</span>
-      <div class="media">${preview}<div class="info">${isNew ? '<span class="new">Ảnh mới chọn</span>' : esc(v)}<br><br>
-      <label class="btn btn-ghost btn-sm">Chọn ${type === 'image' ? 'ảnh' : 'video'} khác<input type="file" hidden accept="${type === 'image' ? 'image/*' : 'video/mp4'}" data-p="${path}" data-type="${type}"></label></div></div></div>`;
+      <div class="media">${preview}<div class="info">${isNew ? '<span class="new">Ảnh mới chọn</span>' : v ? esc(v) : 'Chưa có'}<br><br>
+      <label class="btn btn-ghost btn-sm">Chọn ${type === 'image' ? 'ảnh' : 'video'}<input type="file" hidden accept="${type === 'image' ? 'image/*' : 'video/mp4'}" data-p="${path}" data-type="${type}"></label>
+      ${v && type === 'image' ? ` <button class="btn btn-ghost btn-sm" type="button" data-clear="${path}">Bỏ ảnh</button>` : ''}</div></div></div>`;
   }
   return `<div class="${cls}"><label class="lbl" for="${id}">${esc(label)}</label><input type="text" id="${id}" data-p="${path}" value="${esc(v)}"></div>`;
 }
 
+function listHTML(key, def, nested) {
+  defs[key] = def;
+  const arr = getP(cfg, key) || [];
+  if (!getP(cfg, key)) setP(cfg, key, arr);
+  const head = (it, i) => `<div class="item-head">${def.thumb ? (it[def.thumb] ? `<img class="thumb" src="${esc(it[def.thumb])}" alt="">` : '<span class="thumb"></span>') : ''}<b>${i + 1}. ${esc(def.label(it))}</b>
+      <button class="icon-btn" type="button" data-move="${key}" data-i="${i}" data-d="-1" aria-label="Lên"${i ? '' : ' disabled'}>↑</button>
+      <button class="icon-btn" type="button" data-move="${key}" data-i="${i}" data-d="1" aria-label="Xuống"${i < arr.length - 1 ? '' : ' disabled'}>↓</button>
+      <button class="icon-btn del" type="button" data-del="${key}" data-i="${i}" aria-label="Xoá">✕</button></div>`;
+  const body = (it, i) => `<div class="fields">${def.fields.map(([k, lab, t, w]) => fieldHTML(`${key}.${i}.${k}`, lab, t, w)).join('')}</div>`;
+  return `<div class="list${nested ? ' sub-list' : ''}"><h3>${esc(def.title)}</h3>
+    ${arr.map((it, i) => def.collapsible
+      ? `<details class="item" data-k="${key}.${i}"${openItems.has(`${key}.${i}`) ? ' open' : ''}><summary>${head(it, i)}</summary>${body(it, i)}</details>`
+      : `<div class="item">${head(it, i)}${body(it, i)}</div>`).join('')}
+    <button class="btn btn-ghost btn-sm" type="button" data-add="${key}">+ Thêm</button></div>`;
+}
+
 function render() {
+  defs = {};
+  const y = scrollY;
   $('toc').innerHTML = SECTIONS.map(s => `<a href="#sec-${s.id}">${esc(s.title)}</a>`).join('');
   $('sections').innerHTML = SECTIONS.map(s => `
     <section class="sec" id="sec-${s.id}">
       <h2>${esc(s.title)}</h2>${s.hint ? `<p class="hint">${esc(s.hint)}</p>` : ''}
       ${s.fields ? `<div class="fields">${s.fields.map(f => fieldHTML(...f)).join('')}</div>` : ''}
-      ${(s.lists || []).map(l => {
-        const arr = getP(cfg, l.key) || [];
-        return `<div class="list"><h3>${esc(l.title)}</h3>
-          ${arr.map((it, i) => `<div class="item">
-            <div class="item-head"><b>${i + 1}. ${esc(l.label(it))}</b>
-              <button class="icon-btn" type="button" data-move="${l.key}" data-i="${i}" data-d="-1" aria-label="Lên"${i ? '' : ' disabled'}>↑</button>
-              <button class="icon-btn" type="button" data-move="${l.key}" data-i="${i}" data-d="1" aria-label="Xuống"${i < arr.length - 1 ? '' : ' disabled'}>↓</button>
-              <button class="icon-btn del" type="button" data-del="${l.key}" data-i="${i}" aria-label="Xoá">✕</button></div>
-            <div class="fields">${l.fields.map(([k, lab, t, w]) => fieldHTML(`${l.key}.${i}.${k}`, lab, t, w)).join('')}</div>
-          </div>`).join('')}
-          <button class="btn btn-ghost btn-sm" type="button" data-add="${l.key}">+ Thêm</button></div>`;
-      }).join('')}
+      ${(s.lists || []).map(l => listHTML(l.key, l)).join('')}
     </section>`).join('');
+  scrollTo(0, y);
 }
 
-const findList = key => SECTIONS.flatMap(s => s.lists || []).find(l => l.key === key);
-
+$('sections').addEventListener('toggle', e => {
+  const d = e.target; if (!d.matches?.('details.item')) return;
+  d.open ? openItems.add(d.dataset.k) : openItems.delete(d.dataset.k);
+}, true);
 $('sections').addEventListener('input', e => {
   const el = e.target, p = el.dataset.p;
   if (!p || el.type === 'file') return;
@@ -275,9 +323,14 @@ $('sections').addEventListener('change', async e => {
 });
 $('sections').addEventListener('click', e => {
   const b = e.target.closest('button'); if (!b) return;
-  if (b.dataset.add) { const l = findList(b.dataset.add); getP(cfg, l.key).push(structuredClone(l.newItem)); }
-  else if (b.dataset.del) { const arr = getP(cfg, b.dataset.del); const l = findList(b.dataset.del); if (!confirmDelete(b, l.label(arr[+b.dataset.i]))) return; arr.splice(+b.dataset.i, 1); }
-  else if (b.dataset.move) { const arr = getP(cfg, b.dataset.move), i = +b.dataset.i, j = i + +b.dataset.d; [arr[i], arr[j]] = [arr[j], arr[i]]; }
+  if (b.closest('summary')) e.preventDefault();   // nút trong tiêu đề mục không đóng/mở mục
+  if (b.dataset.add) {
+    const arr = getP(cfg, b.dataset.add); arr.push(structuredClone(defs[b.dataset.add].newItem));
+    if (defs[b.dataset.add].collapsible) openItems.add(`${b.dataset.add}.${arr.length - 1}`);
+  }
+  else if (b.dataset.del) { const arr = getP(cfg, b.dataset.del); if (!confirmDelete(b, defs[b.dataset.del].label(arr[+b.dataset.i]))) return; arr.splice(+b.dataset.i, 1); openItems.clear(); }
+  else if (b.dataset.move) { const arr = getP(cfg, b.dataset.move), i = +b.dataset.i, j = i + +b.dataset.d; [arr[i], arr[j]] = [arr[j], arr[i]]; openItems.clear(); }
+  else if (b.dataset.clear) setP(cfg, b.dataset.clear, '');
   else return;
   render(); setDirty();
 });
@@ -322,6 +375,7 @@ $('reloadBtn').addEventListener('click', () => {
   if (!window.confirm('Xoá bản nháp và quay về nội dung gốc của trang?')) return;
   try { localStorage.removeItem(LS_DRAFT); } catch (e) {}
   delete $('status').dataset.saved;
+  openItems.clear();
   loadConfig();
   toast('Đã quay về nội dung gốc.');
 });
