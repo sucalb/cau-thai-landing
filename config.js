@@ -28,7 +28,7 @@ window.SITE_CONFIG = {
       "titleLine1": "Cau Thái",
       "titleLine2": "Trái Dài",
       "sub": "Giống lùn chuẩn nhà vườn: thấp cây, dễ thu hoạch, buồng sai quả dài đều. Ra trái chỉ sau 9–12 tháng.",
-      "art": "image",
+      "art": "3d",
       "artColor": "#e9862f",
       "artImage": "images/cau-that.png?v=3",
       "note1": "buồng dài, sai trĩu",

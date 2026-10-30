@@ -133,7 +133,7 @@
 
 <div class="toast" id="toast" hidden></div>
 
-<script src="config.js?v=6"></script>
+<script src="config.js?v=7"></script>
 <script>
 // Các mục sửa được. Field: [đường dẫn, nhãn, kiểu, rộng cả dòng | định nghĩa danh sách con]
 // Kiểu: text (mặc định), textarea, money, number, bool, image, video, color, select (danh sách lựa chọn), product (chọn cây trong thư viện), list
@@ -143,7 +143,7 @@ const FACT_LIST = { title: 'Ô thông số đầu trang (nên để 3 ô)', labe
   fields: [['big', 'Chữ lớn (vd: 9–12 tháng)'], ['small', 'Chữ nhỏ (vd: là ra trái)']] };
 const BUNDLE_LIST = { title: 'Gói ưu đãi (ngoài mua lẻ)', label: it => it.name || 'Gói mới', newItem: { name: '', price: 0, note: '', freeship: false, hot: false },
   fields: [['name', 'Tên gói (vd: Gói 6 cây)'], ['price', 'Giá cả gói', 'money'], ['note', 'Ghi chú (vd: Miễn ship · 25.000đ/cây)'], ['freeship', 'Gói này miễn phí ship', 'bool'], ['hot', 'Đánh dấu "Bán chạy nhất" (được chọn sẵn)', 'bool']] };
-const ART_OPTS = [['cau', 'Hình vẽ cây cau'], ['tree', 'Hình vẽ cây ăn quả (tán tròn)'], ['image', 'Dùng ảnh tải lên']];
+const ART_OPTS = [['3d', 'Mô hình 3D cây cau (xoay được)'], ['cau', 'Hình vẽ cây cau'], ['tree', 'Hình vẽ cây ăn quả (tán tròn)'], ['image', 'Dùng ảnh tải lên']];
 const SECTIONS = [
   { id: 'mua', title: 'Cây bán mùa này', hint: 'Mỗi mùa trang chỉ bán một cây. Chọn cây ở đây, cả trang (tiêu đề, hình vẽ, giá, gói, ảnh, video) đổi theo cây đó.',
     fields: [['season.current', 'Cây đang bán', 'product']] },
@@ -153,7 +153,7 @@ const SECTIONS = [
         photo1: '', photo2: '', photo3: '', desc: '', facts: [], specs: [], bundles: [], videoSrc: '', videoPoster: '' },
       fields: [['name', 'Tên cây (vd: Cau Thái trái dài)'], ['seasonLabel', 'Nhãn mùa (vd: Mùa cau 2026)'],
         ['titleLine1', 'Tiêu đề lớn – dòng 1 (nên 1–2 chữ)'], ['titleLine2', 'Tiêu đề lớn – dòng 2 (nên 1–2 chữ)'], ['sub', 'Mô tả ngắn đầu trang', 'textarea'],
-        ['art', 'Hình đầu trang', 'select', ART_OPTS], ['artColor', 'Màu quả trên hình vẽ', 'color'], ['artImage', 'Ảnh đầu trang (khi chọn "Dùng ảnh tải lên", nên là ảnh nền trong suốt)', 'image'],
+        ['art', 'Hình đầu trang', 'select', ART_OPTS], ['artColor', 'Màu quả chín (hình vẽ và mô hình 3D)', 'color'], ['artImage', 'Ảnh đầu trang (dùng khi chọn "Dùng ảnh tải lên", và làm ảnh dự phòng khi máy khách không chạy được 3D; nên là ảnh nền trong suốt)', 'image'],
         ['note1', 'Ghi chú viết tay 1 (cạnh hình)'], ['note2', 'Ghi chú viết tay 2 (cạnh hình)'],
         ['price', 'Giá bán lẻ', 'money'], ['original', 'Giá gốc (gạch ngang, để 0 nếu không có)', 'money'], ['unit', 'Đơn vị (vd: cây, bầu)'], ['minQty', 'Mua lẻ tối thiểu', 'number'],
         ['photo1', 'Ảnh thực tế 1 (ảnh lớn)', 'image'], ['photo2', 'Ảnh thực tế 2', 'image'], ['photo3', 'Ảnh thực tế 3', 'image'], ['desc', 'Mô tả chi tiết', 'textarea'],

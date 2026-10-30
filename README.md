@@ -1,6 +1,6 @@
 # Cây giống theo mùa – landing page
 
-Mỗi mùa trang bán một giống cây (vd mùa này cau, mùa sau bơ). Đầu trang là hình vẽ vector của cây (`art.js`), ảnh thật ở phần "Ảnh thực tế". Khách chọn mua lẻ hoặc theo gói rồi đặt hàng (thanh toán khi nhận). Tối ưu cho điện thoại, mở trên máy tính thì ra bố cục nhiều cột. Trang tĩnh, không cần build, chạy trên GitHub Pages.
+Mỗi mùa trang bán một giống cây (vd mùa này cau, mùa sau bơ). Đầu trang là mô hình 3D cây cau dựng bằng Three.js (`plant3d.js`, tự xoay, kéo để xoay), có thể đổi sang hình vẽ vector (`art.js`) hoặc ảnh tách nền, ảnh thật ở phần "Ảnh thực tế". Khách chọn mua lẻ hoặc theo gói rồi đặt hàng (thanh toán khi nhận). Tối ưu cho điện thoại, mở trên máy tính thì ra bố cục nhiều cột. Trang tĩnh, không cần build, chạy trên GitHub Pages.
 
 - Trang bán hàng: `index.html`
 - Trang quản trị (demo): `admin.html`

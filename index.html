@@ -81,6 +81,8 @@
   .note.n2{right:0;bottom:22%;rotate:5deg;text-align:right}
   .note.n2::before{content:"↖ "}
   .note:empty{display:none}
+  .art.is-3d .note{pointer-events:none}
+  .art.is-3d::after{content:"↔ kéo để xoay";position:absolute;left:50%;bottom:-4px;translate:-50% 0;font-family:var(--hand);font-size:15px;color:var(--muted);white-space:nowrap}
   .mega{display:block;font-family:var(--display);font-weight:400;text-transform:uppercase;color:var(--forest);font-size:clamp(56px,19vw,200px);line-height:1.1;margin-top:10px}
   .mega span{display:block}
   .hero .sub{color:var(--muted);font-size:15.5px;margin-top:12px;max-width:52ch}
@@ -540,8 +542,9 @@
   <a href="#dat-hang" class="m-buy">Đặt mua ngay</a>
 </nav>
 
-<script src="config.js?v=6"></script>
+<script src="config.js?v=7"></script>
 <script src="art.js?v=3"></script>
+<script src="plant3d.js?v=1"></script>
 <script>
   // ?preview=1: hiện bản nháp đã lưu từ trang quản trị (bản demo, chỉ trên máy đó)
   if (new URLSearchParams(location.search).has('preview')) {
@@ -577,10 +580,19 @@
   $('saveLabel').hidden = !save;
   document.querySelectorAll('.js-old-wrap').forEach(el => el.hidden = !save);
 
-  // Hình đầu trang: vector vẽ sẵn hoặc ảnh tải lên
-  $('art').insertAdjacentHTML('afterbegin', P.art === 'image' && P.artImage
+  // Hình đầu trang: mô hình 3D, ảnh tải lên, hoặc hình vẽ vector
+  const flat = () => P.artImage
     ? `<img src="${esc(P.artImage)}" alt="${esc(P.name)}">`
-    : drawPlant(P.art, P.artColor));
+    : drawPlant(P.art === 'tree' ? 'tree' : 'cau', P.artColor);
+  if (P.art === '3d') {
+    $('art').classList.add('is-3d');
+    mountCau3D($('art'), { fruit: P.artColor }).then(ok => {
+      // máy không chạy được WebGL: dùng ảnh/hình vẽ thay thế
+      if (!ok) { $('art').classList.remove('is-3d'); $('art').insertAdjacentHTML('afterbegin', flat()); }
+    });
+  } else {
+    $('art').insertAdjacentHTML('afterbegin', P.art === 'image' && P.artImage ? flat() : drawPlant(P.art, P.artColor));
+  }
 
   $('facts').innerHTML = (P.facts || []).map(f => `<div class="fact"><b>${esc(f.big)}</b>${esc(f.small)}</div>`).join('');
   const photos = [P.photo1, P.photo2, P.photo3].filter(Boolean);
