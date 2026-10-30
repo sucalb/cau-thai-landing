@@ -22,7 +22,7 @@
     --forest:#01472e; --forest-2:#01301f; --ink:#0d2419; --muted:#4a5d4e; --line:rgba(1,71,46,.2);
     --husk:#ee8a2c; --lime:#d9ef78; --red:#c8401f;
     --display:"Anton",Impact,"Arial Narrow",sans-serif; --body:"Be Vietnam Pro",system-ui,-apple-system,sans-serif; --hand:"Pangolin","Comic Sans MS",cursive;
-    --r-xl:2.25rem; --r-lg:1.25rem;
+    --r-xl:2.25rem; --r-lg:1.25rem; --slab-r:2.25rem;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   [hidden]{display:none!important}
@@ -34,7 +34,7 @@
   :focus-visible{outline:3px solid var(--husk);outline-offset:3px}
   .pad{padding-inline:max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-area-inset-right,0px))}
   .wrap{max-width:1240px;margin-inline:auto}
-  section{padding-block:60px}
+  section{padding-block:60px 96px}
 
   .kicker{display:block;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--forest);margin-bottom:14px}
   .h2,.h3{font-family:var(--display);font-weight:400;text-transform:uppercase;color:var(--forest);text-wrap:balance}
@@ -61,7 +61,7 @@
   .d-only{display:none}
 
   /* Hero */
-  .hero{padding-block:20px 50px}
+  .hero{padding-block:20px 84px}
   .hero-top{display:flex;justify-content:space-between;align-items:center;gap:12px}
   .hero-top .kicker{margin:0}
   .season{background:var(--husk);color:#fff;font-weight:800;font-size:13px;padding:7px 12px;border-radius:999px;white-space:nowrap}
@@ -103,7 +103,24 @@
   .fact b{display:block;font-family:var(--display);font-weight:400;font-size:24px;color:var(--forest);line-height:1.2;text-transform:uppercase}
 
   /* Khối bo góc trên */
-  .slab{border-radius:var(--r-xl) var(--r-xl) 0 0;margin-top:-1px}
+  /* Mảng bo góc trên chồng lên phần trước đúng bằng độ bo, để góc lộ màu của phần trước (không lộ nền trang) */
+  .slab{position:relative;z-index:1;border-radius:var(--slab-r) var(--slab-r) 0 0;margin-top:calc(-1 * var(--slab-r))}
+
+  /* Cây cỏ trang trí */
+  .deco{position:absolute;pointer-events:none;z-index:0}
+  .deco svg{width:100%;height:auto;display:block;overflow:visible}
+  .deco .sway{transform-box:fill-box;transform-origin:0 15%;animation:sway 7s ease-in-out infinite}
+  .hero{position:relative;overflow-x:clip}
+  section{overflow-x:clip}
+  .hero > .wrap{position:relative;z-index:1}
+  .frond-l{display:none;left:-60px;width:170px;rotate:-8deg}
+  .frond-r{right:-60px;top:16%;width:170px;scale:-1 1;rotate:10deg}
+  .frond-r .sway{animation-delay:-3s}
+  .tuft{width:68px;top:-40px}
+  .tuft.l{left:6px}
+  .tuft.r{right:6px;scale:-1 1}
+  .tuft.m{left:44%;width:54px;top:-32px}
+  .kicker .sprig{display:inline-block;vertical-align:-3px;margin-right:6px}
   .slab-forest{background:var(--forest);color:var(--cream)}
   .slab-cream{background:var(--cream)}
   .slab-paper{background:var(--paper)}
@@ -239,7 +256,7 @@
   details p{padding-bottom:18px;color:var(--muted);font-size:15px;max-width:62ch}
 
   /* Footer */
-  footer{background:var(--forest-2);color:rgba(240,241,220,.75);padding-top:44px;padding-bottom:110px;overflow:hidden}
+  footer{background:var(--forest-2);color:rgba(240,241,220,.75);padding-top:44px;padding-bottom:110px;overflow-x:clip}
   .foot{display:grid;gap:20px;font-size:14px}
   .foot b{color:var(--cream)}
   .foot ul{list-style:none;display:grid;gap:6px}
@@ -266,7 +283,7 @@
 
   /* Máy tính */
   @media (min-width:960px){
-    section{padding-block:100px}
+    section{padding-block:100px 170px}
     .pad{padding-inline:max(40px,calc((100% - 1240px)/2))}
     .site-head{padding-top:16px}
     .nav{padding:8px 8px 8px 26px}
@@ -278,7 +295,7 @@
     .mbar{display:none}
     footer{padding-bottom:0}
 
-    .hero{padding-block:30px 90px}
+    .hero{padding-block:30px 170px}
     .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:24px 40px;align-items:center;margin-top:10px}
     .hero-grid .art{grid-column:2;grid-row:1/4;width:100%;margin:0}
     .hero-grid > :not(.art){grid-column:1}
@@ -291,7 +308,13 @@
     .fact{font-size:14px;padding:18px 18px 0}
     .fact b{font-size:38px}
 
-    .slab{border-radius:5rem 5rem 0 0}
+    :root{--slab-r:5rem}
+    .frond-l{display:block;left:calc(max(40px,(100% - 1240px)/2) - 300px);top:30%;width:340px;rotate:4deg}
+    .frond-r{right:-30px;top:60px;width:340px}
+    .tuft{width:120px;top:-72px}
+    .tuft.l{left:max(20px,calc((100% - 1240px)/2 - 60px))}
+    .tuft.r{right:max(20px,calc((100% - 1240px)/2 - 60px))}
+    .tuft.m{width:110px;top:-66px}
     .product .top{display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:end}
     .pgrid{display:grid;grid-template-columns:1.5fr 1fr;gap:48px;align-items:start;margin-top:48px}
     .pgrid .gallery{margin:0}
@@ -356,6 +379,7 @@
 
 <!-- HERO -->
 <section class="hero pad">
+  <div class="deco frond-l" data-deco="frond"></div><div class="deco frond-r" data-deco="frond"></div>
   <div class="wrap">
     <div class="hero-top">
       <span class="kicker" data-t="promo.topText"></span>
@@ -543,7 +567,7 @@
 </nav>
 
 <script src="config.js?v=7"></script>
-<script src="art.js?v=3"></script>
+<script src="art.js?v=4"></script>
 <script src="plant3d.js?v=1"></script>
 <script>
   // ?preview=1: hiện bản nháp đã lưu từ trang quản trị (bản demo, chỉ trên máy đó)
@@ -604,6 +628,14 @@
   $('reviews').innerHTML = C.reviews.map(r => `<div class="review"><div class="stars">★★★★★</div><p>“${esc(r.text)}”</p><div class="who"><div class="avatar">${esc((r.name.trim().split(' ').pop() || '?')[0])}</div><div><b>${esc(r.name)}</b><span>${esc(r.place)}</span></div></div></div>`).join('');
   $('reviewSection').hidden = !C.reviews.length;
   $('faqList').innerHTML = C.faq.map((f, i) => `<details${i ? '' : ' open'}><summary>${esc(f.q)}</summary><p>${esc(f.a)}</p></details>`).join('');
+
+  // ---- Cây cỏ trang trí: tàu lá đầu trang, bụi cỏ ở góc các mảng bo, nhánh lá cạnh tiêu đề ----
+  document.querySelectorAll('[data-deco="frond"]').forEach(el => el.innerHTML = drawDeco('frond'));
+  document.querySelectorAll('.slab').forEach((sl, i) => {
+    const pos = i % 2 ? ['l', 'r', 'm'] : ['l', 'r'];
+    sl.insertAdjacentHTML('afterbegin', pos.map(p => `<div class="deco tuft ${p}">${drawDeco('tuft')}</div>`).join(''));
+  });
+  document.querySelectorAll('.kicker').forEach(k => k.insertAdjacentHTML('afterbegin', `<span class="sprig">${drawDeco('sprig', getComputedStyle(k).color)}</span>`));
 
   // ---- Video (theo cây mùa này) ----
   $('video').hidden = !(C.video.enabled && P.videoSrc);

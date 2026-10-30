@@ -99,4 +99,37 @@
   }
 
   window.drawPlant = (kind, color) => (kind === 'tree' ? tree : cau)(color || '#e9862f');
+
+  // ---- Cây cỏ trang trí ----
+  let seed = 7;
+  const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  const GREENS = ['#24583a', '#2f6b3f', '#3f8a4c', '#5aa35c', '#7cbc6a'];
+
+  // Tàu lá cau nhìn ngang, mọc từ góc trái
+  function decoFrond(dark) {
+    const c1 = dark ? '#1d4a30' : '#2f6b3f', c2 = dark ? '#2f6b3f' : '#5aa35c';
+    const body = frond([18, 40], 6, 400, 170, c1, 5, c2) + frond([18, 40], 30, 300, 120, c2, 4.5, '#7cbc6a');
+    return `<svg viewBox="0 0 440 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g class="sway">${body}</g></svg>`;
+  }
+
+  // Bụi cỏ: nhiều lá cỏ cong mọc từ một gốc, vài lá rộng xen kẽ
+  function decoTuft() {
+    let s = '';
+    for (let i = 0; i < 26; i++) {
+      const x = 80 + (rnd() - .5) * 70, h = 45 + rnd() * 50, lean = (rnd() - .5) * 90;
+      const tx = x + lean, ty = 100 - h, cx = x + lean * .2, cy = 100 - h * .6;
+      s += `<path d="M${F(x)} 100 Q${F(cx)} ${F(cy)} ${F(tx)} ${F(ty)}" stroke="${GREENS[i % 5]}" stroke-width="${F(3 + rnd() * 3)}" fill="none" stroke-linecap="round"/>`;
+    }
+    for (let i = 0; i < 3; i++) {
+      const x = 55 + i * 25 + rnd() * 10, rot = -40 + i * 40 + (rnd() - .5) * 20;
+      s += `<ellipse cx="${F(x)}" cy="70" rx="9" ry="28" fill="${GREENS[1 + i]}" transform="rotate(${F(rot)} ${F(x)} 98)"/>`;
+    }
+    return `<svg viewBox="0 0 160 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">${s}</svg>`;
+  }
+
+  // Nhánh lá nhỏ đặt cạnh tiêu đề
+  const decoSprig = color => `<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 21C9 15 13 9 20 4" stroke="${color}" stroke-width="1.8" fill="none" stroke-linecap="round"/><ellipse cx="9" cy="12" rx="2.4" ry="5" fill="${color}" transform="rotate(-50 9 12)"/><ellipse cx="14" cy="7.5" rx="2.2" ry="4.6" fill="${color}" transform="rotate(-60 14 7.5)"/><ellipse cx="14" cy="14" rx="2" ry="4.2" fill="${color}" transform="rotate(35 14 14)" opacity=".75"/></svg>`;
+
+  window.drawDeco = (type, opt) => type === 'frond' ? decoFrond(opt) : type === 'tuft' ? decoTuft() : decoSprig(opt || '#3f8a4c');
+
 })();
